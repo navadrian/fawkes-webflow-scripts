@@ -1,0 +1,92 @@
+/* ------------------------------------------------------------------
+   Fawkes — fk-contrast
+   Registered site-header script #1 (inject the whole file inside one
+   <style>). Two concerns, kept in this order:
+     A. Text-contrast fixes (freeform Part 1)
+     B. Fixed-nav anchor + heading offset (nav-anchor-offset.css)
+   Selector order and specificity are load-bearing — do not re-sort.
+   ------------------------------------------------------------------ */
+
+/* ==================================================================
+   A. TEXT-CONTRAST FIXES
+   Base typography classes had no colour set, causing invisible text on
+   dark sections and invisible eyebrow labels on light sections.
+   ================================================================== */
+.wb-hero-title { color: white; }
+.wb-body-large-24-light { color: rgba(255,255,255,0.85); }
+.section-eyebrow { color: rgba(255,255,255,0.70); }
+.section-wrapper .section-eyebrow { color: #31312f; }
+.wb-h2-section-title { color: #111217; }
+.vision-wrapper .wb-h2-section-title { color: white; }
+.wb-desc-heading-44 { color: #111217; }
+.fk-product-block .wb-desc-heading-44 { color: white; }
+.fk-product-block.is-light .wb-desc-heading-44 { color: #111217; }
+.fk-visual-card .wb-desc-heading-44 { color: white; }
+.wb-tags-24 { color: #111217; }
+.fk-product-block .wb-tags-24 { color: white; }
+.fk-product-block.is-light .wb-tags-24 { color: #111217; }
+.fk-visual-card .wb-tags-24 { color: white; }
+.wb-body-medium-16-light { color: #31312f; }
+.fk-product-block .wb-body-medium-16-light { color: rgba(255,255,255,0.80); }
+.fk-product-block.is-light .wb-body-medium-16-light { color: #31312f; }
+.fk-visual-card .wb-body-medium-16-light { color: rgba(255,255,255,0.80); }
+.wb-body-pointers-18 { color: #111217; }
+.wb-eyebrow-large { color: #111217; }
+.wb-eyebrow-small { color: #111217; }
+.wb-card-text-36 { color: white; }
+.wb-body-large-42-bold { color: #111217; }
+.button-text { color: inherit; }
+
+/* ==================================================================
+   B. FIXED-NAV ANCHOR + HEADING OFFSET
+   Nothing measures --nav-h at runtime any more, so these values are
+   the live source of truth, not a pre-JS fallback. Keep them in step
+   with the nav's real height at each breakpoint.
+   ================================================================== */
+:root {
+  --nav-h: 107px;   /* desktop fixed nav height */
+  --nav-gap: 24px;  /* breathing room under the bar */
+}
+@media (max-width: 991px)  { :root { --nav-h: 88px; } }
+@media (max-width: 767px)  { :root { --nav-h: 72px; } }
+@media (max-width: 479px)  { :root { --nav-h: 64px; } }
+
+/* 1. Browser-driven scrolls: hash on load, back/forward, find-in-page,
+      keyboard focus, scrollIntoView(). */
+html {
+  scroll-padding-top: calc(var(--nav-h) + var(--nav-gap));
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* 2. Per-target offset — any element with an id is a potential anchor
+      (/about#team, /about#vision). scroll-margin-top wins over
+      scroll-padding-top when both apply, and covers scrollIntoView. */
+[id] { scroll-margin-top: calc(var(--nav-h) + var(--nav-gap)); }
+
+/* 3. Belt-and-braces for scripted scrollers that honour neither property
+      (Webflow's own anchor JS is one). Put an empty
+      <div class="anchor-offset" id="team"></div> immediately before the
+      section instead of putting the id on the section itself. */
+.anchor-offset,
+[data-anchor] {
+  display: block;
+  position: relative;
+  top: calc(-1 * (var(--nav-h) + var(--nav-gap)));
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 4. Stop headings sitting under the bar when a section starts flush at
+      the top of the viewport (sticky sub-headers, pinned sections). */
+.section-heading,
+[data-sticky-heading] {
+  top: calc(var(--nav-h) + 8px);
+}
+
+/* Nav stacking order is owned by hero-sticky.css and deliberately not
+   duplicated here. */

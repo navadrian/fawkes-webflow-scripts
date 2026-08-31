@@ -1,0 +1,47 @@
+/* ------------------------------------------------------------------
+   Fawkes — fk-mobilenav
+   Registered site-header script #2 (inject the whole file inside one
+   <style>). Freeform Part 3, rules verbatim.
+
+   Mobile nav menu: JS-click pattern rather than the usual checkbox-hack,
+   because Webflow's Data API rejects <input>/<label> elements outside a
+   Form ("Checkbox Field can only be placed in a Form", "Field Label can
+   only be placed in a Form"). Only takes visual effect at/below 767px,
+   since .fk-nav-hamburger and the collapsed .fk-nav-links state only
+   apply there. The .mobile-menu-open / .is-active / .dropdown-expanded
+   classes are written by fk-site-interactions.js — class names must
+   match exactly across the two files.
+   ------------------------------------------------------------------ */
+
+@media screen and (max-width: 767px) {
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper {
+    margin-right: 0;
+  }
+  .fk-nav-pill.mobile-menu-open {
+    padding-bottom: 24px;
+    background-color: rgba(0, 0, 0, 0.92);
+  }
+  .fk-nav-pill.mobile-menu-open .fk-nav-links {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    order: 10;
+    margin-top: 20px;
+    grid-row-gap: 20px;
+  }
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper {
+    width: 100%;
+  }
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-panel {
+    display: none;
+    position: static;
+    padding: 12px 0 0 16px;
+  }
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper.dropdown-expanded .fk-nav-dropdown-panel {
+    display: flex;
+  }
+  .fk-nav-hamburger.is-active .fk-nav-hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .fk-nav-hamburger.is-active .fk-nav-hamburger-bar:nth-child(2) { opacity: 0; }
+  .fk-nav-hamburger.is-active .fk-nav-hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
