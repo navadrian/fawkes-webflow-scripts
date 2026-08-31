@@ -1,6 +1,6 @@
-/*! fk-site-interactions — Fawkes site-header registered script — v1.0.0
+/*! fk-site-interactions — Fawkes site-header registered script — v1.0.1
  *  Freeform Part 4, reduced. Four independent blocks, no shared state:
- *    1. Empty-slot hiding for .fk-visual-card and .fk-process-tile
+ *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle
  *    3. Mobile nav dropdown expand
  *    4. Home industries tab switcher
@@ -29,6 +29,15 @@
       var heading = tile.querySelector('.wb-tags-24');
       if (heading && heading.textContent.trim() === '') {
         tile.style.display = 'none';
+      }
+    });
+    // Hide FAQ slots with no question — a CMS template has a fixed number of
+    // faq-N-question fields and some pages populate fewer than the maximum.
+    // The IX2 accordion handles open/close; this only removes the empty rows.
+    document.querySelectorAll('.fk-faq-item').forEach(function (item) {
+      var q = item.querySelector('.fk-faq-question-text');
+      if (q && q.textContent.trim() === '') {
+        item.style.display = 'none';
       }
     });
 
