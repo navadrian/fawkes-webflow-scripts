@@ -1,4 +1,4 @@
-/*! fk-site-interactions — Fawkes site-header registered script — v1.2.0
+/*! fk-site-interactions — Fawkes site-header registered script — v1.3.0
  *  Freeform Part 4, reduced. Four independent blocks, no shared state:
  *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle
@@ -100,6 +100,7 @@
       var bottomRow = visualCard ? visualCard.querySelector('.fk-vc-bottom') : null;
       var featureEls = visualCard ? visualCard.querySelectorAll('.fk-vc-feature-item') : [];
       var arrowLink = visualCard ? visualCard.querySelector('.fk-vc-arrow') : null;
+      var scrimEl = visualCard ? visualCard.querySelector('.fk-vc-scrim') : null;
       var current = 'fleets';
 
       // Preload the other two backgrounds so the first crossfade is instant.
@@ -148,6 +149,7 @@
             featureEls[i].textContent = data.features[i] || '';
           }
           if (arrowLink) arrowLink.setAttribute('href', data.href);
+          if (scrimEl) scrimEl.classList.toggle('is-bright', key === 'bess');
           if (titleWrap) titleWrap.style.opacity = '1';
           if (bottomRow) bottomRow.style.opacity = '1';
         }, 200);
@@ -181,6 +183,7 @@
           featureEls[i].textContent = (d && d.features[i]) || '';
         }
         if (arrowLink && d) arrowLink.setAttribute('href', d.href);
+        if (scrimEl) scrimEl.classList.toggle('is-bright', current === 'bess');
       })();
 
       tabRow.querySelectorAll('.tab-pill').forEach(function (pill) {

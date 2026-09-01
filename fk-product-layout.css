@@ -1,0 +1,94 @@
+/* ------------------------------------------------------------------
+   Fawkes — fk-product-layout
+   Part of the fk-base-styles bundle. Brings the Home product sections
+   (FawkesCore / FawkesLink / FawkesArc) in line with the Figma layout:
+   a 2-column grid (text | image) with the feature list as a full-width
+   band below both columns, and a tighter type scale.
+
+   Depends on the feature-row having been moved to be a DIRECT child of
+   .fk-product-block (done via the Webflow API, in the component def for
+   Core/Arc and on the page for the unlinked FawkesLink).
+   ------------------------------------------------------------------ */
+
+.fk-product-block {
+  display: grid;
+  grid-template-columns: minmax(0, 43fr) minmax(0, 52fr);
+  column-gap: 56px;
+  row-gap: 32px;
+  align-items: start;
+}
+
+/* dark blocks: text left, image right */
+.fk-product-block > .fk-product-block-content { grid-column: 1; grid-row: 1; }
+.fk-product-block > .fk-product-block-visual  { grid-column: 2; grid-row: 1; }
+
+/* light block (FawkesLink): image left, text right */
+.fk-product-block.light > .fk-product-block-content { grid-column: 2; grid-row: 1; }
+.fk-product-block.light > .fk-product-block-visual  { grid-column: 1; grid-row: 1; }
+
+/* feature list spans the full width, below both columns */
+.fk-product-block > .feature-row {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  column-gap: 0;
+  margin-top: 4px;
+}
+.fk-product-block > .feature-row > * {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 44px;
+}
+.fk-product-block > .feature-row > *:first-child { padding-left: 0; }
+.fk-product-block > .feature-row > * + * { border-left: 1px solid rgba(255, 255, 255, 0.16); }
+.fk-product-block.light > .feature-row > * + * { border-left-color: rgba(0, 0, 0, 0.16); }
+
+/* tighter content-column stack */
+.fk-product-block > .fk-product-block-content { row-gap: 12px; }
+
+/* type scale — Figma product section */
+.fk-product-block .fk-product-name-dark { font-size: 44px; line-height: 1.08; }
+.fk-product-block .wb-desc-heading-44   { font-size: 33px; line-height: 1.15; }
+.fk-product-block .wb-body-large-24-light { font-size: 16px; line-height: 1.5; }
+.fk-product-block .wb-tags-24 { font-size: 17px; line-height: 1.35; }
+.fk-product-block .fk-feature-description-dark { font-size: 13px; line-height: 1.45; margin-top: 6px; }
+
+/* ---- Industries tab pills: compact, subtle-when-inactive (Figma) ---- */
+.tab-pill {
+  padding: 9px 20px;
+  font-size: 20px;
+  background-color: #e9e9ee;
+  box-shadow: none;
+  color: #6b6b73;
+}
+.tab-pill.is-active {
+  background-color: #ffffff;
+  color: #111217;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+}
+
+/* ---- Industries card: heavier scrim on the brighter BESS slide ---- */
+.fk-vc-scrim.is-bright {
+  background-image: linear-gradient(180deg,
+    rgba(0, 0, 0, 0.32) 0%,
+    rgba(0, 0, 0, 0.30) 45%,
+    rgba(0, 0, 0, 0.62) 100%);
+}
+
+/* stack to one column on tablet/phone */
+@media (max-width: 991px) {
+  .fk-product-block,
+  .fk-product-block.light {
+    grid-template-columns: 1fr;
+  }
+  .fk-product-block > .fk-product-block-content,
+  .fk-product-block > .fk-product-block-visual,
+  .fk-product-block.light > .fk-product-block-content,
+  .fk-product-block.light > .fk-product-block-visual { grid-column: 1; }
+  .fk-product-block > .fk-product-block-content { grid-row: 1; }
+  .fk-product-block > .fk-product-block-visual  { grid-row: 2; }
+  .fk-product-block > .feature-row { grid-row: 3; flex-wrap: wrap; row-gap: 24px; }
+  .fk-product-block > .feature-row > * { flex: 1 1 45%; padding: 0; border-left: 0 !important; }
+}

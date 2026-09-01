@@ -7,7 +7,11 @@ const fs = require("fs");
 
 const contrast = fs.readFileSync("fk-contrast.css", "utf8");
 const mobile = fs.readFileSync("fk-mobilenav.css", "utf8");
-const css = contrast + "\n\n/* ===== fk-mobilenav ===== */\n" + mobile;
+const productLayout = fs.readFileSync("fk-product-layout.css", "utf8");
+const css =
+  contrast +
+  "\n\n/* ===== fk-mobilenav ===== */\n" + mobile +
+  "\n\n/* ===== fk-product-layout ===== */\n" + productLayout;
 
 const out = `/*! fk-base-styles — Fawkes site-header registered script — v1.0.0
  *  Webflow injects registered "scripts" as <script src>, so a raw .css file
