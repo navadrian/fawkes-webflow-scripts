@@ -39,13 +39,9 @@
     "}",
 
     ".hero-wrapper>.image-fill{z-index:0;overflow:hidden;background-color:#111217;}",
-    /* when .image-fill IS the <img> (Home hero) it must be sized like the sheet, not 100% of an auto-height parent */
-    ".hero-wrapper>img.image-fill{",
-      "height:var(--hero-vh);display:block;object-fit:cover;object-position:center;will-change:transform;",
-    "}",
-    /* when .image-fill is a wrapper around <img>/<video> */
     ".hero-wrapper>.image-fill>img,",
-    ".hero-wrapper>.image-fill>video{",
+    ".hero-wrapper>.image-fill>video,",
+    ".hero-wrapper>img.image-fill{",
       "width:100%;height:100%;display:block;object-fit:cover;object-position:center;will-change:transform;",
     "}",
 
