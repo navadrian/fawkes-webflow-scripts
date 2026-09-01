@@ -58,6 +58,22 @@
 /* tighter content-column stack */
 .fk-product-block > .fk-product-block-content { row-gap: 12px; }
 
+/* the product visuals are UI mockup PNGs (transparent, need to show in full),
+   not full-bleed photos — undo the .image-fill cover/crop + grey backdrop. */
+.fk-product-block > .fk-product-block-visual {
+  min-height: 0;
+  overflow: visible;
+  background: transparent;
+  align-self: center;
+}
+.fk-product-block > .fk-product-block-visual > .image-fill {
+  position: static;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;
+}
+
 /* type scale — Figma product section */
 .fk-product-block .fk-product-name-dark { font-size: 44px; line-height: 1.08; }
 .fk-product-block .wb-desc-heading-44   { font-size: 33px; line-height: 1.15; }
