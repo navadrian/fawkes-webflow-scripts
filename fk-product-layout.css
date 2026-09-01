@@ -55,8 +55,9 @@
 .fk-product-block > .feature-row > * + * { border-left: 1px solid rgba(255, 255, 255, 0.16); }
 .fk-product-block.light > .feature-row > * + * { border-left-color: rgba(0, 0, 0, 0.16); }
 
-/* tighter content-column stack */
-.fk-product-block > .fk-product-block-content { row-gap: 12px; }
+/* tighter content-column stack; centre it so the image's extra height splits
+   top/bottom instead of dumping one big empty band above the feature row (cluster B) */
+.fk-product-block > .fk-product-block-content { row-gap: 12px; align-self: center; }
 
 /* the product visuals are UI mockup PNGs (transparent, need to show in full),
    not full-bleed photos — undo the .image-fill cover/crop + grey backdrop. */
@@ -81,18 +82,20 @@
 .fk-product-block .wb-tags-24 { font-size: 17px; line-height: 1.35; }
 .fk-product-block .fk-feature-description-dark { font-size: 13px; line-height: 1.45; margin-top: 6px; }
 
-/* ---- Industries tab pills: compact, subtle-when-inactive (Figma) ---- */
+/* ---- Industries tab pills (cluster I): Figma has inactive = white / grey text,
+   active = lavender #E2E2EC / black; shadow on both (matches the Webflow class).
+   Colour only - type size / padding left as-is. ---- */
 .tab-pill {
   padding: 9px 20px;
   font-size: 20px;
-  background-color: #e9e9ee;
-  box-shadow: none;
-  color: #6b6b73;
+  background-color: #ffffff;
+  color: #b3b3b3;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 .tab-pill.is-active {
-  background-color: #ffffff;
-  color: #111217;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+  background-color: #e2e2ec;
+  color: #000000;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 /* ---- Industries card: heavier scrim on the brighter BESS slide ---- */
@@ -123,4 +126,148 @@
   .fk-product-block.has-section-label > .fk-product-block-content { grid-row: 2; }
   .fk-product-block.has-section-label > .fk-product-block-visual  { grid-row: 3; }
   .fk-product-block.has-section-label > .feature-row { grid-row: 4; }
+
+  /* stacked: text back to top-aligned (row sizes to content) */
+  .fk-product-block > .fk-product-block-content { align-self: start; }
+}
+
+/* ============================================================
+   Figma-gap fixes batch 1 (workflow home-figma-gap-specs)
+   ============================================================ */
+
+/* ---- A: orange accent word in product-block names (mirrors .fk-footer-brand-accent) ---- */
+.fk-product-name-dark .fk-product-name-accent { color: #F2971F; }
+
+/* ---- D: Home Case Study cards (section 10:714) ---- */
+/* D1 - stat text near-black on the orange caption plate (Figma 7:722: Inter Medium, -1.8px, #000) */
+.fk-case-study-stat-block .wb-card-text-36 {
+  color: #000000;
+  font-weight: 500;
+  letter-spacing: -1.8px;
+}
+/* D2 - category chip = "Tag Pill / Light": pale translucent-white, black text, Title case, no blur */
+.fk-case-study-stat-block .fk-tag-chip {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #000000;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* D3 - carousel nav arrow, bottom-right of the LAST (financiers) card only (Figma 15:778).
+   Decorative. url() swapped to the exported asset in a follow-up; glyph is the fallback. */
+.case-study-row > .fk-case-study-card:last-child::after {
+  content: "\2192";
+  position: absolute;
+  right: 26px;
+  bottom: 25px;
+  z-index: 3;
+  width: 61px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ---- E: Our Approach pillar label type (Figma 7:872: 18px Inter Medium, -0.9px, #000).
+   .wb-tags-24 is shared (15 uses) - scope to the tile. ---- */
+.fk-process-tile .wb-tags-24 {
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.9px;
+  color: #000;
+}
+
+/* ---- F: CTA Section - Home-only variant. Requires combo class "is-left" on the
+   Home CTA Banner instance root (added via the API in batch 2). ---- */
+.fk-cta-banner-heading .fk-cta-accent { color: #F2971F; }
+.fk-cta-banner.is-left {
+  align-items: flex-start;
+  text-align: left;
+  padding-left: 126px;
+  padding-right: 126px;
+  row-gap: 36px;
+}
+.fk-cta-banner.is-left .fk-cta-banner-heading {
+  font-size: 42px;
+  line-height: 1.5;
+  letter-spacing: -2.1px;
+  font-weight: 700;
+  text-align: left;
+  max-width: 1080px;
+}
+@media (max-width: 1200px) {
+  .fk-cta-banner.is-left { padding-left: 64px; padding-right: 64px; }
+  .fk-cta-banner.is-left .fk-cta-banner-heading { font-size: 34px; letter-spacing: -1.7px; max-width: 100%; }
+}
+@media (max-width: 991px) {
+  .fk-cta-banner.is-left { padding-left: 24px; padding-right: 24px; }
+  .fk-cta-banner.is-left .fk-cta-banner-heading { font-size: 28px; letter-spacing: -1.4px; }
+}
+
+/* ---- G: hero KPI vertical stack + backing plate + target dots/connector.
+   .hero-stat-row base box props (flex-direction, padding, bg, border, radius, pos)
+   are set on the Webflow class via the API in batch 2; these are the parts the
+   style API can't do reliably. ---- */
+.hero-stat-row { -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.hero-stat-row .fk-stat-card { align-items: center; text-align: center; row-gap: 2px; }
+.hero-stat-row .fk-stat-card-label { order: 1; width: 100%; }
+.hero-stat-row .fk-stat-card-value { order: 2; width: 100%; line-height: 1.1; }
+@media (max-width: 1279px) { .hero-stat-row { right: 120px; top: 300px; } }
+@media (max-width: 1023px) { .hero-stat-row { right: 40px; } }
+@media (max-width: 767px)  { .hero-stat-row { display: none; } }
+
+.fk-hero-target { position: absolute; top: 430px; right: 486px; width: 60px; height: 60px; z-index: 2; pointer-events: none; }
+.fk-hero-dot-lg, .fk-hero-dot-md, .fk-hero-dot-sm { display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+.fk-hero-dot-lg { width: 60px; height: 60px; border: 1px solid rgba(255,255,255,0.25); }
+.fk-hero-dot-md { width: 30px; height: 30px; border: 1px solid rgba(255,255,255,0.5); }
+.fk-hero-dot-sm { width: 10px; height: 10px; background: #fff; box-shadow: 0 0 10px 3px rgba(255,255,255,0.7); }
+.fk-hero-connector { position: absolute; left: 30px; top: 30px; width: 124px; height: 47px; border-left: 1px solid rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.55); }
+@media (max-width: 1279px) { .fk-hero-target { display: none; } }
+
+/* ---- H: Footer - real left logo + centered 2-line copyright ---- */
+.fk-footer-wrapper { position: relative; }
+.fk-footer-wrapper .fk-footer-bottom .fk-nav-logo {
+  position: absolute;
+  left: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 180px;
+  height: 44px;
+  font-size: 0;
+  background-image: url("https://cdn.prod.website-files.com/6a8826652e72a7fcc7c3bf57/6a8fbeca5a721e180eb80cb0_nav-logo-fawkes-energy-clean.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+}
+.fk-footer-bottom { justify-content: center; }
+.fk-footer-copyright {
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---- J: Trusted By band - match Figma logo scale + band height ---- */
+.fk-trusted-band { min-height: 200px; padding-top: 20px; padding-bottom: 20px; }
+.fk-trusted-divider { height: 160px; }
+.trusted-by-logo { display: flex; align-items: center; }
+.trusted-by-logo-img { height: 80px; }
+@media (max-width: 767px) {
+  .fk-trusted-band { min-height: auto; padding-top: 28px; padding-bottom: 28px; }
+  .fk-trusted-divider { height: 120px; }
+  .trusted-by-logo-img { height: 52px; }
 }
