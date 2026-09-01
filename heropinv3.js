@@ -1,19 +1,17 @@
-/*! heropinv3 — Fawkes site-header registered script — v1.1.0
- *  Pinned "hold & dim" hero.
+/*! heropinv3 — Fawkes site-header registered script — v1.2.0
+ *  Plain parallax hero. NO pin — the page keeps scrolling normally; the hero
+ *  background just drifts slower than the scroll (classic parallax) and the
+ *  hero's own overflow:hidden crops it. Everything is `scrub`ed to the scroll
+ *  position, so scrolling back up retraces the exact same frames — no snap.
  *
- *  v1.0.0 tried heropinparallaxv2's trick of pinning the absolutely-positioned
- *  .image-fill / .hero-scrim directly. GSAP can't get a stable box for those
- *  (it froze .hero-scrim at 0x0 and never applied a counter-scroll transform),
- *  so nothing actually pinned. This version pins the whole .hero-wrapper
- *  <section> — a normal in-flow block, the textbook GSAP pin target — with
- *  pinType:"transform" so it stays in flow (no position:fixed escape) and
- *  scrub:true so scrolling back up retraces exactly. The hero holds for ~70vh
- *  of scroll while the scrim darkens and .hero-content / .hero-stat-row fade,
- *  then releases into the next section.
+ *  History: v1.0 tried to pin the absolutely-positioned .image-fill/.hero-scrim
+ *  (GSAP can't box those — never pinned). v1.1 pinned the whole .hero-wrapper
+ *  section — that DID pin, but it froze the page while darkening, which read as
+ *  broken. v1.2 drops pinning entirely and just does the parallax + a gentle
+ *  scrim lift.
  *
- *  Requires gsapcore + gsapscrolltrigger first. .hero-wrapper keeps its
- *  Webflow overflow:hidden / min-height:100vh. Templates with no .hero-stat-row
- *  just skip that tween. About Us has no .hero-wrapper and is untouched.
+ *  Requires gsapcore + gsapscrolltrigger first. .hero-wrapper keeps its Webflow
+ *  overflow:hidden. About Us has no .hero-wrapper and is untouched.
  */
 (function () {
   "use strict";
@@ -28,9 +26,9 @@
     window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
   function init() {
-    // The hero image carried data-parallax="0.25"; with the pin below driving
-    // the whole section that would just fight the pin. Strip it from hero
-    // furniture (every other [data-parallax] is left alone).
+    // The hero image carried data-parallax="0.25" (driven by the generic loop
+    // below). Drive it explicitly in the hero block instead so we control the
+    // scale/headroom, and strip the attr so it isn't double-animated.
     document.querySelectorAll(HERO).forEach(function (hero) {
       hero.querySelectorAll("[data-parallax]").forEach(function (el) {
         if (el.matches(FURNITURE)) el.removeAttribute("data-parallax");
@@ -55,31 +53,40 @@
       });
     });
 
-    // Pinned hero.
+    // Parallax hero — no pin.
     document.querySelectorAll(HERO).forEach(function (hero) {
+      var img = hero.querySelector(".image-fill");
       var scrim = hero.querySelector(".hero-scrim");
       var content = hero.querySelector(".hero-content");
       var statRow = hero.querySelector(".hero-stat-row");
+      var range = {
+        trigger: hero, start: "top top", end: "bottom top",
+        scrub: true, invalidateOnRefresh: true
+      };
 
-      var tl = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: hero,
-          start: "top top",
-          end: function () { return "+=" + Math.round(window.innerHeight * 0.72); },
-          scrub: true,
-          pin: true,
-          pinType: "transform",
-          anticipatePin: 1,
-          invalidateOnRefresh: true
-        }
-      });
+      if (img) {
+        // Overscale so the drift never exposes an edge, then move ~14% of the
+        // hero height across the whole scroll-through (slower than the page).
+        gsap.set(img, { scale: 1.18, transformOrigin: "50% 50%", willChange: "transform" });
+        gsap.fromTo(img,
+          { yPercent: -7 },
+          { yPercent: 7, ease: "none", immediateRender: false,
+            scrollTrigger: Object.assign({}, range) });
+      }
 
-      if (scrim) tl.fromTo(scrim,
+      // Gentle darken as the hero leaves — nowhere near a full black-out.
+      if (scrim) gsap.fromTo(scrim,
         { backgroundColor: "rgba(17,18,23,0.45)" },
-        { backgroundColor: "rgba(17,18,23,0.9)", immediateRender: false, overwrite: "auto" }, 0);
-      if (content) tl.to(content, { autoAlpha: 0.25, overwrite: "auto" }, 0);
-      if (statRow) tl.to(statRow, { autoAlpha: 0.25, overwrite: "auto" }, 0);
+        { backgroundColor: "rgba(17,18,23,0.72)", ease: "none", immediateRender: false,
+          scrollTrigger: Object.assign({}, range) });
+
+      // Copy just fades a touch (no vertical lift — that was tried and rejected).
+      if (content) gsap.to(content,
+        { autoAlpha: 0.55, ease: "none",
+          scrollTrigger: Object.assign({}, range) });
+      if (statRow) gsap.to(statRow,
+        { autoAlpha: 0.4, ease: "none",
+          scrollTrigger: Object.assign({}, range) });
     });
 
     window.addEventListener("load", function () { ScrollTrigger.refresh(); });
