@@ -20,15 +20,15 @@
 .vision-wrapper .wb-h2-section-title { color: white; }
 .wb-desc-heading-44 { color: #111217; }
 .fk-product-block .wb-desc-heading-44 { color: white; }
-.fk-product-block.is-light .wb-desc-heading-44 { color: #111217; }
+.fk-product-block.light .wb-desc-heading-44 { color: #111217; }
 .fk-visual-card .wb-desc-heading-44 { color: white; }
 .wb-tags-24 { color: #111217; }
 .fk-product-block .wb-tags-24 { color: white; }
-.fk-product-block.is-light .wb-tags-24 { color: #111217; }
+.fk-product-block.light .wb-tags-24 { color: #111217; }
 .fk-visual-card .wb-tags-24 { color: white; }
 .wb-body-medium-16-light { color: #31312f; }
 .fk-product-block .wb-body-medium-16-light { color: rgba(255,255,255,0.80); }
-.fk-product-block.is-light .wb-body-medium-16-light { color: #31312f; }
+.fk-product-block.light .wb-body-medium-16-light { color: #31312f; }
 .fk-visual-card .wb-body-medium-16-light { color: rgba(255,255,255,0.80); }
 .wb-body-pointers-18 { color: #111217; }
 .wb-eyebrow-large { color: #111217; }
