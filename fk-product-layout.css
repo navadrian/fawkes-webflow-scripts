@@ -26,6 +26,16 @@
 .fk-product-block.light > .fk-product-block-content { grid-column: 2; grid-row: 1; }
 .fk-product-block.light > .fk-product-block-visual  { grid-column: 1; grid-row: 1; }
 
+/* first section (FawkesCore) carries the "Our Products" label as a full-width
+   row above both columns; content/visual/features shift down one row. */
+.fk-product-block.has-section-label > .fk-product-section-label {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+.fk-product-block.has-section-label > .fk-product-block-content,
+.fk-product-block.has-section-label > .fk-product-block-visual { grid-row: 2; }
+.fk-product-block.has-section-label > .feature-row { grid-row: 3; }
+
 /* feature list spans the full width, below both columns */
 .fk-product-block > .feature-row {
   grid-column: 1 / -1;
@@ -91,4 +101,10 @@
   .fk-product-block > .fk-product-block-visual  { grid-row: 2; }
   .fk-product-block > .feature-row { grid-row: 3; flex-wrap: wrap; row-gap: 24px; }
   .fk-product-block > .feature-row > * { flex: 1 1 45%; padding: 0; border-left: 0 !important; }
+
+  /* label-carrying first section: label / content / visual / features */
+  .fk-product-block.has-section-label > .fk-product-section-label { grid-row: 1; }
+  .fk-product-block.has-section-label > .fk-product-block-content { grid-row: 2; }
+  .fk-product-block.has-section-label > .fk-product-block-visual  { grid-row: 3; }
+  .fk-product-block.has-section-label > .feature-row { grid-row: 4; }
 }
