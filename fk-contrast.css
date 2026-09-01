@@ -55,10 +55,8 @@
       keyboard focus, scrollIntoView(). */
 html {
   scroll-padding-top: calc(var(--nav-h) + var(--nav-gap));
-  scroll-behavior: smooth;
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  /* NB: no `scroll-behavior: smooth` — it desyncs GSAP ScrollTrigger and breaks
+     the pinned hero. Anchor jumps land correctly via scroll-padding-top alone. */
 }
 
 /* 2. Per-target offset — any element with an id is a potential anchor

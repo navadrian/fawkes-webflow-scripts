@@ -1,19 +1,19 @@
-/*! heropinv3 — Fawkes site-header registered script — v1.0.0
- *  Pinned "Palantir" hero: the .image-fill + .hero-scrim are transform-pinned
- *  (pinType:"transform" so the hero's own overflow:hidden crops them
- *  progressively), the scrim darkens and .hero-content / .hero-stat-row fade
- *  as the page scrolls past. Every driver is `scrub`ed, so scrolling back up
- *  retraces the same values — no snap.
+/*! heropinv3 — Fawkes site-header registered script — v1.1.0
+ *  Pinned "hold & dim" hero.
  *
- *  This is heropinparallaxv2's architecture with ONE fix: v2 left
- *  data-parallax="0.25" on the hero's .image-fill, so the generic parallax
- *  tween AND the pin both wrote translateY on it — they desynced on scroll-up
- *  and the image "snapped back onto the full box". v3 strips data-parallax off
- *  hero furniture first, so the pin is the only thing transforming it.
+ *  v1.0.0 tried heropinparallaxv2's trick of pinning the absolutely-positioned
+ *  .image-fill / .hero-scrim directly. GSAP can't get a stable box for those
+ *  (it froze .hero-scrim at 0x0 and never applied a counter-scroll transform),
+ *  so nothing actually pinned. This version pins the whole .hero-wrapper
+ *  <section> — a normal in-flow block, the textbook GSAP pin target — with
+ *  pinType:"transform" so it stays in flow (no position:fixed escape) and
+ *  scrub:true so scrolling back up retraces exactly. The hero holds for ~70vh
+ *  of scroll while the scrim darkens and .hero-content / .hero-stat-row fade,
+ *  then releases into the next section.
  *
- *  Requires: gsapcore + gsapscrolltrigger loaded first; .hero-wrapper keeps
- *  its Webflow overflow:hidden. Other templates have no .hero-stat-row (the
- *  selector just returns null there).
+ *  Requires gsapcore + gsapscrolltrigger first. .hero-wrapper keeps its
+ *  Webflow overflow:hidden / min-height:100vh. Templates with no .hero-stat-row
+ *  just skip that tween. About Us has no .hero-wrapper and is untouched.
  */
 (function () {
   "use strict";
@@ -28,8 +28,9 @@
     window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
   function init() {
-    // Strip data-parallax from hero furniture regardless of GSAP — belt-and-braces
-    // so a half-loaded GSAP can't leave the image mid-parallax.
+    // The hero image carried data-parallax="0.25"; with the pin below driving
+    // the whole section that would just fight the pin. Strip it from hero
+    // furniture (every other [data-parallax] is left alone).
     document.querySelectorAll(HERO).forEach(function (hero) {
       hero.querySelectorAll("[data-parallax]").forEach(function (el) {
         if (el.matches(FURNITURE)) el.removeAttribute("data-parallax");
@@ -41,8 +42,6 @@
     ScrollTrigger.config({ ignoreMobileResize: true });
 
     // Generic parallax — product dashboards, case-study card images, etc.
-    // Hero furniture is already disarmed above; the closest() guard covers any
-    // other [data-parallax] that happens to live inside a hero.
     document.querySelectorAll("[data-parallax]").forEach(function (el) {
       if (el.closest(HERO)) return;
       var speed = parseFloat(el.getAttribute("data-parallax")) || 0.15;
@@ -58,33 +57,29 @@
 
     // Pinned hero.
     document.querySelectorAll(HERO).forEach(function (hero) {
-      var img = hero.querySelector(".image-fill");
       var scrim = hero.querySelector(".hero-scrim");
       var content = hero.querySelector(".hero-content");
       var statRow = hero.querySelector(".hero-stat-row");
-      var range = {
-        trigger: hero, start: "top top", end: "bottom top",
-        invalidateOnRefresh: true
-      };
 
-      if (img) ScrollTrigger.create(Object.assign(
-        { pin: img, pinSpacing: false, pinType: "transform" }, range));
-      if (scrim) ScrollTrigger.create(Object.assign(
-        { pin: scrim, pinSpacing: false, pinType: "transform" }, range));
+      var tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: function () { return "+=" + Math.round(window.innerHeight * 0.72); },
+          scrub: true,
+          pin: true,
+          pinType: "transform",
+          anticipatePin: 1,
+          invalidateOnRefresh: true
+        }
+      });
 
-      if (scrim) gsap.fromTo(scrim,
+      if (scrim) tl.fromTo(scrim,
         { backgroundColor: "rgba(17,18,23,0.45)" },
-        { backgroundColor: "rgba(17,18,23,0.9)", ease: "none",
-          immediateRender: false, overwrite: "auto",
-          scrollTrigger: Object.assign({ scrub: true }, range) });
-
-      if (content) gsap.to(content,
-        { autoAlpha: 0.25, ease: "none", overwrite: "auto",
-          scrollTrigger: Object.assign({ scrub: true }, range) });
-
-      if (statRow) gsap.to(statRow,
-        { autoAlpha: 0.25, ease: "none", overwrite: "auto",
-          scrollTrigger: Object.assign({ scrub: true }, range) });
+        { backgroundColor: "rgba(17,18,23,0.9)", immediateRender: false, overwrite: "auto" }, 0);
+      if (content) tl.to(content, { autoAlpha: 0.25, overwrite: "auto" }, 0);
+      if (statRow) tl.to(statRow, { autoAlpha: 0.25, overwrite: "auto" }, 0);
     });
 
     window.addEventListener("load", function () { ScrollTrigger.refresh(); });
