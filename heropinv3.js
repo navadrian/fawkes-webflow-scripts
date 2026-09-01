@@ -1,4 +1,4 @@
-/*! heropinv3 — Fawkes site-header registered script — v1.2.0
+/*! heropinv3 — Fawkes site-header registered script — v1.3.0
  *  Plain parallax hero. NO pin — the page keeps scrolling normally; the hero
  *  background just drifts slower than the scroll (classic parallax) and the
  *  hero's own overflow:hidden crops it. Everything is `scrub`ed to the scroll
@@ -65,12 +65,12 @@
       };
 
       if (img) {
-        // Overscale so the drift never exposes an edge, then move ~14% of the
-        // hero height across the whole scroll-through (slower than the page).
-        gsap.set(img, { scale: 1.18, transformOrigin: "50% 50%", willChange: "transform" });
+        // Overscale so the drift never exposes an edge, then move ~28% of the
+        // hero height across the whole scroll-through (well slower than the page).
+        gsap.set(img, { scale: 1.32, transformOrigin: "50% 50%", willChange: "transform" });
         gsap.fromTo(img,
-          { yPercent: -7 },
-          { yPercent: 7, ease: "none", immediateRender: false,
+          { yPercent: -14 },
+          { yPercent: 14, ease: "none", immediateRender: false,
             scrollTrigger: Object.assign({}, range) });
       }
 
