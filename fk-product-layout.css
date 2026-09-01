@@ -190,7 +190,8 @@
 
 /* ---- F: CTA Section - Home-only variant. Requires combo class "is-left" on the
    Home CTA Banner instance root (added via the API in batch 2). ---- */
-.fk-cta-banner-heading .fk-cta-accent { color: #F2971F; }
+/* leading margin because Webflow trims the trailing space off the lead text node */
+.fk-cta-banner-heading .fk-cta-accent { color: #F2971F; margin-left: 0.28em; }
 .fk-cta-banner.is-left {
   align-items: flex-start;
   text-align: left;
