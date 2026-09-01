@@ -161,11 +161,11 @@
 .case-study-row > .fk-case-study-card::after {
   content: "\2192";
   position: absolute;
-  right: 26px;
-  bottom: 25px;
+  right: 40px;
+  bottom: 40px;
   z-index: 3;
-  width: 56px;
-  height: 52px;
+  width: 52px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,12 +178,12 @@
   pointer-events: none;
 }
 
-/* D4 - the case-study image carries data-parallax="0.16"; the generic parallax loop
-   translates it up ~16px, and since it's exactly card-height that exposes the card's
-   dark #31312f bg as a band at the bottom. Oversize it so the drift never shows an edge. */
+/* D4 - case-study images: parallax removed (data-parallax stripped from both), so the
+   image sits flush; a tiny overscale kept only to hide sub-pixel edges. */
 .fk-case-study-card > .image-fill {
-  top: -22px;
-  height: calc(100% + 60px);
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
 }
 
 /* D5 - whole card is a link */
