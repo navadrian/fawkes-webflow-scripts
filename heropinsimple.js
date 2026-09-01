@@ -1,4 +1,4 @@
-/*! heropinsimple — Fawkes site-header registered script — v1.0.0
+/*! heropinsimple — Fawkes site-header registered script — v1.1.0
  *  Freeze + release is 100% CSS (position:sticky hero sheets — see the
  *  consolidated CSS script). This file adds ONE scrubbed ScrollTrigger
  *  timeline per hero (scrim .55 -> .92, content autoAlpha -> .25, media
@@ -81,6 +81,10 @@
     }
     if (content) {
       tl.to(content, { autoAlpha: CONTENT_TO, overwrite: "auto" }, 0);
+    }
+    var statRow = hero.querySelector(".hero-stat-row");
+    if (statRow) {
+      tl.to(statRow, { autoAlpha: CONTENT_TO, overwrite: "auto" }, 0);
     }
     if (media) {
       /* scale the inner img/video so .image-fill's overflow:hidden clips it */
