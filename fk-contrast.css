@@ -44,10 +44,10 @@
    with the nav's real height at each breakpoint.
    ================================================================== */
 :root {
-  --nav-h: 107px;   /* desktop fixed nav height */
+  --nav-h: 82px;    /* desktop fixed nav height (wrapper pad-top 12 + pill ~70) */
   --nav-gap: 24px;  /* breathing room under the bar */
 }
-@media (max-width: 991px)  { :root { --nav-h: 88px; } }
+@media (max-width: 991px)  { :root { --nav-h: 80px; } }
 @media (max-width: 767px)  { :root { --nav-h: 72px; } }
 @media (max-width: 479px)  { :root { --nav-h: 64px; } }
 
