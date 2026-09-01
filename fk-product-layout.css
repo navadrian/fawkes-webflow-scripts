@@ -157,27 +157,39 @@
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
-/* D3 - carousel nav arrow, bottom-right of the LAST (financiers) card only (Figma 15:778).
-   Decorative. url() swapped to the exported asset in a follow-up; glyph is the fallback. */
-.case-study-row > .fk-case-study-card:last-child::after {
+/* D3 - "read case study" arrow, bottom-right of BOTH cards (they're now clickable). Decorative. */
+.case-study-row > .fk-case-study-card::after {
   content: "\2192";
   position: absolute;
   right: 26px;
   bottom: 25px;
   z-index: 3;
-  width: 61px;
-  height: 56px;
+  width: 56px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.38);
+  background-color: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: #ffffff;
   font-size: 22px;
   line-height: 1;
   pointer-events: none;
 }
+
+/* D4 - the case-study image carries data-parallax="0.16"; the generic parallax loop
+   translates it up ~16px, and since it's exactly card-height that exposes the card's
+   dark #31312f bg as a band at the bottom. Oversize it so the drift never shows an edge. */
+.fk-case-study-card > .image-fill {
+  top: -22px;
+  height: calc(100% + 60px);
+}
+
+/* D5 - whole card is a link */
+.fk-cs-card-link { position: absolute; inset: 0; z-index: 6; display: block; }
+.fk-case-study-card { transition: filter .18s ease; }
+.fk-case-study-card:hover { filter: brightness(1.05); cursor: pointer; }
 
 /* ---- E: Our Approach pillar label type (Figma 7:872: 18px Inter Medium, -0.9px, #000).
    .wb-tags-24 is shared (15 uses) - scope to the tile. ---- */
