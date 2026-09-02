@@ -191,6 +191,13 @@
 .fk-case-study-card { transition: filter .18s ease; }
 .fk-case-study-card:hover { filter: brightness(1.05); cursor: pointer; }
 
+/* D6 - 3rd card (BESS) chip/stat are <h3>/<h2> (headless builder can only set text on
+   headings); neutralise heading defaults so they render like the other cards' divs. */
+.fk-case-study-stat-block h2.wb-card-text-36,
+.fk-case-study-stat-block h3.fk-tag-chip {
+  margin: 0;
+}
+
 /* ---- E: Our Approach pillar label type (Figma 7:872: 18px Inter Medium, -0.9px, #000).
    .wb-tags-24 is shared (15 uses) - scope to the tile. ---- */
 .fk-process-tile .wb-tags-24 {
