@@ -197,7 +197,8 @@
   /* full-bleed via the safe margin trick, not width:100vw + left:50% (that overflows) */
   .fk-trusted-band { width: auto; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); left: auto; right: auto; }
 
-  /* Industries tabs on ONE line — nowrap + horizontal swipe, scrollbar hidden */
+  /* Industries tabs on ONE line — nowrap; tight enough to fit ~360px+, with a
+     horizontal-swipe fallback (scrollbar hidden, right edge faded) for narrower. */
   .tab-row {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -205,6 +206,9 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     row-gap: 0;
+    column-gap: 6px;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
   }
   .tab-row::-webkit-scrollbar { display: none; }
   .tab-row .tab-pill { flex: 0 0 auto; white-space: nowrap; }
@@ -264,7 +268,7 @@
   .hero-wrapper { padding-bottom: 28px; }   /* min-height:100svh + padding-top stay from the @767 rule */
   .fk-product-block { row-gap: 14px; padding: 24px 16px; }
   .fk-trusted-band .trusted-by-logo-img { height: 34px; }
-  .tab-row .tab-pill { font-size: 12px; padding: 8px 11px; }
+  .tab-row .tab-pill { font-size: 12px; padding: 8px 10px; }
   .fk-process-tile .methodology-icon { height: 52px; }
   .fk-process-tile-list { gap: 8px; }
   .fk-footer-columns { gap: 22px 14px; }
