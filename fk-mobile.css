@@ -208,7 +208,7 @@
   .vision-wrapper  { padding: 32px 16px; }
   .vision-wrapper .wb-h2-section-title,
   .vision-wrapper .vision-heading { font-size: 24px; }
-  .hero-wrapper { padding-top: 96px; padding-bottom: 32px; }
+  .hero-wrapper { padding-bottom: 32px; }   /* padding-top stays calc(var(--nav-h) + 40px) from the @767 rule */
   .fk-product-block { row-gap: 22px; padding: 30px 16px; }
   .fk-product-block > .feature-row .fk-feature-description-dark,
   .fk-product-block > .feature-row .fk-feature-description-light,
