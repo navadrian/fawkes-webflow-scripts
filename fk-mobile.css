@@ -226,7 +226,9 @@
 
 /* page-level horizontal-overflow guard. Unscoped: inert when nothing overflows
    (true on desktop), fixes the mobile bleed + the desktop-test-width bleed from
-   .fk-trusted-band. `clip` (not `hidden`) does NOT create a scroll container, so
-   position:sticky and the GSAP hero parallax are unaffected;
-   .case-study-row keeps its own overflow-x:auto. */
-body { overflow-x: clip; }
+   .fk-trusted-band's 100vw/-50vw full-bleed. `clip` (not `hidden`) does NOT
+   create a scroll container, so position:sticky, position:fixed (the nav) and
+   the GSAP hero parallax are unaffected. Must be on <html> too — the viewport
+   scroll lives on the documentElement, so body-only clip still lets it scroll.
+   .case-study-row keeps its own overflow-x:auto (horizontal card list). */
+html, body { overflow-x: clip; }
