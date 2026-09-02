@@ -195,6 +195,13 @@
   /* tab row wraps cleanly (pill size is in Group 2) */
   .tab-row { flex-wrap: wrap; row-gap: 8px; }
 
+  /* About — founder card: .fk-founder-info / -image have a hard width:440px
+     that overflows a 375px viewport (same R2 fixed-px root cause) */
+  .fk-founder-row { gap: 24px; }
+  .fk-founder-info,
+  .fk-founder-image { width: 100%; }
+  .fk-founder-image { height: auto; aspect-ratio: 440 / 380; }
+
   /* case study cards: release the fixed height, move the decorative arrow off the plate */
   .fk-case-study-card.fk-case-study-card { height: auto; min-height: 440px; }
   .case-study-row > .fk-case-study-card.fk-case-study-card::after {
