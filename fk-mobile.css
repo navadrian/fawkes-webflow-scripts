@@ -16,7 +16,9 @@
    GROUP 1d — hero clearance (token-tracked, replaces the ~110px hardcode)
    ================================================================== */
 @media screen and (max-width: 767px) {
-  .hero-wrapper { padding-top: calc(var(--nav-h) + 40px); }
+  /* hero fills the first fold; content is justify-content:flex-end so it sits
+     at the bottom over the photo. svh = the collapsed-chrome viewport. */
+  .hero-wrapper { min-height: 100vh; min-height: 100svh; padding-top: calc(var(--nav-h) + 40px); }
 }
 
 /* ==================================================================
@@ -140,33 +142,36 @@
   .vision-wrapper .vision-heading { width: auto; font-size: 28px; line-height: 1.25; }
   .vision-body { font-size: 16px; }
 
-  /* "Our Approach" process tiles: full-width, no dead column, no space-between void */
-  .fk-process-tile-list { gap: 12px; padding-bottom: 56px; }
+  /* "Our Approach" process tiles: 2-up grid so they don't run one-after-another
+     down the page; shrink the oversized methodology icon. */
+  .fk-process-tile-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 24px; }
   .fk-process-tile {
-    width: 100%; min-height: 0; justify-content: flex-start; gap: 12px; padding: 16px 16px 20px;
+    width: auto; min-height: 0; justify-content: flex-start; gap: 8px; padding: 14px 12px 16px;
   }
+  .fk-process-tile .methodology-icon { height: 58px; margin-bottom: 4px; justify-content: center; }
+  .fk-process-tile .methodology-icon img { height: 100%; width: auto; max-width: 100%; }
 
-  /* product block internal rhythm + padding */
-  .fk-product-block { row-gap: 26px; padding: 40px 20px; }
+  /* product blocks — pull the whole section toward one fold: smaller mockup,
+     tighter feature stack, less padding. */
+  .fk-product-block { row-gap: 16px; padding: 28px 18px; }
 
-  /* product feature list to a single full-width column */
-  .fk-product-block > .feature-row { flex-direction: column; flex-wrap: nowrap; row-gap: 28px; column-gap: 0; }
+  /* product feature list: single full-width column, compact */
+  .fk-product-block > .feature-row { flex-direction: column; flex-wrap: nowrap; row-gap: 14px; column-gap: 0; }
   .fk-product-block > .feature-row > * { flex: 0 0 auto; width: 100%; max-width: 100%; padding: 0; border-left: 0 !important; }
-  .feature-row { flex-direction: column; flex-wrap: nowrap; row-gap: 28px; }
+  .feature-row { flex-direction: column; flex-wrap: nowrap; row-gap: 14px; }
   .feature-row > .fk-feature-item { flex: 0 0 auto; width: 100%; border-left: 0; padding-left: 0; padding-right: 0; }
 
   /* title->description gap in stacked feature items */
   .fk-product-block > .feature-row .fk-feature-description-dark,
   .fk-product-block > .feature-row .fk-feature-description-light,
   .feature-row .fk-feature-item .fk-feature-description-dark,
-  .feature-row .fk-feature-item .fk-feature-description-light { margin-top: 10px; }
+  .feature-row .fk-feature-item .fk-feature-description-light { margin-top: 4px; font-size: 12.5px; line-height: 1.4; }
 
-  /* feature icons read as intentional above stacked text */
-  .fk-feature-icon { width: 28px; height: 28px; margin-bottom: 10px; }
+  .fk-feature-icon { width: 20px; height: 20px; margin-bottom: 6px; }
 
-  /* keep the product mockup (parallax transform + oversized art) inside its box */
+  /* keep the product mockup inside its box AND compact — it was ~72vh, eating the fold */
   .fk-product-block > .fk-product-block-visual { overflow: hidden; }
-  .fk-product-block > .fk-product-block-visual > .image-fill { max-height: 72vh; transform: none !important; }
+  .fk-product-block > .fk-product-block-visual > .image-fill { max-height: 34vh; transform: none !important; }
 
   /* Industries visual card: unclamp headline plate, stack the bottom row,
      kill the min-height:420 + space-between void that reads as an empty card */
@@ -192,8 +197,18 @@
   /* full-bleed via the safe margin trick, not width:100vw + left:50% (that overflows) */
   .fk-trusted-band { width: auto; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); left: auto; right: auto; }
 
-  /* tab row wraps cleanly (pill size is in Group 2) */
-  .tab-row { flex-wrap: wrap; row-gap: 8px; }
+  /* Industries tabs on ONE line — nowrap + horizontal swipe, scrollbar hidden */
+  .tab-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    row-gap: 0;
+  }
+  .tab-row::-webkit-scrollbar { display: none; }
+  .tab-row .tab-pill { flex: 0 0 auto; white-space: nowrap; }
+  .tab-row .tab-pill span { white-space: nowrap; }
 
   /* About — founder card: .fk-founder-info / -image have a hard width:440px
      that overflows a 375px viewport (same R2 fixed-px root cause) */
@@ -207,6 +222,37 @@
   .case-study-row > .fk-case-study-card.fk-case-study-card::after {
     top: 16px; right: 16px; bottom: auto; left: auto; width: 40px; height: 38px; font-size: 18px;
   }
+
+  /* -------- FOOTER --------
+     was a single stacked column of 5 link groups + an absolutely-positioned
+     logo (from the desktop H-fix) that landed mid-footer over the columns. */
+  .fk-footer-wrapper { padding-left: 22px; padding-right: 22px; padding-top: 44px; padding-bottom: 28px; }
+  .fk-footer-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 16px;
+    width: 100%;
+    padding-bottom: 28px;
+  }
+  .fk-footer-column { width: auto; }
+  .fk-footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 12px;
+    margin-top: 8px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .fk-footer-wrapper .fk-footer-bottom .fk-nav-logo {
+    position: static;
+    transform: none;
+    left: auto;
+    top: auto;
+    margin: 0 auto;
+    width: 148px;
+    height: 34px;
+  }
+  .fk-footer-copyright { margin-top: 0; }
 }
 
 @media (max-width: 479px) {
@@ -215,13 +261,13 @@
   .vision-wrapper  { padding: 32px 16px; }
   .vision-wrapper .wb-h2-section-title,
   .vision-wrapper .vision-heading { font-size: 24px; }
-  .hero-wrapper { padding-bottom: 32px; }   /* padding-top stays calc(var(--nav-h) + 40px) from the @767 rule */
-  .fk-product-block { row-gap: 22px; padding: 30px 16px; }
-  .fk-product-block > .feature-row .fk-feature-description-dark,
-  .fk-product-block > .feature-row .fk-feature-description-light,
-  .feature-row .fk-feature-item .fk-feature-description-dark,
-  .feature-row .fk-feature-item .fk-feature-description-light { font-size: 14px; line-height: 1.5; }
+  .hero-wrapper { padding-bottom: 28px; }   /* min-height:100svh + padding-top stay from the @767 rule */
+  .fk-product-block { row-gap: 14px; padding: 24px 16px; }
   .fk-trusted-band .trusted-by-logo-img { height: 34px; }
+  .tab-row .tab-pill { font-size: 12px; padding: 8px 11px; }
+  .fk-process-tile .methodology-icon { height: 52px; }
+  .fk-process-tile-list { gap: 8px; }
+  .fk-footer-columns { gap: 22px 14px; }
 }
 
 /* page-level horizontal-overflow guard. Unscoped: inert when nothing overflows
