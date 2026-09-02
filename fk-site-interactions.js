@@ -1,4 +1,4 @@
-/*! fk-site-interactions — Fawkes site-header registered script — v1.3.0
+/*! fk-site-interactions — Fawkes site-header registered script — v1.4.0
  *  Freeform Part 4, reduced. Four independent blocks, no shared state:
  *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle
@@ -49,8 +49,20 @@
       burger.addEventListener('click', function () {
         var pill = burger.closest('.fk-nav-pill');
         if (!pill) return;
-        pill.classList.toggle('mobile-menu-open');
+        var open = pill.classList.toggle('mobile-menu-open');
         burger.classList.toggle('is-active');
+        // NAV-8 body scroll lock. position:fixed + top:-scrollY save/restore is
+        // required for iOS Safari; do NOT use height:100% on <body> (it clamps
+        // scrollTop to 0 and the page sticks at the top on close).
+        document.documentElement.classList.toggle('fk-nav-open', open);
+        document.body.classList.toggle('fk-nav-open', open);
+        if (open) {
+          window.__fkScrollY = window.pageYOffset || 0;
+          document.body.style.top = (-window.__fkScrollY) + 'px';
+        } else {
+          document.body.style.top = '';
+          window.scrollTo(0, window.__fkScrollY || 0);
+        }
       });
     });
 

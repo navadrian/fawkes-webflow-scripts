@@ -118,6 +118,11 @@
   .fk-product-block.light > .fk-product-block-visual { grid-column: 1; }
   .fk-product-block > .fk-product-block-content { grid-row: 1; }
   .fk-product-block > .fk-product-block-visual  { grid-row: 2; }
+  /* mobile-remediation PROD-1: base .fk-product-block.light > .fk-product-block-visual{grid-row:1}
+     (0,0,3,0) out-specifies the generic stack rule above (0,0,2,0), so on the .light block
+     (Home FawkesLink) content + visual collapse into the same grid cell and overlap. Force it. */
+  .fk-product-block.light > .fk-product-block-content { grid-row: 1; }
+  .fk-product-block.light > .fk-product-block-visual  { grid-row: 2; }
   .fk-product-block > .feature-row { grid-row: 3; flex-wrap: wrap; row-gap: 24px; }
   .fk-product-block > .feature-row > * { flex: 1 1 45%; padding: 0; border-left: 0 !important; }
 

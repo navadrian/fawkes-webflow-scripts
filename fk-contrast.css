@@ -48,8 +48,8 @@
   --nav-gap: 24px;  /* breathing room under the bar */
 }
 @media (max-width: 991px)  { :root { --nav-h: 80px; } }
-@media (max-width: 767px)  { :root { --nav-h: 72px; } }
-@media (max-width: 479px)  { :root { --nav-h: 64px; } }
+@media (max-width: 767px)  { :root { --nav-h: 70px; } }  /* mobile-remediation NAV-2: 16px wrapper pad + ~54px shrunk pill */
+@media (max-width: 479px)  { :root { --nav-h: 66px; } }
 
 /* 1. Browser-driven scrolls: hash on load, back/forward, find-in-page,
       keyboard focus, scrollIntoView(). */

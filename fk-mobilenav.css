@@ -1,47 +1,133 @@
 /* ------------------------------------------------------------------
    Fawkes — fk-mobilenav
-   Registered site-header script #2 (inject the whole file inside one
-   <style>). Freeform Part 3, rules verbatim.
+   Registered site-header script #2 (bundled into fk-base-styles).
 
    Mobile nav menu: JS-click pattern rather than the usual checkbox-hack,
    because Webflow's Data API rejects <input>/<label> elements outside a
-   Form ("Checkbox Field can only be placed in a Form", "Field Label can
-   only be placed in a Form"). Only takes visual effect at/below 767px,
-   since .fk-nav-hamburger and the collapsed .fk-nav-links state only
-   apply there. The .mobile-menu-open / .is-active / .dropdown-expanded
-   classes are written by fk-site-interactions.js — class names must
-   match exactly across the two files.
+   Form ("Checkbox Field can only be placed in a Form"). Only takes visual
+   effect at/below 767px, since .fk-nav-hamburger and the collapsed
+   .fk-nav-links state only apply there. The .mobile-menu-open / .is-active
+   / .dropdown-expanded / .fk-nav-open classes are written by
+   fk-site-interactions.js — class names must match exactly across the two
+   files.
+
+   Mobile-remediation additions (2026-09): NAV-1..8 — hide "Let's Talk"
+   while collapsed and re-home it inside the open menu, shrink + opaque the
+   collapsed pill, make the open menu a real full-viewport panel with a
+   body scroll lock, add group dividers + dropdown carets.
    ------------------------------------------------------------------ */
 
 @media screen and (max-width: 767px) {
-  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper {
-    margin-right: 0;
-  }
+
+  /* -------- collapsed bar -------- */
+
+  /* NAV-1 — "Let's Talk" is a direct child of .fk-nav-pill, OUTSIDE .fk-nav-links,
+     so .fk-nav-links{display:none} never touches it. Hide it while collapsed. */
+  .fk-nav-pill:not(.mobile-menu-open) .fk-nav-cta-button { display: none; }
+
+  /* NAV-2 — shorter collapsed pill (longhand keeps Webflow's L/R 14/18px) */
+  .fk-nav-pill:not(.mobile-menu-open) { padding-top: 10px; padding-bottom: 10px; row-gap: 0; }
+
+  /* NAV-3 — collapsed pill fully opaque so scrolled-under content can't read
+     through. backdrop-filter:blur(16px) is left in place (harmless behind an
+     opaque fill). */
+  .fk-nav-pill { background-color: #08090b; }
+
+  /* -------- open menu: a real full-viewport panel (NAV-5) -------- */
   .fk-nav-pill.mobile-menu-open {
-    padding-bottom: 24px;
-    background-color: rgba(0, 0, 0, 0.92);
+    position: fixed;
+    inset: 0;
+    width: auto;
+    height: 100dvh;                 /* NOT 100vh — must sit under the mobile address bar */
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    background-color: #000;
+    padding: 16px 18px calc(28px + env(safe-area-inset-bottom, 0px));
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
   }
+  .fk-nav-pill.mobile-menu-open .fk-nav-hamburger {
+    position: absolute; top: 20px; right: 18px; z-index: 2;
+  }
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper { margin-right: 0; width: 100%; }
+
   .fk-nav-pill.mobile-menu-open .fk-nav-links {
     display: flex !important;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    order: 10;
-    margin-top: 20px;
+    order: 1;
+    margin-top: 28px;
     grid-row-gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   }
-  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper {
-    width: 100%;
+
+  /* NAV-6 — hierarchy + dividers in the open list */
+  .fk-nav-pill.mobile-menu-open .fk-nav-links > * {
+    width: 100%; padding-bottom: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   }
+  .fk-nav-pill.mobile-menu-open .fk-nav-links > *:last-child { padding-bottom: 0; border-bottom: 0; }
+  .fk-nav-pill.mobile-menu-open .fk-nav-links > .fk-nav-link,
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper > .fk-nav-link { font-size: 20px; font-weight: 600; }
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper > .fk-nav-link {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper > .fk-nav-link::after {
+    content: "\203A"; font-size: 22px; line-height: 1; opacity: 0.6; transition: transform .2s ease;
+  }
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper.dropdown-expanded > .fk-nav-link::after {
+    transform: rotate(90deg);
+  }
+
   .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-panel {
     display: none;
     position: static;
-    padding: 12px 0 0 16px;
   }
   .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-wrapper.dropdown-expanded .fk-nav-dropdown-panel {
     display: flex;
+    padding: 14px 0 4px 14px;
+    border-left: 2px solid rgba(255, 255, 255, 0.14);
+    margin-left: 2px;
+    grid-row-gap: 10px;
   }
+  .fk-nav-pill.mobile-menu-open .fk-nav-dropdown-item { font-size: 16px; padding: 6px 0; }
+
+  /* NAV-7 — "Let's Talk" re-homed to the end of the open menu, full-width */
+  .fk-nav-pill.mobile-menu-open .fk-nav-cta-button {
+    order: 99;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 15px 20px;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* NAV-8 — body scroll lock CSS half (JS half in fk-site-interactions.js) */
+  html.fk-nav-open { overflow: hidden; }
+  body.fk-nav-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
+  body.fk-nav-open .fk-nav-wrapper { padding: 0; }
+
+  /* -------- hamburger -> X animation (unchanged) -------- */
   .fk-nav-hamburger.is-active .fk-nav-hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .fk-nav-hamburger.is-active .fk-nav-hamburger-bar:nth-child(2) { opacity: 0; }
   .fk-nav-hamburger.is-active .fk-nav-hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+
+@media screen and (max-width: 479px) {
+  /* held at 10px (not 8px) to keep a ~44px vertical tap area on the hamburger */
+  .fk-nav-pill:not(.mobile-menu-open) { padding-top: 10px; padding-bottom: 10px; }
 }
