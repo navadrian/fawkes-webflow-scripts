@@ -349,17 +349,78 @@
   .fk-use-case-item { flex: 1 1 100%; }
 }
 
-/* ---- segmented feature groups (FawkesCore / FawkesLink) ---- */
-.fk-feature-groups { display: flex; flex-direction: column; gap: 22px; }
-.fk-feature-group { display: flex; flex-direction: column; gap: 10px; }
-.fk-feature-group-label {
-  font-family: Inter, sans-serif; font-size: 15px; font-weight: 500;
-  letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255, 255, 255, 0.55);
+/* ---- segmented feature groups (FawkesCore / FawkesLink) ----
+   Two labelled groups (EV / BESS, Resellers / Financiers, ...) sit side-by-side
+   as a comparison pair, wrapping to a stack only when the column gets narrow. */
+.fk-feature-groups {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 18px 36px;
+  margin-top: 4px;
 }
-.fk-product-block.light .fk-feature-group-label { color: rgba(17, 18, 23, 0.5); }
-.fk-feature-group-rows { display: flex; flex-direction: column; gap: 6px; }
-.fk-feature-line { font-family: Inter, sans-serif; font-size: 17px; font-weight: 300; line-height: 1.5; color: rgba(255, 255, 255, 0.9); }
+.fk-feature-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 190px;
+  min-width: 0;
+}
+.fk-feature-group + .fk-feature-group { position: relative; }
+.fk-feature-group-label {
+  font-family: Inter, sans-serif; font-size: 13px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
+}
+.fk-product-block.light .fk-feature-group-label { color: rgba(17, 18, 23, 0.45); }
+.fk-feature-group-rows { display: flex; flex-direction: column; gap: 7px; }
+.fk-feature-line { font-family: Inter, sans-serif; font-size: 16px; font-weight: 300; line-height: 1.45; color: rgba(255, 255, 255, 0.88); }
 .fk-product-block.light .fk-feature-line { color: #111217; }
+@media (max-width: 767px) {
+  .fk-feature-groups { gap: 16px; }
+  .fk-feature-group { flex: 1 1 100%; }
+}
+
+/* ---- Tech-stack numbered tiles ("How the tech stack works") ----
+   Light-theme section. Tiles reuse .fk-feature-description-dark (white text),
+   which is invisible on the light tile; and the list was flex-wrap, producing a
+   ragged single row of narrow 212px tiles. Switch to an even grid + dark copy. */
+.fk-process-tile-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+.fk-process-tile-list:has(.fk-process-tile:nth-child(4):last-child) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.fk-process-tile {
+  justify-content: flex-start;
+  gap: 10px;
+}
+.fk-process-tile-number {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #f2971f;
+}
+.fk-process-tile .fk-feature-description-dark {
+  color: rgba(17, 18, 23, 0.66);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+@media (max-width: 991px) {
+  .fk-process-tile-list,
+  .fk-process-tile-list:has(.fk-process-tile:nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .fk-process-tile-list,
+  .fk-process-tile-list:has(.fk-process-tile:nth-child(4):last-child) {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ---- Comparison Table (product pages) ---- */
 .fk-comparison-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
