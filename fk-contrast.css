@@ -8,32 +8,22 @@
    ------------------------------------------------------------------ */
 
 /* ==================================================================
-   A. TEXT-CONTRAST FIXES
-   Base typography classes had no colour set, causing invisible text on
-   dark sections and invisible eyebrow labels on light sections.
+   A. TEXT-CONTRAST FIXES  (Phase 1: most retired)
+   Type classes now carry their own token-backed colour + .on-dark/.on-light
+   modifiers (Webflow Designer). What remains here are the dark-SECTION context
+   overrides that Webflow can't express (descendant combinators) — these come
+   out in Phase 2 when the product/visual-card markup becomes components.
    ================================================================== */
-.wb-body-large-24-light { color: rgba(255,255,255,0.85); }
-.section-eyebrow { color: rgba(255,255,255,0.70); }
-.section-wrapper .section-eyebrow { color: #31312f; }
-.wb-h2-section-title { color: #111217; }
 .vision-wrapper .wb-h2-section-title { color: white; }
-.wb-desc-heading-44 { color: #111217; }
 .fk-product-block .wb-desc-heading-44 { color: white; }
 .fk-product-block.light .wb-desc-heading-44 { color: #111217; }
 .fk-visual-card .wb-desc-heading-44 { color: white; }
-.wb-tags-24 { color: #111217; }
 .fk-product-block .wb-tags-24 { color: white; }
 .fk-product-block.light .wb-tags-24 { color: #111217; }
 .fk-visual-card .wb-tags-24 { color: white; }
-.wb-body-medium-16-light { color: #31312f; }
 .fk-product-block .wb-body-medium-16-light { color: rgba(255,255,255,0.80); }
 .fk-product-block.light .wb-body-medium-16-light { color: #31312f; }
 .fk-visual-card .wb-body-medium-16-light { color: rgba(255,255,255,0.80); }
-.wb-body-pointers-18 { color: #111217; }
-.wb-eyebrow-large { color: #111217; }
-.wb-eyebrow-small { color: #111217; }
-.wb-card-text-36 { color: white; }
-.wb-body-large-42-bold { color: #111217; }
 .button-text { color: inherit; }
 
 /* ==================================================================
