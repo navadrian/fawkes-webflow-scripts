@@ -55,9 +55,9 @@
 .fk-product-block > .feature-row > * + * { border-left: 1px solid rgba(255, 255, 255, 0.16); }
 .fk-product-block.light > .feature-row > * + * { border-left-color: rgba(0, 0, 0, 0.16); }
 
-/* tighter content-column stack; centre it so the image's extra height splits
-   top/bottom instead of dumping one big empty band above the feature row (cluster B) */
-.fk-product-block > .fk-product-block-content { row-gap: 12px; align-self: center; }
+/* tighter content-column stack; top-align it (Figma: copy sits directly under the
+   section label, the tall dashboard image fills the space beside it) */
+.fk-product-block > .fk-product-block-content { row-gap: 12px; align-self: start; }
 
 /* the product visuals are UI mockup PNGs (transparent, need to show in full),
    not full-bleed photos — undo the .image-fill cover/crop + grey backdrop. */
@@ -65,7 +65,7 @@
   min-height: 0;
   overflow: visible;
   background: transparent;
-  align-self: center;
+  align-self: start;
 }
 .fk-product-block > .fk-product-block-visual > .image-fill {
   position: static;
@@ -83,11 +83,9 @@
 .fk-product-block .fk-feature-description-dark { font-size: 13px; line-height: 1.45; margin-top: 6px; }
 
 /* ---- Industries tab pills (cluster I): Figma has inactive = white / grey text,
-   active = lavender #E2E2EC / black; shadow on both (matches the Webflow class).
-   Colour only - type size / padding left as-is. ---- */
+   active = lavender #E2E2EC / black; shadow on both. Colour only — size (24px) and
+   padding come from the Webflow .tab-pill class so it matches Figma "Wb Tags 24pt". ---- */
 .tab-pill {
-  padding: 9px 20px;
-  font-size: 20px;
   background-color: #ffffff;
   color: #b3b3b3;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
@@ -184,11 +182,16 @@
 }
 
 /* D4 - case-study images: parallax removed (data-parallax stripped from both), so the
-   image sits flush; a tiny overscale kept only to hide sub-pixel edges. */
+   image sits flush. Overscale via top/left + auto right/bottom so width/height aren't
+   over-constrained and reliably apply — the old inset:-1px + calc width left a 1px
+   gap on the right edge that showed the dark card background as a hairline. */
 .fk-case-study-card > .image-fill {
-  inset: -1px;
-  width: calc(100% + 2px);
-  height: calc(100% + 2px);
+  top: -2px;
+  left: -2px;
+  right: auto;
+  bottom: auto;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
 }
 
 /* D5 - whole card is a link */
@@ -260,15 +263,14 @@
 .fk-hero-connector { position: absolute; left: 30px; top: 30px; width: 124px; height: 47px; border-left: 1px solid rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.55); }
 @media (max-width: 1279px) { .fk-hero-target { display: none; } }
 
-/* ---- H: Footer - real left logo + centered 2-line copyright ---- */
-.fk-footer-wrapper { position: relative; }
-.fk-footer-wrapper .fk-footer-bottom .fk-nav-logo {
-  position: absolute;
-  left: 80px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 180px;
+/* ---- H: Footer - logo as the left column (vertically centred against the link
+   columns, per Figma), centered 2-line copyright below ---- */
+.fk-footer-columns > .fk-nav-logo {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 188px;
   height: 44px;
+  margin-right: 24px;
   font-size: 0;
   background-image: url("https://cdn.prod.website-files.com/6a8826652e72a7fcc7c3bf57/6a8fbeca5a721e180eb80cb0_nav-logo-fawkes-energy-clean.svg");
   background-repeat: no-repeat;
