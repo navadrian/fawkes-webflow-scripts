@@ -396,6 +396,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .fk-process-tile:has(.fk-feature-description-dark) {
+  width: auto;          /* Webflow style pins these to 212px; let the grid cell size them */
   justify-content: flex-start;
   gap: 10px;
 }
