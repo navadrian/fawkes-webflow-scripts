@@ -192,6 +192,7 @@
   bottom: auto;
   width: calc(100% + 4px);
   height: calc(100% + 4px);
+  max-width: none;   /* Webflow's img{max-width:100%} was clamping the overscale, leaving an edge hairline */
 }
 
 /* D5 - whole card is a link */
