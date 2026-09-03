@@ -375,9 +375,21 @@
 .fk-feature-group-rows { display: flex; flex-direction: column; gap: 7px; }
 .fk-feature-line { font-family: Inter, sans-serif; font-size: 16px; font-weight: 300; line-height: 1.45; color: rgba(255, 255, 255, 0.88); }
 .fk-product-block.light .fk-feature-line { color: #111217; }
+/* When the groups block is a direct grid child of .fk-product-block (FawkesLink
+   build), span it full-width below both columns like Home's .feature-row.
+   FawkesCore nests its groups inside .fk-product-block-content, so this
+   direct-child rule leaves that page alone. */
+.fk-product-block > .fk-feature-groups {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 8px;
+  gap: 18px 64px;
+}
+.fk-product-block > .fk-feature-groups .fk-feature-group { flex: 0 1 340px; }
 @media (max-width: 767px) {
   .fk-feature-groups { gap: 16px; }
-  .fk-feature-group { flex: 1 1 100%; }
+  .fk-feature-group,
+  .fk-product-block > .fk-feature-groups .fk-feature-group { flex: 1 1 100%; }
 }
 
 /* ---- Tech-stack numbered tiles ("How the tech stack works") ----
