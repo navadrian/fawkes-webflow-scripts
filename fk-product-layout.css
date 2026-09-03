@@ -386,6 +386,9 @@
   gap: 18px 64px;
 }
 .fk-product-block > .fk-feature-groups .fk-feature-group { flex: 0 1 340px; }
+/* content column is just heading + short body opposite a tall dashboard — centre
+   it so the leftover space splits evenly instead of pooling above the groups row */
+.fk-product-block:has(> .fk-feature-groups) > .fk-product-block-content { align-self: center; }
 @media (max-width: 767px) {
   .fk-feature-groups { gap: 16px; }
   .fk-feature-group,
