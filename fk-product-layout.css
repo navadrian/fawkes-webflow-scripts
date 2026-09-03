@@ -383,46 +383,41 @@
 }
 
 /* ---- Tech-stack numbered tiles ("How the tech stack works") ----
-   Product-page tech-stack tiles carry a .fk-feature-description-dark line — that
-   class is white text, invisible on the light tile; the list was also flex-wrap,
-   producing a ragged row of narrow 212px tiles. Scope every rule below to
-   :has(.fk-feature-description-dark) so the Home "neutral platform" tiles
-   (number + title only, no description) are untouched. */
-.fk-process-tile-list:has(.fk-feature-description-dark) {
+   Product-page tech-stack tiles are Process Tile instances with ShowDescription
+   on, in a list that carries the explicit `.is-columns` modifier (set on the
+   instance's container in Designer). Home's "neutral platform" tiles (number +
+   title only) use the plain list and are untouched. The grid needs `nth-child`
+   + responsive columns, which Webflow classes can't express, so it stays here —
+   but keyed off an explicit class now, not a `:has(.fk-feature-description-dark)`
+   sniff. Tile colour/size come from the Process Tile component + its `fk-process-tile-desc`
+   token style; only the grid geometry lives here. */
+.fk-process-tile-list.is-columns {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: var(--_fawkes-energy-design-system---space-xs);
   align-items: stretch;
 }
-.fk-process-tile-list:has(.fk-feature-description-dark):has(.fk-process-tile:nth-child(4):last-child) {
+.fk-process-tile-list.is-columns:has(> .fk-process-tile:nth-child(4):last-child) {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
-.fk-process-tile:has(.fk-feature-description-dark) {
-  width: auto;          /* Webflow style pins these to 212px; let the grid cell size them */
+.fk-process-tile-list.is-columns > .fk-process-tile {
+  width: auto;          /* the component style pins these to 212px; let the grid cell size them */
   justify-content: flex-start;
   gap: 10px;
 }
-.fk-process-tile:has(.fk-feature-description-dark) .fk-process-tile-number {
-  font-size: 13px;
-  font-weight: 600;
+.fk-process-tile-list.is-columns > .fk-process-tile .fk-process-tile-number {
+  color: var(--_fawkes-energy-design-system---brand-orange);
   letter-spacing: 1px;
-  color: #f2971f;
-}
-.fk-process-tile .fk-feature-description-dark {
-  color: rgba(17, 18, 23, 0.66);
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.5;
 }
 @media (max-width: 991px) {
-  .fk-process-tile-list:has(.fk-feature-description-dark),
-  .fk-process-tile-list:has(.fk-feature-description-dark):has(.fk-process-tile:nth-child(4):last-child) {
+  .fk-process-tile-list.is-columns,
+  .fk-process-tile-list.is-columns:has(> .fk-process-tile:nth-child(4):last-child) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 560px) {
-  .fk-process-tile-list:has(.fk-feature-description-dark),
-  .fk-process-tile-list:has(.fk-feature-description-dark):has(.fk-process-tile:nth-child(4):last-child) {
+  .fk-process-tile-list.is-columns,
+  .fk-process-tile-list.is-columns:has(> .fk-process-tile:nth-child(4):last-child) {
     grid-template-columns: 1fr;
   }
 }
