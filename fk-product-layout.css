@@ -296,3 +296,144 @@
   .fk-trusted-divider { height: 120px; }
   .trusted-by-logo-img { height: 52px; }
 }
+
+/* ==================================================================
+   K: Static Product + Industry pages (wave3)
+   Hand-built page markup — Use Cases Bar, Comparison Table, segmented
+   feature groups, field-intelligence + industry-application cards.
+   ================================================================== */
+
+/* ---- Use Cases Bar (industry 6-up, product 1-2-up) ---- */
+.fk-use-cases-bar {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background-color: #e2e2ec;
+  padding: 28px 48px;
+  display: flex;
+  justify-content: center;
+}
+.fk-use-cases-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 1280px;
+}
+.fk-use-case-item {
+  flex: 1 1 0;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 8px 20px;
+}
+.fk-use-case-item + .fk-use-case-item { border-left: 1px solid rgba(17, 18, 23, 0.14); }
+.fk-use-case-icon { width: 24px; height: 24px; object-fit: contain; margin-bottom: 6px; }
+.fk-use-case-title { font-family: Inter, sans-serif; font-size: 20px; font-weight: 500; color: #111217; letter-spacing: -0.4px; }
+.fk-use-case-sub { font-family: Inter, sans-serif; font-size: 14px; font-weight: 300; color: rgba(17, 18, 23, 0.65); }
+@media (max-width: 991px) {
+  .fk-use-case-item { flex: 1 1 33%; }
+}
+@media (max-width: 767px) {
+  .fk-use-cases-bar { padding: 24px 20px; }
+  .fk-use-case-item { flex: 1 1 50%; padding: 12px; }
+  .fk-use-case-item + .fk-use-case-item { border-left: 0; }
+  .fk-use-case-title { font-size: 16px; }
+}
+@media (max-width: 479px) {
+  .fk-use-case-item { flex: 1 1 100%; }
+}
+
+/* ---- segmented feature groups (FawkesCore / FawkesLink) ---- */
+.fk-feature-groups { display: flex; flex-direction: column; gap: 22px; }
+.fk-feature-group { display: flex; flex-direction: column; gap: 10px; }
+.fk-feature-group-label {
+  font-family: Inter, sans-serif; font-size: 15px; font-weight: 500;
+  letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255, 255, 255, 0.55);
+}
+.fk-product-block.light .fk-feature-group-label { color: rgba(17, 18, 23, 0.5); }
+.fk-feature-group-rows { display: flex; flex-direction: column; gap: 6px; }
+.fk-feature-line { font-family: Inter, sans-serif; font-size: 17px; font-weight: 300; line-height: 1.5; color: rgba(255, 255, 255, 0.9); }
+.fk-product-block.light .fk-feature-line { color: #111217; }
+
+/* ---- Comparison Table (product pages) ---- */
+.fk-comparison-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.fk-comparison-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-family: Inter, sans-serif;
+}
+.fk-comparison-table th,
+.fk-comparison-table td {
+  padding: 14px 18px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(17, 18, 23, 0.12);
+  font-size: 15px;
+  line-height: 1.4;
+}
+.fk-comparison-table thead th {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  color: rgba(17, 18, 23, 0.55); border-bottom-width: 2px;
+}
+.fk-comparison-table thead th:last-child,
+.fk-comparison-table tbody td:last-child { color: #111217; font-weight: 500; }
+.fk-comparison-table tbody th {
+  font-weight: 500; color: #111217; font-size: 15px;
+}
+.fk-comparison-table td.is-yes,
+.fk-comparison-table td.is-no,
+.fk-comparison-table td.is-partial { white-space: nowrap; }
+.fk-comparison-table td.is-yes::before { content: "\2713 "; color: #1a8f4c; font-weight: 700; }
+.fk-comparison-table td.is-no::before  { content: "\2715 "; color: #b0503a; font-weight: 700; }
+.fk-comparison-table td.is-partial::before { content: "\2013 "; color: #9a6f1c; font-weight: 700; }
+.fk-comparison-table.on-dark th,
+.fk-comparison-table.on-dark td { border-color: rgba(255, 255, 255, 0.14); color: rgba(255, 255, 255, 0.85); }
+.fk-comparison-table.on-dark thead th { color: rgba(255, 255, 255, 0.55); }
+.fk-comparison-table.on-dark tbody th,
+.fk-comparison-table.on-dark tbody td:last-child { color: #fff; }
+
+/* ---- Field Intelligence / Industry Application cross-link card ---- */
+.fk-xlink-card {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+  isolation: isolate;
+}
+.fk-xlink-card > .image-fill { z-index: -1; }
+.fk-xlink-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%);
+}
+.fk-xlink-eyebrow {
+  font-family: Inter, sans-serif; font-size: 15px; font-weight: 500;
+  letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 10px;
+}
+.fk-xlink-title { font-family: Inter, sans-serif; font-size: 34px; font-weight: 500; color: #fff; line-height: 1.15; margin-bottom: 20px; }
+.fk-xlink-btn {
+  align-self: flex-start;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: Inter, sans-serif; font-size: 16px; font-weight: 500;
+  color: #fff; text-decoration: none;
+  transition: background-color .16s;
+}
+.fk-xlink-btn:hover { background-color: rgba(255, 255, 255, 0.14); }
+@media (max-width: 767px) {
+  .fk-xlink-card { padding: 24px; min-height: 300px; }
+  .fk-xlink-title { font-size: 24px; }
+  .fk-comparison-table { min-width: 560px; }
+}
