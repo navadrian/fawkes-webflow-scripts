@@ -381,23 +381,25 @@
 }
 
 /* ---- Tech-stack numbered tiles ("How the tech stack works") ----
-   Light-theme section. Tiles reuse .fk-feature-description-dark (white text),
-   which is invisible on the light tile; and the list was flex-wrap, producing a
-   ragged single row of narrow 212px tiles. Switch to an even grid + dark copy. */
-.fk-process-tile-list {
+   Product-page tech-stack tiles carry a .fk-feature-description-dark line — that
+   class is white text, invisible on the light tile; the list was also flex-wrap,
+   producing a ragged row of narrow 212px tiles. Scope every rule below to
+   :has(.fk-feature-description-dark) so the Home "neutral platform" tiles
+   (number + title only, no description) are untouched. */
+.fk-process-tile-list:has(.fk-feature-description-dark) {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   align-items: stretch;
 }
-.fk-process-tile-list:has(.fk-process-tile:nth-child(4):last-child) {
+.fk-process-tile-list:has(.fk-feature-description-dark):has(.fk-process-tile:nth-child(4):last-child) {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
-.fk-process-tile {
+.fk-process-tile:has(.fk-feature-description-dark) {
   justify-content: flex-start;
   gap: 10px;
 }
-.fk-process-tile-number {
+.fk-process-tile:has(.fk-feature-description-dark) .fk-process-tile-number {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -410,14 +412,14 @@
   line-height: 1.5;
 }
 @media (max-width: 991px) {
-  .fk-process-tile-list,
-  .fk-process-tile-list:has(.fk-process-tile:nth-child(4):last-child) {
+  .fk-process-tile-list:has(.fk-feature-description-dark),
+  .fk-process-tile-list:has(.fk-feature-description-dark):has(.fk-process-tile:nth-child(4):last-child) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 560px) {
-  .fk-process-tile-list,
-  .fk-process-tile-list:has(.fk-process-tile:nth-child(4):last-child) {
+  .fk-process-tile-list:has(.fk-feature-description-dark),
+  .fk-process-tile-list:has(.fk-feature-description-dark):has(.fk-process-tile:nth-child(4):last-child) {
     grid-template-columns: 1fr;
   }
 }
