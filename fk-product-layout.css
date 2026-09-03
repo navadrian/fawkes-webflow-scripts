@@ -363,6 +363,9 @@
 
 /* ---- Comparison Table (product pages) ---- */
 .fk-comparison-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+/* fallback: a comparison table with no .fk-comparison-scroll wrapper still scrolls
+   horizontally instead of being clipped (2 product pages built before the wrapper class existed) */
+.section-wrapper > .fk-comparison-table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .fk-comparison-table {
   width: 100%;
   min-width: 640px;
