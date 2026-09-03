@@ -30,8 +30,8 @@
    beats bare .section-eyebrow; case-study card (0,3,0) beats product-layout D1.
    ================================================================== */
 @media (max-width: 767px) {
-  /* hero H1 (font-size AND the missing line-height) */
-  .wb-hero-title { font-size: 34px; line-height: 1.15; }
+  /* hero H1 line-height only — font-size now scales via the text-hero token */
+  .wb-hero-title { line-height: 1.15; }
 
   /* section H2 */
   .wb-h2-section-title { font-size: 28px; line-height: 1.2; }
@@ -97,7 +97,7 @@
 }
 
 @media (max-width: 479px) {
-  .wb-hero-title { font-size: 28px; line-height: 1.15; }
+  .wb-hero-title { line-height: 1.15; }
   .wb-h2-section-title { font-size: 24px; line-height: 1.22; }
   .approach-headline,
   .approach-subtext,

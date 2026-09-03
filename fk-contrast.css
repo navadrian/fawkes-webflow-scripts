@@ -12,7 +12,6 @@
    Base typography classes had no colour set, causing invisible text on
    dark sections and invisible eyebrow labels on light sections.
    ================================================================== */
-.wb-hero-title { color: white; }
 .wb-body-large-24-light { color: rgba(255,255,255,0.85); }
 .section-eyebrow { color: rgba(255,255,255,0.70); }
 .section-wrapper .section-eyebrow { color: #31312f; }
