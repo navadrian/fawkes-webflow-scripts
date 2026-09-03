@@ -375,24 +375,32 @@
 .fk-feature-group-rows { display: flex; flex-direction: column; gap: 7px; }
 .fk-feature-line { font-family: Inter, sans-serif; font-size: 16px; font-weight: 300; line-height: 1.45; color: rgba(255, 255, 255, 0.88); }
 .fk-product-block.light .fk-feature-line { color: #111217; }
-/* When the groups block is a direct grid child of .fk-product-block (FawkesLink
-   build), span it full-width below both columns like Home's .feature-row.
-   FawkesCore nests its groups inside .fk-product-block-content, so this
-   direct-child rule leaves that page alone. */
-.fk-product-block > .fk-feature-groups {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  margin-top: 8px;
-  gap: 18px 64px;
+/* FawkesCore + FawkesLink keep the groups block as a direct grid child of
+   .fk-product-block. Stack it under the copy in column 1 while the dashboard
+   spans the full height of column 2 — no dead space, groups still 2-up.
+   (Home uses .feature-row, not .fk-feature-groups, so it is untouched.) */
+.fk-product-block:has(> .fk-feature-groups) { align-items: start; }
+.fk-product-block:has(> .fk-feature-groups) > .fk-product-block-visual {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: stretch;
 }
-.fk-product-block > .fk-feature-groups .fk-feature-group { flex: 0 1 340px; }
-/* content column is just heading + short body opposite a tall dashboard — centre
-   it so the leftover space splits evenly instead of pooling above the groups row */
-.fk-product-block:has(> .fk-feature-groups) > .fk-product-block-content { align-self: center; }
+.fk-product-block > .fk-feature-groups {
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 20px;
+}
+@media (max-width: 991px) {
+  /* single-column stack: copy, then groups, then dashboard */
+  .fk-product-block:has(> .fk-feature-groups) > .fk-product-block-visual {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .fk-product-block > .fk-feature-groups { grid-column: 1; grid-row: auto; }
+}
 @media (max-width: 767px) {
   .fk-feature-groups { gap: 16px; }
-  .fk-feature-group,
-  .fk-product-block > .fk-feature-groups .fk-feature-group { flex: 1 1 100%; }
+  .fk-feature-group { flex: 1 1 100%; }
 }
 
 /* ---- Tech-stack numbered tiles ("How the tech stack works") ----
