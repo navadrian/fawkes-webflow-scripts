@@ -1,10 +1,15 @@
-/*! fk-reveal — Fawkes site-header registered script — v1.1.0
+/*! fk-reveal — Fawkes site-header registered script — v1.2.0
  *  Super-subtle "animate into view" for whole content blocks: a short opacity +
  *  10px rise the first time each block enters the viewport.
  *
  *  Uses IntersectionObserver (not ScrollTrigger.batch, which drops elements on
- *  fast scroll / when they start above the fold). Hard failsafe reveals
- *  everything after 3.5s and on tab-hide so nothing can get stuck invisible.
+ *  fast scroll / when they start above the fold).
+ *
+ *  v1.2.0 — the reveal path now uses gsap.set (synchronous, no rAF) with a CSS
+ *  transition for the fade, so blocks still un-hide in environments where
+ *  requestAnimationFrame is throttled/stopped (background tabs, headless/automation).
+ *  gsap.to tweens were freezing at autoAlpha:0 there, leaving the whole page
+ *  invisible. Hard failsafe also un-hides everything after 1.8s and on tab-hide.
  *  Respects prefers-reduced-motion. Hero / nav / footer bottom are left alone.
  */
 (function () {
@@ -38,16 +43,19 @@
     els.forEach(function (el) {
       // already in view on load → don't touch it (no flash, no CLS)
       if (el.getBoundingClientRect().top < vh * 0.9) return;
+      // CSS transition drives the fade so we never depend on the rAF ticker.
+      el.style.transition = "opacity .5s ease, transform .5s ease";
       gsap.set(el, { autoAlpha: 0, y: 10 });
       hidden.push(el);
     });
     if (!hidden.length) return;
 
     function reveal(el) {
-      if (!el.__fkDone) {
-        el.__fkDone = true;
-        gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power1.out", overwrite: "auto" });
-      }
+      if (el.__fkDone) return;
+      el.__fkDone = true;
+      // gsap.set is synchronous — applies instantly even with no rAF. The inline
+      // CSS transition above animates opacity/transform to the new values.
+      gsap.set(el, { autoAlpha: 1, y: 0 });
     }
     function revealAll() { hidden.forEach(reveal); }
 
@@ -64,11 +72,12 @@
     }
 
     // Failsafes — nothing may ever stay invisible.
-    setTimeout(revealAll, 3500);
+    setTimeout(revealAll, 1800);
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) revealAll();
     });
     window.addEventListener("pagehide", revealAll);
+    window.addEventListener("load", function () { setTimeout(revealAll, 1200); });
   }
 
   if (document.readyState !== "loading") init();
