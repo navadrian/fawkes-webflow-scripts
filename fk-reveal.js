@@ -1,10 +1,11 @@
-/*! fk-reveal — Fawkes site-header registered script — v1.0.0
- *  Super-subtle "animate into view" for content blocks: a short opacity + 12px
- *  rise as each block crosses into the viewport, once. Respects
- *  prefers-reduced-motion. Requires gsapcore + gsapscrolltrigger first.
+/*! fk-reveal — Fawkes site-header registered script — v1.1.0
+ *  Super-subtle "animate into view" for whole content blocks: a short opacity +
+ *  10px rise the first time each block enters the viewport.
  *
- *  Deliberately gentle — this is polish, not a showcase. Hero is left alone
- *  (heropinv3 owns it). Nav and footer are left alone.
+ *  Uses IntersectionObserver (not ScrollTrigger.batch, which drops elements on
+ *  fast scroll / when they start above the fold). Hard failsafe reveals
+ *  everything after 3.5s and on tab-hide so nothing can get stuck invisible.
+ *  Respects prefers-reduced-motion. Hero / nav / footer bottom are left alone.
  */
 (function () {
   "use strict";
@@ -14,70 +15,60 @@
   var REDUCED = !!(window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-  // Block-level things worth revealing. Kept to a curated list so we animate
-  // whole sections/cards, not every leaf node.
+  // Whole blocks — one gentle fade per section/card, never per leaf node.
   var SELECTOR = [
-    ".section-wrapper > *",
+    ".section-wrapper",
     ".fk-product-block",
-    ".fk-visual-card",
-    ".fk-case-study-card",
+    ".fk-cta-banner",
     ".fk-trusted-band",
-    ".fk-process-tile-list > *",
-    ".approach-headline",
-    ".approach-subtext",
-    ".fk-method-cta",
-    ".fk-cta-banner > *",
-    ".fk-footer-columns",
     ".fk-use-cases-bar",
-    ".fk-xlink-card",
-    ".fk-comparison-table",
-    ".fk-feature-groups"
+    ".fk-xlink-card"
   ].join(",");
 
   function init() {
-    if (REDUCED || !window.gsap || !window.ScrollTrigger) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    var all = Array.prototype.slice.call(document.querySelectorAll(SELECTOR));
-    var els = all.filter(function (el) {
-      // skip anything inside the hero, nav or an already-hidden ancestor
-      if (el.closest(".hero-wrapper, .fk-nav-wrapper, nav")) return false;
-      return true;
-    });
+    var els = Array.prototype.slice.call(document.querySelectorAll(SELECTOR))
+      .filter(function (el) { return !el.closest(".hero-wrapper, nav, .fk-nav-wrapper"); });
     if (!els.length) return;
 
+    if (REDUCED || !window.gsap) return; // leave everything visible
+
     var vh = window.innerHeight || document.documentElement.clientHeight;
+    var hidden = [];
 
     els.forEach(function (el) {
-      var top = el.getBoundingClientRect().top;
-      // Already comfortably in view on load → leave it fully visible, no flash.
-      if (top < vh * 0.92) return;
-      gsap.set(el, { autoAlpha: 0, y: 12 });
-      el.__fkReveal = true;
+      // already in view on load → don't touch it (no flash, no CLS)
+      if (el.getBoundingClientRect().top < vh * 0.9) return;
+      gsap.set(el, { autoAlpha: 0, y: 10 });
+      hidden.push(el);
     });
+    if (!hidden.length) return;
 
-    var pending = els.filter(function (el) { return el.__fkReveal; });
-    if (!pending.length) return;
-
-    ScrollTrigger.batch(pending, {
-      start: "top 90%",
-      once: true,
-      onEnter: function (batch) {
-        gsap.to(batch, {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.5,
-          ease: "power1.out",
-          stagger: 0.06,
-          overwrite: true
-        });
+    function reveal(el) {
+      if (!el.__fkDone) {
+        el.__fkDone = true;
+        gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power1.out", overwrite: "auto" });
       }
-    });
-
-    window.addEventListener("load", function () { ScrollTrigger.refresh(); });
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
     }
+    function revealAll() { hidden.forEach(reveal); }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); }
+        });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
+      hidden.forEach(function (el) { io.observe(el); });
+    } else {
+      revealAll();
+      return;
+    }
+
+    // Failsafes — nothing may ever stay invisible.
+    setTimeout(revealAll, 3500);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) revealAll();
+    });
+    window.addEventListener("pagehide", revealAll);
   }
 
   if (document.readyState !== "loading") init();
