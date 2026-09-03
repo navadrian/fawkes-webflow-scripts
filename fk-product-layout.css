@@ -216,33 +216,10 @@
   color: #000;
 }
 
-/* ---- F: CTA Section - Home-only variant. Requires combo class "is-left" on the
-   Home CTA Banner instance root (added via the API in batch 2). ---- */
-/* leading margin because Webflow trims the trailing space off the lead text node */
-.fk-cta-banner-heading .fk-cta-accent { color: #F2971F; margin-left: 0.28em; }
-.fk-cta-banner.is-left {
-  align-items: flex-start;
-  text-align: left;
-  padding-left: 126px;
-  padding-right: 126px;
-  row-gap: 36px;
-}
-.fk-cta-banner.is-left .fk-cta-banner-heading {
-  font-size: 42px;
-  line-height: 1.5;
-  letter-spacing: -2.1px;
-  font-weight: 700;
-  text-align: left;
-  max-width: 1080px;
-}
-@media (max-width: 1200px) {
-  .fk-cta-banner.is-left { padding-left: 64px; padding-right: 64px; }
-  .fk-cta-banner.is-left .fk-cta-banner-heading { font-size: 34px; letter-spacing: -1.7px; max-width: 100%; }
-}
-@media (max-width: 991px) {
-  .fk-cta-banner.is-left { padding-left: 24px; padding-right: 24px; }
-  .fk-cta-banner.is-left .fk-cta-banner-heading { font-size: 28px; letter-spacing: -1.4px; }
-}
+/* ---- F: CTA Banner — RETIRED. The section is now the native "CTA Banner"
+   component (7fab28c8…) with a token-backed Left variant (07462798…) and a
+   lead/accent split heading bound to props. Accent colour + leading margin live
+   on the .fk-cta-accent Designer style; is-left layout lives on the Left variant. ---- */
 
 /* ---- G: hero KPI vertical stack + backing plate + target dots/connector.
    .hero-stat-row base box props (flex-direction, padding, bg, border, radius, pos)

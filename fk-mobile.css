@@ -121,7 +121,7 @@
   .fk-vc-headline       { font-size: 18px; }
   .fk-vc-feature-item   { font-size: 13px; }
   .fk-cta-banner-heading { font-size: 22px; line-height: 1.3; }
-  .fk-cta-banner.is-left .fk-cta-banner-heading { font-size: 22px; line-height: 1.3; letter-spacing: -1px; }
+  /* .fk-cta-banner.is-left … retired — Left variant of the CTA Banner component now owns this (text-cta-heading token = 22px at ≤479). */
   .fk-trusted-band .fk-trusted-label { font-size: 15px; }
   .tab-row .tab-pill { font-size: 13px; padding: 9px 12px; }
   .fk-process-tile .wb-tags-24 { font-size: 16px; line-height: 1.3; letter-spacing: -0.3px; }
