@@ -52,6 +52,7 @@
   grid-row:auto;
 }
 .fk-product-block.has-feature-groups .fk-product-feature-right > .fk-product-block-visual.is-product-dashboard {
+  flex:0 0 auto !important;
   min-width:0;
   width:100%;
   max-width:900px;
