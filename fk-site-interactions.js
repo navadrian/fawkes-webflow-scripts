@@ -8,11 +8,15 @@
  *       tab, matching the Figma card (v1.2.0)
  *    4b. Home industries carousel AUTOPLAY — advances a tab every 5s; pauses on
  *        hover / backgrounded tab; any manual pill click resets the clock.
- *    5. Home hero KPI reveal — pulse dot + connector draw in, then the three
- *       stat cards rise in staggered. Inline styles + transitionDelay (not a
- *       rAF tween) so it can't stick invisible when throttled; 2.6s failsafe.
- *    6. Home case-study cards — gentle auto-scroll marquee (clone + scrollLeft),
- *       pause on hover/focus, respects prefers-reduced-motion.
+ *    5. Home hero KPI reveal — slow sequenced intro: dot scales up, connector
+ *       line wipes toward the cards, the KPI plate wipes in from the top, then
+ *       the three stat cards rise + fade in staggered (~3.8s total). Inline
+ *       styles primed without a transition then revealed (real from-frame);
+ *       4.4s failsafe force-shows. Plate uses clip-path, not opacity, because
+ *       heropinv3.js owns .hero-stat-row's opacity.
+ *    6. Home case-study cards — auto-scroll marquee: wrap children (+1 clone
+ *       set) in a flex track, animate translateX. Pause on hover/focus,
+ *       respects prefers-reduced-motion.
  *  Pairs with fk-mobilenav.css: the .mobile-menu-open / .is-active /
  *  .dropdown-expanded class names written here are the ones that file
  *  styles — keep them identical in both.
@@ -246,13 +250,17 @@
       scheduleAuto();
     }
 
-    // 5. Home hero KPI reveal — dot + connector first, then the three stat
-    // cards staggered. Priming is done WITHOUT a transition, forced to paint,
-    // then the transition is added and the reveal set — so the browser has a
-    // real "from" frame and actually animates (setting opacity:0 and the
-    // transition in one go just animates the fade-OUT). rAF-free trigger +
-    // 2.4s failsafe force-show. No-op under reduced-motion or <=767 (KPI row
-    // is display:none there).
+    // 5. Home hero KPI reveal — a slow, sequenced intro:
+    //    (a) the pulse dot scales up
+    //    (b) the connector line draws toward the cards (clip-path wipe L->R)
+    //    (c) the KPI plate/background wipes in from the top (clip-path)
+    //    (d) the three stat cards rise + fade in, staggered
+    // Each element is primed WITHOUT a transition, the hidden state is forced
+    // to lay out, THEN the transition is added and the target set — otherwise
+    // setting the prop and the transition together only animates the way OUT.
+    // The plate uses clip-path (NOT opacity) because heropinv3.js owns
+    // .hero-stat-row's opacity for its scroll-scrub fade. rAF + timeout
+    // trigger; failsafe force-shows if a throttled tab never runs it.
     var kpiRow = document.querySelector('.hero-stat-row');
     if (kpiRow &&
         !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
@@ -261,41 +269,77 @@
       var dotLg = kpiTarget ? kpiTarget.querySelector('.fk-hero-dot-lg') : null;
       var connector = kpiTarget ? kpiTarget.querySelector('.fk-hero-connector') : null;
       var statCards = Array.prototype.slice.call(kpiRow.querySelectorAll('.fk-stat-card'));
-      var kpiEls = [];
-      if (dotLg) kpiEls.push([dotLg, 'scale(.4)', '0.10s']);
-      if (connector) kpiEls.push([connector, 'none', '0.42s']);
-      statCards.forEach(function (c, i) {
-        kpiEls.push([c, 'translateY(16px)', (0.58 + i * 0.14).toFixed(2) + 's']);
+
+      // { el, prime:{prop:val}, reveal:{prop:val}, trans, delay(seconds) }
+      var kpiSteps = [];
+      if (dotLg) kpiSteps.push({
+        el: dotLg,
+        prime: { opacity: '0', transform: 'scale(.35)' },
+        reveal: { opacity: '1', transform: 'scale(1)' },
+        trans: 'opacity .8s ease, transform .9s cubic-bezier(.18,.7,.3,1)',
+        delay: 0.25
       });
-      // prime: hidden, NO transition yet
-      kpiEls.forEach(function (e) {
-        e[0].style.transition = 'none';
-        e[0].style.opacity = '0';
-        e[0].style.transform = e[1];
+      if (connector) kpiSteps.push({
+        el: connector,
+        prime: { opacity: '0', 'clip-path': 'inset(0 100% 0 0)', '-webkit-clip-path': 'inset(0 100% 0 0)' },
+        reveal: { opacity: '1', 'clip-path': 'inset(0 0 0 0)', '-webkit-clip-path': 'inset(0 0 0 0)' },
+        trans: 'opacity .35s ease, clip-path .85s ease, -webkit-clip-path .85s ease',
+        delay: 0.95
+      });
+      kpiSteps.push({ // the plate / backing card — clip-path, not opacity
+        el: kpiRow,
+        prime: { 'clip-path': 'inset(0 0 100% 0)', '-webkit-clip-path': 'inset(0 0 100% 0)' },
+        reveal: { 'clip-path': 'inset(0 0 0% 0)', '-webkit-clip-path': 'inset(0 0 0% 0)' },
+        trans: 'clip-path .9s ease, -webkit-clip-path .9s ease',
+        delay: 1.7
+      });
+      statCards.forEach(function (c, i) {
+        kpiSteps.push({
+          el: c,
+          prime: { opacity: '0', transform: 'translateY(18px)' },
+          reveal: { opacity: '1', transform: 'translateY(0)' },
+          trans: 'opacity .8s ease, transform .8s ease',
+          delay: 2.4 + i * 0.28
+        });
+      });
+
+      function kpiApply(step, map) {
+        for (var k in map) {
+          if (map.hasOwnProperty(k)) step.el.style.setProperty(k, map[k]);
+        }
+      }
+      // prime: no transition yet
+      kpiSteps.forEach(function (s) {
+        s.el.style.setProperty('transition', 'none');
+        kpiApply(s, s.prime);
       });
       void kpiRow.offsetWidth; // force the hidden state to lay out
+
       function revealKPI() {
-        kpiEls.forEach(function (e) {
-          e[0].style.transition = 'opacity .6s ease, transform .6s ease';
-          e[0].style.transitionDelay = e[2];
-          e[0].style.opacity = '1';
-          e[0].style.transform = e[0] === dotLg ? 'scale(1)' : 'translateY(0)';
+        kpiSteps.forEach(function (s) {
+          s.el.style.setProperty('transition', s.trans);
+          s.el.style.setProperty('transition-delay', s.delay + 's');
+          kpiApply(s, s.reveal);
         });
       }
-      // two rAFs if we can (cleanest), else a short timeout — the tab may be
-      // backgrounded (rAF frozen) at load.
       if (typeof window.requestAnimationFrame === 'function' && !document.hidden) {
         window.requestAnimationFrame(function () { window.requestAnimationFrame(revealKPI); });
       }
       window.setTimeout(revealKPI, 90);
+      // failsafe: after the whole sequence would have finished, hard-clear
       window.setTimeout(function () {
-        kpiEls.forEach(function (e) {
-          e[0].style.transition = 'none';
-          e[0].style.transitionDelay = '0s';
-          e[0].style.opacity = '1';
-          e[0].style.transform = 'none';
+        kpiSteps.forEach(function (s) {
+          s.el.style.setProperty('transition', 'none');
+          s.el.style.setProperty('transition-delay', '0s');
+          s.el.style.removeProperty('clip-path');
+          s.el.style.removeProperty('-webkit-clip-path');
+          if (s.el !== kpiRow) {
+            // leave .hero-stat-row's opacity to heropinv3's scroll-scrub
+            s.el.style.opacity = '1';
+            s.el.style.transform = 'none';
+          }
         });
-      }, 2400);
+      }, 4400);
     }
 
     // 6. Home case-study cards — auto-scroll marquee. Wrap the row's children
