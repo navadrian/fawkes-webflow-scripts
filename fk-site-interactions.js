@@ -3,7 +3,7 @@
  *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle
  *    3. Mobile nav dropdown expand
- *    4. Home industries tab switcher — crossfades the card background image and
+ *    4. Home industries tab switcher — fades the card background image and
  *       swaps headline (with orange accent spans) + a 3-item feature list per
  *       tab, matching the Figma card (v1.2.0)
  *    4b. Home industries carousel AUTOPLAY — advances a tab every 5s; pauses on
@@ -93,10 +93,10 @@
     });
 
     // Home page industries tab switcher. Figma designed this as a 3-slide carousel
-    // but defined no transition — the product decision is a CROSSFADE of the card
-    // background image + copy on tab click. Implementation: the existing
-    // `.image-fill` <img> is layer A (keeps its parallax); JS adds a static layer B
-    // on top and fades opacity between the two so the swap never flashes blank.
+    // but defined no transition. The existing `.image-fill` remains the only
+    // background layer so an outgoing slide can never reappear over the selected
+    // image. Each target image is preloaded, then the base image fades out, swaps
+    // source, and fades back in while preserving its parallax behavior.
     var CDN = 'https://cdn.prod.website-files.com/6a8826652e72a7fcc7c3bf57/';
     var INDUSTRY_DATA = {
       fleets: {
@@ -136,22 +136,10 @@
         p.src = INDUSTRY_DATA[k].img;
       });
 
-      // Build the crossfade layer stacked over the base image.
-      var fadeImg = null;
-      if (visualCard && baseImg) {
-        if (getComputedStyle(visualCard).position === 'static') {
-          visualCard.style.position = 'relative';
-        }
-        fadeImg = document.createElement('img');
-        fadeImg.setAttribute('aria-hidden', 'true');
-        fadeImg.style.cssText =
-          'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;' +
-          'opacity:0;transition:opacity .5s ease;pointer-events:none;z-index:1';
-        baseImg.parentNode.insertBefore(fadeImg, baseImg.nextSibling);
-        [titleWrap, bottomRow].forEach(function (el) {
-          if (el) { el.style.transition = 'opacity .25s ease'; }
-        });
-      }
+      if (baseImg) baseImg.style.transition = 'opacity .3s ease';
+      [titleWrap, bottomRow].forEach(function (el) {
+        if (el) { el.style.transition = 'opacity .25s ease'; }
+      });
 
       var busy = false;
       function activate(key, pill) {
@@ -181,20 +169,29 @@
           if (bottomRow) bottomRow.style.opacity = '1';
         }, 200);
 
-        // Background crossfade.
-        if (fadeImg) {
-          fadeImg.src = data.img;
+        // Swap the single background layer after the target asset is ready.
+        if (baseImg) {
+          baseImg.style.opacity = '0';
+          var nextImg = new Image();
+          var swapped = false;
           var reveal = function () {
-            fadeImg.style.opacity = '1';
-            window.setTimeout(function () {
-              if (baseImg) { baseImg.setAttribute('src', data.img); baseImg.removeAttribute('srcset'); }
-              fadeImg.style.opacity = '0';
-              current = key;
-              busy = false;
-            }, 520);
+            if (swapped) return;
+            swapped = true;
+            baseImg.setAttribute('src', data.img);
+            baseImg.removeAttribute('srcset');
+            window.requestAnimationFrame(function () {
+              window.requestAnimationFrame(function () { baseImg.style.opacity = '1'; });
+            });
+            current = key;
+            busy = false;
           };
-          if (fadeImg.complete) { reveal(); }
-          else { fadeImg.onload = reveal; fadeImg.onerror = function () { busy = false; }; }
+          nextImg.onload = reveal;
+          nextImg.onerror = function () {
+            baseImg.style.opacity = '1';
+            busy = false;
+          };
+          nextImg.src = data.img;
+          if (nextImg.complete) reveal();
         } else {
           current = key;
           busy = false;
