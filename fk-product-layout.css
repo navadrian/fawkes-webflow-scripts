@@ -510,3 +510,54 @@
   .fk-xlink-title { font-size: 24px; }
   .fk-comparison-table { min-width: 560px; }
 }
+
+/* ==================================================================
+   L: Home polish batch (2026-09-04)
+   ================================================================== */
+
+/* ---- L1: Feature Item — icon inline-LEFT of the title (Figma has the icon
+   on the title's line, not stacked above it). The component now wraps
+   icon + title in .fk-feature-item-head; here we kill the icon's stacked
+   margin and size the SVG. Shared by Home "Our Products" + every industry /
+   product feature section (27 instances). ---- */
+.fk-feature-item-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.fk-feature-item-head > .fk-feature-icon {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fk-feature-item-head > .fk-feature-icon > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.fk-feature-item-head > .wb-tags-24 { margin: 0; }
+
+/* ---- L2: cap non-hero content on wide screens. Best practice: the page
+   background / full-bleed colour bands stay edge-to-edge, the *content* is
+   capped and centred. `.section-wrapper` is capped on its Webflow class via
+   the `content-max` (1300) token. `.fk-product-block` keeps its full-bleed
+   colour band but pads the inner grid to the same centred column — `max()`
+   so the token side-padding still wins on smaller screens. ---- */
+.fk-product-block {
+  padding-left: max(48px, calc(50% - (var(--_fawkes-energy-design-system---content-max, 1300px) / 2)));
+  padding-right: max(48px, calc(50% - (var(--_fawkes-energy-design-system---content-max, 1300px) / 2)));
+}
+
+/* ---- L3: Home case-study row auto-scrolls as a marquee (fk-site-interactions
+   clones the cards + drives scrollLeft). Hide the native scrollbar so it
+   reads as a marquee, not a scroller. ---- */
+.case-study-row {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.case-study-row::-webkit-scrollbar { display: none; }

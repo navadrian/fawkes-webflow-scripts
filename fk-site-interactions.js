@@ -1,11 +1,18 @@
-/*! fk-site-interactions — Fawkes site-header registered script — v1.4.1
- *  Freeform Part 4, reduced. Four independent blocks, no shared state:
+/*! fk-site-interactions — Fawkes site-header registered script — v1.5.0
+ *  Freeform Part 4, reduced. Independent blocks, no shared state:
  *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle
  *    3. Mobile nav dropdown expand
  *    4. Home industries tab switcher — crossfades the card background image and
  *       swaps headline (with orange accent spans) + a 3-item feature list per
  *       tab, matching the Figma card (v1.2.0)
+ *    4b. Home industries carousel AUTOPLAY — advances a tab every 5s; pauses on
+ *        hover / backgrounded tab; any manual pill click resets the clock.
+ *    5. Home hero KPI reveal — pulse dot + connector draw in, then the three
+ *       stat cards rise in staggered. Inline styles + transitionDelay (not a
+ *       rAF tween) so it can't stick invisible when throttled; 2.6s failsafe.
+ *    6. Home case-study cards — gentle auto-scroll marquee (clone + scrollLeft),
+ *       pause on hover/focus, respects prefers-reduced-motion.
  *  Pairs with fk-mobilenav.css: the .mobile-menu-open / .is-active /
  *  .dropdown-expanded class names written here are the ones that file
  *  styles — keep them identical in both.
@@ -202,11 +209,127 @@
         if (scrimEl) scrimEl.classList.toggle('is-bright', current === 'bess');
       })();
 
+      // 4b. Autoplay — advance to the next tab every 5s. Figma drew this as a
+      // rotating 3-slide carousel; the crossfade above is the transition. The
+      // timer is paused while the pointer is over the card or the tab row and
+      // while the tab is backgrounded; a manual pill click restarts the clock.
+      var AUTOPLAY_MS = 5000;
+      var order = ['fleets', 'financiers', 'bess'];
+      var autoTimer = null;
+      var hovering = false;
+      function stopAuto() { if (autoTimer) { window.clearTimeout(autoTimer); autoTimer = null; } }
+      function scheduleAuto() {
+        stopAuto();
+        autoTimer = window.setTimeout(function () {
+          if (!hovering && !document.hidden && !busy) {
+            var i = order.indexOf(current);
+            var nextKey = order[(i + 1) % order.length];
+            var nextPill = tabRow.querySelector('.tab-pill[data-industry="' + nextKey + '"]');
+            if (nextPill) activate(nextKey, nextPill);
+          }
+          scheduleAuto();
+        }, AUTOPLAY_MS);
+      }
+      [visualCard, tabRow].forEach(function (el) {
+        if (!el) return;
+        el.addEventListener('mouseenter', function () { hovering = true; });
+        el.addEventListener('mouseleave', function () { hovering = false; });
+      });
+
       tabRow.querySelectorAll('.tab-pill').forEach(function (pill) {
         pill.addEventListener('click', function () {
           activate(pill.getAttribute('data-industry'), pill);
+          scheduleAuto();
         });
       });
+
+      scheduleAuto();
+    }
+
+    // 5. Home hero KPI reveal — dot + connector first, then the three stat
+    // cards staggered. Inline opacity/transform + transitionDelay so a
+    // throttled rAF can't leave them invisible (see fk-reveal v1.2.0);
+    // 2.6s failsafe force-shows. No-op under prefers-reduced-motion or on
+    // phones (the KPI row is display:none <=767).
+    var kpiRow = document.querySelector('.hero-stat-row');
+    if (kpiRow &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+        window.matchMedia('(min-width: 768px)').matches) {
+      var kpiTarget = document.querySelector('.fk-hero-target');
+      var dotLg = kpiTarget ? kpiTarget.querySelector('.fk-hero-dot-lg') : null;
+      var connector = kpiTarget ? kpiTarget.querySelector('.fk-hero-connector') : null;
+      var statCards = Array.prototype.slice.call(kpiRow.querySelectorAll('.fk-stat-card'));
+      var primed = [];
+      function primeKPI(el, transform) {
+        if (!el) return;
+        el.style.opacity = '0';
+        el.style.transform = transform;
+        el.style.transition = 'opacity .55s ease, transform .55s ease';
+        primed.push(el);
+      }
+      primeKPI(dotLg, 'scale(.35)');
+      primeKPI(connector, 'none');
+      statCards.forEach(function (c) { primeKPI(c, 'translateY(16px)'); });
+
+      function revealKPI() {
+        if (dotLg) {
+          dotLg.style.transitionDelay = '.1s';
+          dotLg.style.opacity = '1';
+          dotLg.style.transform = 'scale(1)';
+        }
+        if (connector) {
+          connector.style.transitionDelay = '.42s';
+          connector.style.opacity = '1';
+        }
+        statCards.forEach(function (c, i) {
+          c.style.transitionDelay = (0.6 + i * 0.13).toFixed(2) + 's';
+          c.style.opacity = '1';
+          c.style.transform = 'translateY(0)';
+        });
+      }
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(revealKPI);
+      });
+      window.setTimeout(function () {
+        primed.forEach(function (el) {
+          el.style.transition = 'none';
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+      }, 2600);
+    }
+
+    // 6. Home case-study cards — auto-scroll marquee. The row already overflows
+    // (3 wide cards, overflow-x:auto). Clone the set once and drive scrollLeft
+    // so it loops seamlessly; pause on hover/focus; respect reduced-motion.
+    var csRow = document.querySelector('.case-study-row');
+    if (csRow &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+        csRow.scrollWidth > csRow.clientWidth + 4) {
+      var csOriginals = Array.prototype.slice.call(csRow.children);
+      csOriginals.forEach(function (card) {
+        var clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.tabIndex = -1;
+        csRow.appendChild(clone);
+      });
+      // exact loop period = distance from the first original to the first clone
+      var csLoop = csRow.children[csOriginals.length].offsetLeft - csRow.children[0].offsetLeft;
+      var CS_SPEED = 0.45; // px per frame ≈ 27px/s at 60fps
+      var csPaused = false;
+      ['mouseenter', 'focusin'].forEach(function (ev) {
+        csRow.addEventListener(ev, function () { csPaused = true; });
+      });
+      ['mouseleave', 'focusout'].forEach(function (ev) {
+        csRow.addEventListener(ev, function () { csPaused = false; });
+      });
+      (function csTick() {
+        if (!csPaused && !document.hidden && csLoop > 0) {
+          csRow.scrollLeft += CS_SPEED;
+          if (csRow.scrollLeft >= csLoop) { csRow.scrollLeft -= csLoop; }
+        }
+        window.requestAnimationFrame(csTick);
+      })();
     }
   }
 
