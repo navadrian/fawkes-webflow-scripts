@@ -160,8 +160,10 @@
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
-/* D3 - "read case study" arrow, bottom-right of BOTH cards (they're now clickable). Decorative. */
-.case-study-row > .fk-case-study-card::after {
+/* D3 - "read case study" arrow, bottom-right of BOTH cards (they're now clickable). Decorative.
+   Descendant (not child) combinator: fk-site-interactions wraps the cards in a
+   marquee track, so they are no longer direct children of .case-study-row. */
+.case-study-row .fk-case-study-card::after {
   content: "\2192";
   position: absolute;
   right: 40px;
@@ -549,8 +551,8 @@
    colour band but pads the inner grid to the same centred column — `max()`
    so the token side-padding still wins on smaller screens. ---- */
 .fk-product-block {
-  padding-left: max(48px, calc(50% - (var(--_fawkes-energy-design-system---content-max, 1300px) / 2)));
-  padding-right: max(48px, calc(50% - (var(--_fawkes-energy-design-system---content-max, 1300px) / 2)));
+  padding-left: max(48px, calc(50% - (var(--_fawkes-energy-design-system---content-max, 1450px) / 2)));
+  padding-right: max(48px, calc(50% - (var(--_fawkes-energy-design-system---content-max, 1450px) / 2)));
 }
 
 /* ---- L3: Home case-study row auto-scrolls as a marquee (fk-site-interactions

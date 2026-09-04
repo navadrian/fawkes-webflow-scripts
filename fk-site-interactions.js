@@ -247,10 +247,12 @@
     }
 
     // 5. Home hero KPI reveal — dot + connector first, then the three stat
-    // cards staggered. Inline opacity/transform + transitionDelay so a
-    // throttled rAF can't leave them invisible (see fk-reveal v1.2.0);
-    // 2.6s failsafe force-shows. No-op under prefers-reduced-motion or on
-    // phones (the KPI row is display:none <=767).
+    // cards staggered. Priming is done WITHOUT a transition, forced to paint,
+    // then the transition is added and the reveal set — so the browser has a
+    // real "from" frame and actually animates (setting opacity:0 and the
+    // transition in one go just animates the fade-OUT). rAF-free trigger +
+    // 2.4s failsafe force-show. No-op under reduced-motion or <=767 (KPI row
+    // is display:none there).
     var kpiRow = document.querySelector('.hero-stat-row');
     if (kpiRow &&
         !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
@@ -259,64 +261,79 @@
       var dotLg = kpiTarget ? kpiTarget.querySelector('.fk-hero-dot-lg') : null;
       var connector = kpiTarget ? kpiTarget.querySelector('.fk-hero-connector') : null;
       var statCards = Array.prototype.slice.call(kpiRow.querySelectorAll('.fk-stat-card'));
-      var primed = [];
-      function primeKPI(el, transform) {
-        if (!el) return;
-        el.style.opacity = '0';
-        el.style.transform = transform;
-        el.style.transition = 'opacity .55s ease, transform .55s ease';
-        primed.push(el);
-      }
-      primeKPI(dotLg, 'scale(.35)');
-      primeKPI(connector, 'none');
-      statCards.forEach(function (c) { primeKPI(c, 'translateY(16px)'); });
-
+      var kpiEls = [];
+      if (dotLg) kpiEls.push([dotLg, 'scale(.4)', '0.10s']);
+      if (connector) kpiEls.push([connector, 'none', '0.42s']);
+      statCards.forEach(function (c, i) {
+        kpiEls.push([c, 'translateY(16px)', (0.58 + i * 0.14).toFixed(2) + 's']);
+      });
+      // prime: hidden, NO transition yet
+      kpiEls.forEach(function (e) {
+        e[0].style.transition = 'none';
+        e[0].style.opacity = '0';
+        e[0].style.transform = e[1];
+      });
+      void kpiRow.offsetWidth; // force the hidden state to lay out
       function revealKPI() {
-        if (dotLg) {
-          dotLg.style.transitionDelay = '.1s';
-          dotLg.style.opacity = '1';
-          dotLg.style.transform = 'scale(1)';
-        }
-        if (connector) {
-          connector.style.transitionDelay = '.42s';
-          connector.style.opacity = '1';
-        }
-        statCards.forEach(function (c, i) {
-          c.style.transitionDelay = (0.6 + i * 0.13).toFixed(2) + 's';
-          c.style.opacity = '1';
-          c.style.transform = 'translateY(0)';
+        kpiEls.forEach(function (e) {
+          e[0].style.transition = 'opacity .6s ease, transform .6s ease';
+          e[0].style.transitionDelay = e[2];
+          e[0].style.opacity = '1';
+          e[0].style.transform = e[0] === dotLg ? 'scale(1)' : 'translateY(0)';
         });
       }
-      // Trigger via setTimeout, not rAF: a backgrounded / automated tab freezes
-      // rAF and the reveal would never fire (only the failsafe would). 60ms
-      // lets the primed hidden state paint first.
-      window.setTimeout(revealKPI, 60);
+      // two rAFs if we can (cleanest), else a short timeout — the tab may be
+      // backgrounded (rAF frozen) at load.
+      if (typeof window.requestAnimationFrame === 'function' && !document.hidden) {
+        window.requestAnimationFrame(function () { window.requestAnimationFrame(revealKPI); });
+      }
+      window.setTimeout(revealKPI, 90);
       window.setTimeout(function () {
-        primed.forEach(function (el) {
-          el.style.transition = 'none';
-          el.style.opacity = '1';
-          el.style.transform = 'none';
+        kpiEls.forEach(function (e) {
+          e[0].style.transition = 'none';
+          e[0].style.transitionDelay = '0s';
+          e[0].style.opacity = '1';
+          e[0].style.transform = 'none';
         });
-      }, 2600);
+      }, 2400);
     }
 
-    // 6. Home case-study cards — auto-scroll marquee. The row already overflows
-    // (3 wide cards, overflow-x:auto). Clone the set once and drive scrollLeft
-    // so it loops seamlessly; pause on hover/focus; respect reduced-motion.
+    // 6. Home case-study cards — auto-scroll marquee. Wrap the row's children
+    // (+ one cloned set) in a flex track and drive it with translateX — a
+    // transform takes sub-pixel values and is GPU-composited, unlike
+    // element.scrollLeft which several browsers round to whole pixels (so a
+    // <1px/frame step never moves). Pause on hover/focus; respect
+    // prefers-reduced-motion.
     var csRow = document.querySelector('.case-study-row');
-    if (csRow &&
+    if (csRow && csRow.children.length &&
         !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
         csRow.scrollWidth > csRow.clientWidth + 4) {
+      var csGap = getComputedStyle(csRow).columnGap;
+      if (!csGap || csGap === 'normal') csGap = getComputedStyle(csRow).gap;
+      if (!csGap || csGap === 'normal') csGap = '24px';
+      var csTrack = document.createElement('div');
+      csTrack.style.cssText = 'display:flex;flex:0 0 auto;column-gap:' + csGap + ';will-change:transform';
       var csOriginals = Array.prototype.slice.call(csRow.children);
+      var csCardW = csOriginals[0].getBoundingClientRect().width;
+      while (csRow.firstChild) { csTrack.appendChild(csRow.firstChild); }
       csOriginals.forEach(function (card) {
         var clone = card.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
         clone.tabIndex = -1;
-        csRow.appendChild(clone);
+        csTrack.appendChild(clone);
       });
-      // exact loop period = distance from the first original to the first clone
-      var csLoop = csRow.children[csOriginals.length].offsetLeft - csRow.children[0].offsetLeft;
-      var CS_SPEED = 0.45; // px per frame ≈ 27px/s at 60fps
+      // keep each card at its natural width inside the track (guard against a
+      // flex:1 basis collapsing them now that the track has no fixed width)
+      Array.prototype.forEach.call(csTrack.children, function (card) {
+        card.style.flex = '0 0 ' + Math.round(csCardW) + 'px';
+      });
+      csRow.appendChild(csTrack);
+      csRow.style.overflow = 'hidden';
+      // loop period = left edge of the first clone minus left edge of the first card
+      var firstCardLeft = csTrack.children[0].getBoundingClientRect().left;
+      var csLoop = csTrack.children[csOriginals.length].getBoundingClientRect().left - firstCardLeft;
+      var CS_SPEED = 0.5; // px per frame ≈ 30px/s at 60fps
+      var csPos = 0;
       var csPaused = false;
       ['mouseenter', 'focusin'].forEach(function (ev) {
         csRow.addEventListener(ev, function () { csPaused = true; });
@@ -326,8 +343,9 @@
       });
       (function csTick() {
         if (!csPaused && !document.hidden && csLoop > 0) {
-          csRow.scrollLeft += CS_SPEED;
-          if (csRow.scrollLeft >= csLoop) { csRow.scrollLeft -= csLoop; }
+          csPos -= CS_SPEED;
+          if (csPos <= -csLoop) { csPos += csLoop; }
+          csTrack.style.transform = 'translateX(' + csPos + 'px)';
         }
         window.requestAnimationFrame(csTick);
       })();
