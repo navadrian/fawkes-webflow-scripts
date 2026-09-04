@@ -563,3 +563,31 @@
   -ms-overflow-style: none;
 }
 .case-study-row::-webkit-scrollbar { display: none; }
+
+/* ==================================================================
+   M: Industry / Product static pages — parity with Home (2026-09-04)
+   ================================================================== */
+
+/* ---- M1: hero headline should wrap to ~2 lines, not 3-4. The industry
+   heroes ("For most electric fleets, lower TCO remains an unrealised
+   promise") were capping .hero-content at 780px. Give the hero copy more
+   room and tighten the display line-height. Applies to Home too — the Home
+   headline just lands on 2 lines instead of 3, which reads better. ---- */
+.hero-content { max-width: 1100px; }
+.wb-hero-title { line-height: 1.14; }
+
+/* ---- M2: the Industry / Product feature sections are a `.fk-product-block`
+   nested inside a capped `.section-wrapper`, so the coloured band was an
+   inset "card". Break it out to full-bleed like Home's product sections —
+   the inner grid re-centres to `content-max` via the L2 padding rule. ---- */
+.section-wrapper > .fk-product-block {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+/* the section-wrapper only existed to host the block — kill its own padding
+   and row-gap so the full-bleed band sits flush against its neighbours */
+.section-wrapper:has(> .fk-product-block:only-child) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
