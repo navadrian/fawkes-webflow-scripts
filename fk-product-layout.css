@@ -285,50 +285,25 @@
    feature groups, field-intelligence + industry-application cards.
    ================================================================== */
 
-/* ---- Use Cases Bar (industry 6-up, product 1-2-up) ---- */
+/* ---- Use Cases Bar (industry 3–6-up) — now the `Use Cases Bar` / `Use Case
+   Item` components (e0b9aa2f… / 44757db4…). All box/type/icon/layout styling is
+   on the Designer classes (token-bound). The bundle keeps ONLY what Webflow
+   can't express: the 100vw full-bleed on the bar, and the adjacent-sibling
+   divider rule between items. ---- */
 .fk-use-cases-bar {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  background-color: #e2e2ec;
-  padding: 28px 48px;
-  display: flex;
-  justify-content: center;
 }
-.fk-use-cases-inner {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: stretch;
-  gap: 0;
-  width: 100%;
-  max-width: 1280px;
-}
-.fk-use-case-item {
-  flex: 1 1 0;
-  min-width: 150px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 4px;
-  padding: 8px 20px;
-}
-.fk-use-case-item + .fk-use-case-item { border-left: 1px solid rgba(17, 18, 23, 0.14); }
-.fk-use-case-icon { width: 24px; height: 24px; object-fit: contain; margin-bottom: 6px; }
-.fk-use-case-title { font-family: Inter, sans-serif; font-size: 20px; font-weight: 500; color: #111217; letter-spacing: -0.4px; }
-.fk-use-case-sub { font-family: Inter, sans-serif; font-size: 14px; font-weight: 300; color: rgba(17, 18, 23, 0.65); }
-@media (max-width: 991px) {
-  .fk-use-case-item { flex: 1 1 33%; }
+.fk-use-cases-inner > .fk-use-case-item + .fk-use-case-item {
+  border-left: 1px solid var(--_fawkes-energy-design-system---overlay-black-10);
+  padding-left: var(--_fawkes-energy-design-system---space-lg);
 }
 @media (max-width: 767px) {
-  .fk-use-cases-bar { padding: 24px 20px; }
-  .fk-use-case-item { flex: 1 1 50%; padding: 12px; }
-  .fk-use-case-item + .fk-use-case-item { border-left: 0; }
-  .fk-use-case-title { font-size: 16px; }
-}
-@media (max-width: 479px) {
-  .fk-use-case-item { flex: 1 1 100%; }
+  .fk-use-cases-inner > .fk-use-case-item + .fk-use-case-item {
+    border-left: 0;
+    padding-left: var(--_fawkes-energy-design-system---space-md);
+  }
 }
 
 /* ---- segmented feature groups (FawkesCore / FawkesLink) ----
@@ -551,8 +526,8 @@
    colour band but pads the inner grid to the same centred column — `max()`
    so the token side-padding still wins on smaller screens. ---- */
 .fk-product-block {
-  padding-left: max(48px, calc(50% - (var(--_fawkes-energy-design-system---content-max, 1450px) / 2)));
-  padding-right: max(48px, calc(50% - (var(--_fawkes-energy-design-system---content-max, 1450px) / 2)));
+  padding-left: max(var(--_fawkes-energy-design-system---space-xl), calc(50% - (var(--_fawkes-energy-design-system---content-max) / 2)));
+  padding-right: max(var(--_fawkes-energy-design-system---space-xl), calc(50% - (var(--_fawkes-energy-design-system---content-max) / 2)));
 }
 
 /* ---- L3: Home case-study row auto-scrolls as a marquee (fk-site-interactions
@@ -564,17 +539,22 @@
 }
 .case-study-row::-webkit-scrollbar { display: none; }
 
+/* ---- L4: the plain "how our platform works" tile list (NOT the `.is-columns`
+   product-page grid) has 6 fixed-width Process Tiles that wrapped 5 + 1. Cap it
+   so it wraps 3-per-row and centre it. `:not()` = can't be a Designer combo. ---- */
+.fk-process-tile-list:not(.is-columns) {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ==================================================================
    M: Industry / Product static pages — parity with Home (2026-09-04)
    ================================================================== */
 
-/* ---- M1: hero headline should wrap to ~2 lines, not 3-4. The industry
-   heroes ("For most electric fleets, lower TCO remains an unrealised
-   promise") were capping .hero-content at 780px. Give the hero copy more
-   room and tighten the display line-height. Applies to Home too — the Home
-   headline just lands on 2 lines instead of 3, which reads better. ---- */
-.hero-content { max-width: 1100px; }
-.wb-hero-title { line-height: 1.14; }
+/* ---- M1: RETIRED — `.hero-content { max-width }` → `hero-content-max` token on
+   the Designer class; `.wb-hero-title { line-height: 1.14 }` → the Designer
+   class. Nothing needed in the bundle. ---- */
 
 /* ---- M2: the Industry / Product feature sections are a `.fk-product-block`
    nested inside a capped `.section-wrapper`, so the coloured band was an
