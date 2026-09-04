@@ -287,9 +287,10 @@
           c.style.transform = 'translateY(0)';
         });
       }
-      window.requestAnimationFrame(function () {
-        window.requestAnimationFrame(revealKPI);
-      });
+      // Trigger via setTimeout, not rAF: a backgrounded / automated tab freezes
+      // rAF and the reveal would never fire (only the failsafe would). 60ms
+      // lets the primed hidden state paint first.
+      window.setTimeout(revealKPI, 60);
       window.setTimeout(function () {
         primed.forEach(function (el) {
           el.style.transition = 'none';
