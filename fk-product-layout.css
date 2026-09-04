@@ -10,17 +10,8 @@
    Core/Arc and on the page for the unlinked FawkesLink).
    ------------------------------------------------------------------ */
 
-.fk-product-block {
-  display: grid;
-  grid-template-columns: minmax(0, 43fr) minmax(0, 52fr);
-  column-gap: 56px;
-  row-gap: 32px;
-  align-items: start;
-}
-
-/* dark blocks: text left, image right */
-.fk-product-block > .fk-product-block-content { grid-column: 1; grid-row: 1; }
-.fk-product-block > .fk-product-block-visual  { grid-column: 2; grid-row: 1; }
+/* Base two-column geometry, content placement, dashboard containment, and
+   responsive stacking now live on the native Webflow component classes. */
 
 /* light block (FawkesLink): image left, text right */
 .fk-product-block.light > .fk-product-block-content { grid-column: 2; grid-row: 1; }
@@ -36,44 +27,9 @@
 .fk-product-block.has-section-label > .fk-product-block-visual { grid-row: 2; }
 .fk-product-block.has-section-label > .feature-row { grid-row: 3; }
 
-/* feature list spans the full width, below both columns */
-.fk-product-block > .feature-row {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  column-gap: 0;
-  margin-top: 4px;
-}
-.fk-product-block > .feature-row > * {
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 0 44px;
-}
-.fk-product-block > .feature-row > *:first-child { padding-left: 0; }
-.fk-product-block > .feature-row > * + * { border-left: 1px solid rgba(255, 255, 255, 0.16); }
-.fk-product-block.light > .feature-row > * + * { border-left-color: rgba(0, 0, 0, 0.16); }
-
 /* tighter content-column stack; top-align it (Figma: copy sits directly under the
    section label, the tall dashboard image fills the space beside it) */
 .fk-product-block > .fk-product-block-content { row-gap: 12px; align-self: start; }
-
-/* the product visuals are UI mockup PNGs (transparent, need to show in full),
-   not full-bleed photos — undo the .image-fill cover/crop + grey backdrop. */
-.fk-product-block > .fk-product-block-visual {
-  min-height: 0;
-  overflow: visible;
-  background: transparent;
-  align-self: start;
-}
-.fk-product-block > .fk-product-block-visual > .image-fill {
-  position: static;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 0;
-}
 
 /* type scale — Figma product section */
 .fk-product-block .fk-product-name-dark { font-size: 44px; line-height: 1.08; }
@@ -106,24 +62,11 @@
 
 /* stack to one column on tablet/phone */
 @media (max-width: 991px) {
-  .fk-product-block,
-  .fk-product-block.light {
-    grid-template-columns: 1fr;
-  }
-  .fk-product-block > .fk-product-block-content,
-  .fk-product-block > .fk-product-block-visual,
-  .fk-product-block.light > .fk-product-block-content,
-  .fk-product-block.light > .fk-product-block-visual { grid-column: 1; }
-  .fk-product-block > .fk-product-block-content { grid-row: 1; }
-  .fk-product-block > .fk-product-block-visual  { grid-row: 2; }
   /* mobile-remediation PROD-1: base .fk-product-block.light > .fk-product-block-visual{grid-row:1}
      (0,0,3,0) out-specifies the generic stack rule above (0,0,2,0), so on the .light block
      (Home FawkesLink) content + visual collapse into the same grid cell and overlap. Force it. */
   .fk-product-block.light > .fk-product-block-content { grid-row: 1; }
   .fk-product-block.light > .fk-product-block-visual  { grid-row: 2; }
-  .fk-product-block > .feature-row { grid-row: 3; flex-wrap: wrap; row-gap: 24px; }
-  .fk-product-block > .feature-row > * { flex: 1 1 45%; padding: 0; border-left: 0 !important; }
-
   /* label-carrying first section: label / content / visual / features */
   .fk-product-block.has-section-label > .fk-product-section-label { grid-row: 1; }
   .fk-product-block.has-section-label > .fk-product-block-content { grid-row: 2; }
@@ -295,14 +238,12 @@
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
 }
-.fk-use-cases-inner > .fk-use-case-item + .fk-use-case-item {
+.fk-use-cases-slot > .fk-use-case-item + .fk-use-case-item {
   border-left: 1px solid var(--_fawkes-energy-design-system---overlay-black-10);
-  padding-left: var(--_fawkes-energy-design-system---space-lg);
 }
 @media (max-width: 767px) {
-  .fk-use-cases-inner > .fk-use-case-item + .fk-use-case-item {
+  .fk-use-cases-slot > .fk-use-case-item + .fk-use-case-item {
     border-left: 0;
-    padding-left: var(--_fawkes-energy-design-system---space-md);
   }
 }
 
@@ -331,29 +272,8 @@
 }
 .fk-feature-group-rows { display: flex; flex-direction: column; gap: 7px; }
 .fk-feature-line { font-family: Inter, sans-serif; font-size: 16px; font-weight: 300; line-height: 1.45; }
-/* FawkesCore + FawkesLink keep the groups block as a direct grid child of
-   .fk-product-block. Stack it under the copy in column 1 while the dashboard
-   spans the full height of column 2 — no dead space, groups still 2-up.
-   (Home uses .feature-row, not .fk-feature-groups, so it is untouched.) */
-.fk-product-block:has(> .fk-feature-groups) { align-items: start; }
-.fk-product-block:has(> .fk-feature-groups) > .fk-product-block-visual {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  align-self: stretch;
-}
-.fk-product-block > .fk-feature-groups {
-  grid-column: 1;
-  grid-row: 2;
-  margin-top: 20px;
-}
-@media (max-width: 991px) {
-  /* single-column stack: copy, then groups, then dashboard */
-  .fk-product-block:has(> .fk-feature-groups) > .fk-product-block-visual {
-    grid-column: 1;
-    grid-row: auto;
-  }
-  .fk-product-block > .fk-feature-groups { grid-column: 1; grid-row: auto; }
-}
+/* Product Feature Section positioning now uses explicit native
+   has-feature-groups / is-product-dashboard combo classes. */
 @media (max-width: 767px) {
   .fk-feature-groups { gap: 16px; }
   .fk-feature-group { flex: 1 1 100%; }
@@ -538,15 +458,6 @@
   -ms-overflow-style: none;
 }
 .case-study-row::-webkit-scrollbar { display: none; }
-
-/* ---- L4: the plain "how our platform works" tile list (NOT the `.is-columns`
-   product-page grid) has 6 fixed-width Process Tiles that wrapped 5 + 1. Cap it
-   so it wraps 3-per-row and centre it. `:not()` = can't be a Designer combo. ---- */
-.fk-process-tile-list:not(.is-columns) {
-  max-width: 680px;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 /* ==================================================================
    M: Industry / Product static pages — parity with Home (2026-09-04)

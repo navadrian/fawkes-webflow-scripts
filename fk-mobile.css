@@ -155,12 +155,6 @@
      tighter feature stack, less padding. */
   .fk-product-block { row-gap: 16px; padding: 28px 18px; }
 
-  /* product feature list: single full-width column, compact */
-  .fk-product-block > .feature-row { flex-direction: column; flex-wrap: nowrap; row-gap: 14px; column-gap: 0; }
-  .fk-product-block > .feature-row > * { flex: 0 0 auto; width: 100%; max-width: 100%; padding: 0; border-left: 0 !important; }
-  .feature-row { flex-direction: column; flex-wrap: nowrap; row-gap: 14px; }
-  .feature-row > .fk-feature-item { flex: 0 0 auto; width: 100%; border-left: 0; padding-left: 0; padding-right: 0; }
-
   /* title->description gap in stacked feature items */
   .fk-product-block > .feature-row .fk-feature-description-dark,
   .fk-product-block > .feature-row .fk-feature-description-light,
@@ -168,10 +162,6 @@
   .feature-row .fk-feature-item .fk-feature-description-light { margin-top: 4px; font-size: 12.5px; line-height: 1.4; }
 
   .fk-feature-icon { width: 20px; height: 20px; margin-bottom: 6px; }
-
-  /* keep the product mockup inside its box AND compact — it was ~72vh, eating the fold */
-  .fk-product-block > .fk-product-block-visual { overflow: hidden; }
-  .fk-product-block > .fk-product-block-visual > .image-fill { max-height: 34vh; transform: none !important; }
 
   /* Industries visual card: unclamp headline plate, stack the bottom row,
      kill the min-height:420 + space-between void that reads as an empty card */
