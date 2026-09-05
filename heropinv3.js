@@ -1,4 +1,4 @@
-/*! heropinv3 — Fawkes site-header registered script — v1.3.0
+/*! heropinv3 — Fawkes site-header registered script — v1.4.0
  *  Plain parallax hero. NO pin — the page keeps scrolling normally; the hero
  *  background just drifts slower than the scroll (classic parallax) and the
  *  hero's own overflow:hidden crops it. Everything is `scrub`ed to the scroll
@@ -65,6 +65,10 @@
       };
 
       if (img) {
+        // Responsive image selection must describe the transformed footprint,
+        // not the pre-transform 100vw layout box. Without this, browsers pick
+        // a source roughly 24% smaller than the 1.32x rendered hero.
+        img.setAttribute("sizes", "132vw");
         // Overscale so the drift never exposes an edge, then move ~28% of the
         // hero height across the whole scroll-through (well slower than the page).
         gsap.set(img, { scale: 1.32, transformOrigin: "50% 50%", willChange: "transform" });
