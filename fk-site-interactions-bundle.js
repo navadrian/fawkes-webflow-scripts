@@ -639,6 +639,9 @@
   Rotation.prototype.revealA = function () {
     var self = this, jobs = [], mobile = window.matchMedia("(max-width:767px)").matches;
     if (!mobile) {
+      // The children own the delayed entrance. A 1ms parent fade can commit
+      // a near-zero opacity at the animation boundary in Chromium.
+      set(this.aTarget, { opacity: "1" });
       if (this.aDot) jobs.push(this.animate(this.aDot,
         [{ opacity: 0, transform: "scale(.35)" }, { opacity: 1, transform: "scale(1)" }],
         { duration: 900, delay: 250, fill: "forwards", easing: "cubic-bezier(.18,.7,.3,1)" }));
@@ -648,7 +651,6 @@
       if (this.aRow) jobs.push(this.animate(this.aRow,
         [{ opacity: 1, clipPath: "inset(0 0 100% 0)", webkitClipPath: "inset(0 0 100% 0)" }, { opacity: 1, clipPath: "inset(0 0 0 0)", webkitClipPath: "inset(0 0 0 0)" }],
         { duration: 900, delay: 1700, fill: "forwards", easing: "ease" }));
-      if (this.aTarget) jobs.push(this.animate(this.aTarget, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: 250, fill: "forwards" }));
     } else if (this.aRow) {
       jobs.push(this.animate(this.aRow, [{ opacity: 0 }, { opacity: 1 }], { duration: 250, fill: "forwards", easing: "ease-out" }));
     }
