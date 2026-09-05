@@ -29,6 +29,8 @@
     '.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link:focus-visible,.fk-nav-pill .fk-nav-dropdown-item:focus-visible{outline:2px solid rgba(242,151,31,.85);outline-offset:4px}',
     '.fk-nav-pill[data-nav-open] .fk-nav-cta-button{background-color:#000;border-color:#fff}',
     '}',
+    '.fk-nav-pill .fk-nav-cta-button{transition:background-color .2s ease,border-color .2s ease,color .2s ease}',
+    '.fk-nav-pill .fk-nav-cta-button:hover,.fk-nav-pill .fk-nav-cta-button:focus-visible{background-color:#f2971f!important;border-color:#f2971f!important;color:#111217!important}',
     '@media (prefers-reduced-motion:reduce){.fk-nav-pill,.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link{transition:none!important}}'
   ].join('');
   document.head.appendChild(style);
