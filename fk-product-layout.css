@@ -145,6 +145,14 @@
 .fk-case-study-card { transition: filter .18s ease; }
 .fk-case-study-card:hover { filter: brightness(1.05); cursor: pointer; }
 
+/* Industry dashboard exports include a sub-pixel light outline at their outer
+   rounded edge. Let the clipped frame trim that source outline so the corner
+   radius reads as one continuous curve instead of a pale arc. */
+.fk-product-block.is-industry-feature > .fk-product-block-visual.is-dashboard > .image-fill.is-dashboard-image {
+  transform: scale(1.006);
+  transform-origin: 50% 50%;
+}
+
 /* D6 - 3rd card (BESS) chip/stat are <h3>/<h2> (headless builder can only set text on
    headings); neutralise heading defaults so they render like the other cards' divs. */
 .fk-case-study-stat-block h2.wb-card-text-36,
@@ -321,53 +329,333 @@
 
 /* ---- Comparison Table (product pages) ---- */
 .fk-comparison-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-/* fallback: any comparison table (wrapped or not) scrolls horizontally on small
-   screens instead of being clipped by body{overflow-x:clip}. display:block on a
-   <table> keeps internal cell layout via anonymous table boxes. */
+.fk-comparison-band .section-wrapper > .wb-h2-section-title {
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+/* Keep the real table formatting context at tablet/mobile widths. The wrapper
+   owns horizontal scrolling; changing the table itself to display:block made
+   WebKit recalculate the four columns independently and broke Figma parity. */
 @media (max-width: 991px) {
-  .section-wrapper .fk-comparison-table {
-    display: block;
+  .section-wrapper .fk-comparison-scroll {
     width: 100%;
-    min-width: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+  .section-wrapper .fk-comparison-table { display: table; min-width: 760px; }
 }
 .fk-comparison-table {
   width: 100%;
-  min-width: 640px;
+  min-width: 860px;
   border-collapse: collapse;
+  table-layout: fixed;
   font-family: Inter, sans-serif;
 }
 .fk-comparison-table th,
 .fk-comparison-table td {
-  padding: 14px 18px;
+  padding: 12px 24px 12px 0;
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
   border-bottom: 1px solid rgba(17, 18, 23, 0.12);
-  font-size: 15px;
-  line-height: 1.4;
+  font-size: 16px;
+  line-height: 1.5;
 }
+.fk-comparison-table th:nth-child(1),
+.fk-comparison-table td:nth-child(1) { width: 30.5%; }
+.fk-comparison-table th:nth-child(2),
+.fk-comparison-table td:nth-child(2) { width: 15.5%; }
+.fk-comparison-table th:nth-child(3),
+.fk-comparison-table td:nth-child(3) { width: 23%; }
+.fk-comparison-table th:nth-child(4),
+.fk-comparison-table td:nth-child(4) { width: 31%; padding-right: 0; }
 .fk-comparison-table thead th {
-  font-size: 13px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
-  color: rgba(17, 18, 23, 0.55); border-bottom-width: 2px;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  color: rgba(17, 18, 23, 0.55); border-bottom-width: 1px;
 }
 .fk-comparison-table thead th:last-child,
 .fk-comparison-table tbody td:last-child { color: #111217; font-weight: 500; }
 .fk-comparison-table tbody th {
-  font-weight: 500; color: #111217; font-size: 15px;
+  font-weight: 400; color: rgba(17, 18, 23, 0.68); font-size: 16px;
 }
 .fk-comparison-table td.is-yes,
 .fk-comparison-table td.is-no,
 .fk-comparison-table td.is-partial { white-space: nowrap; }
-.fk-comparison-table td.is-yes::before { content: "\2713 "; color: #1a8f4c; font-weight: 700; }
-.fk-comparison-table td.is-no::before  { content: "\2715 "; color: #b0503a; font-weight: 700; }
-.fk-comparison-table td.is-partial::before { content: "\2013 "; color: #9a6f1c; font-weight: 700; }
+.fk-comparison-table td.is-yes::before,
+.fk-comparison-table td.is-no::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+  vertical-align: -2px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.fk-comparison-table td.is-yes::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M7 13.125C10.507 13.125 13.35 10.327 13.35 6.875C13.35 3.423 10.507.625 7 .625C3.493.625.65 3.423.65 6.875C.65 10.327 3.493 13.125 7 13.125Z' stroke='white' stroke-width='1.25'/%3E%3Cpath d='M3.3 7 5.332 9 9.397 5' stroke='white' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.fk-comparison-table td.is-no::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M7 13.25C10.452 13.25 13.25 10.452 13.25 7S10.452.75 7 .75.75 3.548.75 7 3.548 13.25 7 13.25Z' stroke='%23D4D4D4' stroke-width='1.25'/%3E%3Cpath d='M4.5 7h5' stroke='%23D4D4D4' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.fk-comparison-table td.is-partial::before { content: "\2013"; color: #d4d4d4; margin-right: 1px; }
 .fk-comparison-table.on-dark th,
 .fk-comparison-table.on-dark td { border-color: rgba(255, 255, 255, 0.14); color: rgba(255, 255, 255, 0.85); }
 .fk-comparison-table.on-dark thead th { color: rgba(255, 255, 255, 0.55); }
-.fk-comparison-table.on-dark tbody th,
+.fk-comparison-table.on-dark tbody th { color: rgba(255, 255, 255, 0.65); }
+.fk-comparison-table.on-dark tbody tr:last-child th,
 .fk-comparison-table.on-dark tbody td:last-child { color: #fff; }
+
+/* ---- About / Vision: exact desktop typography from Figma 2024:2863 + 2024:2936 ---- */
+.about-vision {
+  min-height: 807px;
+  padding: 104px 5vw;
+}
+.about-vision-inner {
+  width: 100%;
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: 1fr 1.25fr;
+  column-gap: 96px;
+  align-items: start;
+}
+.about-vision-title {
+  font-size: 48px;
+  line-height: 1.5;
+  letter-spacing: -0.05em;
+}
+.about-vision-copy { max-width: 744px; }
+.about-vision-lead,
+.about-vision-paragraph {
+  font-size: 24px;
+  line-height: 1.5;
+}
+.about-vision-lead { font-weight: 700; margin-bottom: 36px; }
+.about-vision-paragraph { font-weight: 300; margin-bottom: 36px; }
+.about-vision-paragraph:last-child { margin-bottom: 0; }
+
+/* Preserve the line structure of the Figma milestone lists. */
+.about-timeline .about-milestone-body { white-space: pre-line; }
+
+/* ---- About / Founders: restore the separate angled Figma image plates. The
+   plates remain decorative layers behind the real portrait images and HTML
+   text, matching the source file instead of rasterising the whole row. ---- */
+.section-wrapper:has(> .about-founders-title) .fk-founder-row { align-items: start; }
+.section-wrapper:has(> .about-founders-title) .fk-founder-bio { white-space: pre-line; }
+.section-wrapper:has(> .about-founders-title) .fk-founder-info {
+  position: relative;
+  isolation: isolate;
+}
+.section-wrapper:has(> .about-founders-title) .fk-founder-info::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 565px;
+  height: 319px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  transform: rotate(180deg);
+  pointer-events: none;
+}
+.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-info::before {
+  left: -103px;
+  top: 90px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 565 319'%3E%3Cpath d='M565 319H0L132.966 0H565V319Z' fill='%23E8E8E8'/%3E%3C/svg%3E");
+}
+.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-info::before {
+  left: -52px;
+  top: 37px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 565 319'%3E%3Cpath d='M565 319H0L122.196 0H565V319Z' fill='%23E8E8E8'/%3E%3C/svg%3E");
+}
+@media (min-width: 992px) {
+  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) {
+    grid-template-columns: 454px 625px;
+    column-gap: 148px;
+    justify-content: center;
+  }
+  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-info {
+    width: 454px;
+    transform: translateX(11px);
+  }
+  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-bio {
+    transform: translateX(11px);
+  }
+  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-info,
+  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-bio {
+    transform: translateX(-52px);
+  }
+  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-image {
+    width: 454px;
+    height: 449px;
+  }
+  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-image {
+    width: 404px;
+    height: 396px;
+  }
+}
+
+/* ---- About / Journey: replace placeholder font glyphs with the exact Figma
+   vector exports while retaining the existing accessible milestone text. ---- */
+.about-timeline .about-milestone-icon {
+  font-size: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 32px 32px;
+}
+.about-timeline .about-milestone:nth-of-type(1) .about-milestone-icon {
+  background-size: 31.5px 31.4994px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjMxLjUiIGhlaWdodD0iMzEuNDk5NCIgdmlld0JveD0iMCAwIDMxLjUgMzEuNDk5NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTMxLjUgMjQuNzQ5NEwyNC43NSAzMS40OTk0TDIzLjE3NSAyOS45MjQ0TDI3LjIyNSAyNS44NzQ0SDE2Ljg3NVYyMy42MjQ0SDI3LjIyNUwyMy4xNzUgMTkuNTc0NEwyNC43NSAxNy45OTk0TDMxLjUgMjQuNzQ5NFpNMjEuOTIwNiA1Ljc2NjE3TDExLjc5NTYgMC4xNDExNzFDMTEuNjI4NyAwLjA0ODU4MTQgMTEuNDQwOSAwIDExLjI1IDBDMTEuMDU5MSAwIDEwLjg3MTMgMC4wNDg1ODE0IDEwLjcwNDQgMC4xNDExNzFMMC41NzkzNzUgNS43NjYxN0MwLjQwMzg4NyA1Ljg2MzUgMC4yNTc2MjUgNi4wMDU5OSAwLjE1NTc1MiA2LjE3ODg4QzAuMDUzODc4OSA2LjM1MTc2IDAuMDAwMTAzMTkgNi41NDg3NSA5LjU0NjYyZS0xMCA2Ljc0OTQyVjE3Ljk5OTRDLTguMjYwMDdlLTA2IDE4LjIgMC4wNTM1OTc4IDE4LjM5NjkgMC4xNTUyNjcgMTguNTY5OEMwLjI1NjkzNiAxOC43NDI2IDAuNDAyOTcxIDE4Ljg4NTIgMC41NzgyNSAxOC45ODI3TDEwLjcwMzIgMjQuNjA3N0MxMC44NzQ1IDI0LjcwMjkgMTEuMDY3NyAyNC43NTE4IDExLjI2MzYgMjQuNzQ5NEMxMS40NTk1IDI0Ljc0NyAxMS42NTE0IDI0LjY5MzUgMTEuODIwMyAyNC41OTQyQzExLjk4OTIgMjQuNDk0OCAxMi4xMjkzIDI0LjM1MzEgMTIuMjI2NiAyNC4xODNDMTIuMzIzOCAyNC4wMTI5IDEyLjM3NSAyMy44MjA0IDEyLjM3NSAyMy42MjQ0VjEzLjAzNTlMMjAuMjUgOC42NjE5MlYxMy40OTk0SDIyLjVWNi43NDk0MkMyMi40OTk5IDYuNTQ4NzUgMjIuNDQ2MSA2LjM1MTc2IDIyLjM0NDIgNi4xNzg4OEMyMi4yNDI0IDYuMDA1OTkgMjIuMDk2MSA1Ljg2MzUgMjEuOTIwNiA1Ljc2NjE3Wk0xMS4yNSAyLjQxMTQyTDE5LjA1ODYgNi43NDk0MkwxMS4yNSAxMS4wODc0TDMuNDQyNSA2Ljc0OTQyTDExLjI1IDIuNDExNDJaTTIuMjUgMTcuMzM2OFY4LjY2MTkyTDEwLjEyNSAxMy4wMzgyVjIxLjcxMTlMMi4yNSAxNy4zMzY4WiIgZmlsbD0iI0UyRTJFQyIvPgo8L3N2Zz4K");
+}
+.about-timeline .about-milestone:nth-of-type(2) .about-milestone-icon {
+  background-size: 28.2786px 23.3px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjI4LjI3ODYiIGhlaWdodD0iMjMuMyIgdmlld0JveD0iMCAwIDI4LjI3ODYgMjMuMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTcuNDc3NzggMTcuOTY2N1YyMS45NjY3QzcuNDc3NzggMjIuMzQ0NCA3LjM0OTc4IDIyLjY2MTMgNy4wOTM3OCAyMi45MTczQzYuODM3NzggMjMuMTczMyA2LjUyMTMzIDIzLjMwMDkgNi4xNDQ0NCAyMy4zQzUuNzY3NTYgMjMuMjk5MSA1LjQ1MTExIDIzLjE3MTEgNS4xOTUxMSAyMi45MTZDNC45MzkxMSAyMi42NjA5IDQuODExMTEgMjIuMzQ0NCA0LjgxMTExIDIxLjk2NjdWMTcuOTY2N0gzLjQ3Nzc4QzMuMSAxNy45NjY3IDIuNzgzNTYgMTcuODM4NyAyLjUyODQ0IDE3LjU4MjdDMi4yNzMzMyAxNy4zMjY3IDIuMTQ1MzMgMTcuMDEwMiAyLjE0NDQ0IDE2LjYzMzNDMi4xNDM1NiAxNi4yNTY0IDIuMjcxNTYgMTUuOTQgMi41Mjg0NCAxNS42ODRDMi43ODUzMyAxNS40MjggMy4xMDE3OCAxNS4zIDMuNDc3NzggMTUuM0g0LjgxMTExVjkuNzY2NjdMMi4xNDQ0NCAxMS44QzEuODMzMzMgMTIuMDIyMiAxLjUgMTIuMTE2OSAxLjE0NDQ0IDEyLjA4NEMwLjc4ODg4OSAxMi4wNTExIDAuNSAxMS44Nzg3IDAuMjc3Nzc4IDExLjU2NjdDMC4wNTU1NTU2IDExLjI1NDcgLTAuMDMzMzMzMiAxMC45MjEzIDAuMDExMTExMSAxMC41NjY3QzAuMDU1NTU1NiAxMC4yMTIgMC4yMzMzMzMgOS45MjMxMSAwLjU0NDQ0NCA5LjdMMTIuNTExMSAwLjUzMzMzM0MxMi43NTU2IDAuMzU1NTU1IDEzLjAxNjkgMC4yMjIyMjIgMTMuMjk1MSAwLjEzMzMzM0MxMy41NzMzIDAuMDQ0NDQ0MyAxMy44NTY0IDAgMTQuMTQ0NCAwQzE0LjQzMjQgMCAxNC43MTYgMC4wNDQ0NDQzIDE0Ljk5NTEgMC4xMzMzMzNDMTUuMjc0MiAwLjIyMjIyMiAxNS41MzUxIDAuMzU1NTU1IDE1Ljc3NzggMC41MzMzMzNMMjcuNzQ0NCA5LjdDMjguMDMzMyA5LjkyMjIyIDI4LjIwNTggMTAuMjExMSAyOC4yNjE4IDEwLjU2NjdDMjguMzE3OCAxMC45MjIyIDI4LjIzNDIgMTEuMjU1NiAyOC4wMTExIDExLjU2NjdDMjcuNzg4IDExLjg3NzggMjcuNDk5MSAxMi4wNTAyIDI3LjE0NDQgMTIuMDg0QzI2Ljc4OTggMTIuMTE3OCAyNi40NTY0IDEyLjAyMzEgMjYuMTQ0NCAxMS44TDIzLjQ3NzggOS43NjY2N1YxNS4zSDI0LjgxMTFDMjUuMTg4OSAxNS4zIDI1LjUwNTggMTUuNDI4IDI1Ljc2MTggMTUuNjg0QzI2LjAxNzggMTUuOTQgMjYuMTQ1MyAxNi4yNTY0IDI2LjE0NDQgMTYuNjMzM0MyNi4xNDM2IDE3LjAxMDIgMjYuMDE1NiAxNy4zMjcxIDI1Ljc2MDQgMTcuNTg0QzI1LjUwNTMgMTcuODQwOSAyNS4xODg5IDE3Ljk2ODQgMjQuODExMSAxNy45NjY3SDIzLjQ3NzhWMjEuOTY2N0MyMy40Nzc4IDIyLjM0NDQgMjMuMzQ5OCAyMi42NjEzIDIzLjA5MzggMjIuOTE3M0MyMi44Mzc4IDIzLjE3MzMgMjIuNTIxMyAyMy4zMDA5IDIyLjE0NDQgMjMuM0MyMS43Njc2IDIzLjI5OTEgMjEuNDUxMSAyMy4xNzExIDIxLjE5NTEgMjIuOTE2QzIwLjkzOTEgMjIuNjYwOSAyMC44MTExIDIyLjM0NDQgMjAuODExMSAyMS45NjY3VjE3Ljk2NjdIMTUuNDc3OFYyMS45NjY3QzE1LjQ3NzggMjIuMzQ0NCAxNS4zNDk4IDIyLjY2MTMgMTUuMDkzOCAyMi45MTczQzE0LjgzNzggMjMuMTczMyAxNC41MjEzIDIzLjMwMDkgMTQuMTQ0NCAyMy4zQzEzLjc2NzYgMjMuMjk5MSAxMy40NTExIDIzLjE3MTEgMTMuMTk1MSAyMi45MTZDMTIuOTM5MSAyMi42NjA5IDEyLjgxMTEgMjIuMzQ0NCAxMi44MTExIDIxLjk2NjdWMTcuOTY2N0g3LjQ3Nzc4Wk03LjQ3Nzc4IDE1LjNIMTIuODExMVYzLjY2NjY3TDcuNDc3NzggNy43MzMzM1YxNS4zWk0xNS40Nzc4IDE1LjNIMjAuODExMVY3LjczMzMzTDE1LjQ3NzggMy42NjY2N1YxNS4zWiIgZmlsbD0iI0UyRTJFQyIvPgo8L3N2Zz4K");
+}
+
+.about-timeline .about-milestone:nth-of-type(3) .about-milestone-icon {
+  background-size: 32px 32px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMzIgMzIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGlkPSJWZWN0b3IiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjQuMDQ1OCA2LjU1ODg0ZS0wNUMyNC4xMTQ3IDAuMDAwMTEwMjQgMjQuMTg0NyAwLjAwMDEzOTkzMiAyNC4yNTU1IDAuMDAwMTM5OTMySDI1LjE3OUMyNi40NzYzIDkuNTI3OThlLTA1IDI3LjU2MDggNi41NTcxM2UtMDUgMjguNDIyNCAwLjExNTU1QzI5LjMzMjcgMC4yMzc1ODMgMzAuMTU5NiAwLjUwNjYwOSAzMC44MjUgMS4xNzAwNkMzMS40OTA5IDEuODMzOTcgMzEuNzYxNCAyLjY1OTc3IDMxLjg4NCAzLjU2OUMzMS45OTk5IDQuNDI4NzIgMzEuOTk5OCA1LjUxMDYzIDMxLjk5OTggNi44MDM0NVY3LjcyNDc3QzMxLjk5OTggNy43OTU3NCAzMS45OTk4IDcuODY1NzcgMzEuOTk5OSA3LjkzNDg5QzMyLjAwMDcgOS40OTc3NyAzMi4wMDEzIDEwLjU5NDYgMzEuNTg0NCAxMS41OTgyQzMxLjE2NzUgMTIuNjAxMyAzMC4zODk3IDEzLjM3NiAyOS4yODA3IDE0LjQ4MDdDMjkuMjMxOCAxNC41Mjk1IDI5LjE4MjEgMTQuNTc4OSAyOS4xMzE4IDE0LjYyOTFMMjUuMTU4MiAxOC41OTA5TDI1LjI5NjcgMTguODA0OEMyNS44ODI2IDE5LjcwOTcgMjYuMzU3MiAyMC40NDI3IDI2LjcgMjEuMDc0OEMyNy4wNTQ4IDIxLjcyOTYgMjcuMzA3IDIyLjM0MzcgMjcuNDA4IDIzLjAyMzFDMjcuNTcwMyAyNC4xMTUzIDI3LjQyMzYgMjUuMjM4IDI2Ljk5MyAyNi4yNjk1QzI2LjgzMzMgMjYuNjUyIDI2LjU1NzEgMjcuMDUyOCAyNi4yNzM4IDI3LjQxODJDMjUuOTc2OSAyNy44MDEgMjUuNjE0MSAyOC4yMTgxIDI1LjIyNDMgMjguNjQyN0MyNC40NDg1IDI5LjQ4ODEgMjMuNTE3MSAzMC40MTY3IDIyLjY5MDUgMzEuMjQwOEwyMi41NTUxIDMxLjM3NkMyMS40ODM1IDMyLjQ0NDQgMTkuNjI2MiAzMi4wOTggMTkuMDU0OCAzMC42NjQ1QzE4LjcxNTkgMjkuODE0NSAxOC41Nzg4IDI5LjQ3NTggMTguNDA3MiAyOS4xNjI4QzE4LjI0ODEgMjguODcyNyAxOC4wNjU1IDI4LjU5NiAxNy44NjEzIDI4LjMzNTRDMTcuNjQzOCAyOC4wNTc5IDE3LjM4OTggMjcuODAxMiAxNi43NTk4IDI3LjE3MjlMMTYuMDA4NCAyNi41MTQyQzE1Ljk5NzkgMjYuNTA0OSAxNS45ODc2IDI2LjQ5NTYgMTUuOTc3NSAyNi40ODZDMTUuODM4MyAyNi41MDQgMTUuNjk3MSAyNi41MTMzIDE1LjU1MzUgMjYuNTEzM0MxNC42MTM2IDI2LjUxMzMgMTMuODM4MSAyNi4xMjA5IDEzLjEwNzIgMjUuNTY0OUMxMi40MTU5IDI1LjAzOSAxMS42NDg4IDI0LjI3NDEgMTAuNzMxNyAyMy4zNTk3TDguNTc4NjQgMjEuMjEzMUM3LjY2MTYxIDIwLjI5ODggNi44OTQ0OCAxOS41MzQxIDYuMzY2ODkgMTguODQ0NUM1LjgwOTI3IDE4LjExNTkgNS40MTQ0NCAxNy4zNDEyIDUuNDE0NDQgMTYuNDAxQzUuNDE0NDQgMTYuMjMwNCA1LjQyNzUyIDE2LjA2MzQgNS40NTI5NiAxNS44OTk3TDQuMjE3MDEgMTQuNjY3NUM0LjE0NDk0IDE0LjU5NTYgNC4xMTYwOCAxNC41NjY5IDQuMDg3NjEgMTQuNTM5M0MzLjUzMTQ4IDEzLjk5OTYgMi44NzcxMyAxMy41NzA0IDIuMTU5NTIgMTMuMjc0OEMyLjEyMjc2IDEzLjI1OTYgMi4wODQ4NSAxMy4yNDQ2IDEuOTkwMTUgMTMuMjA3MUwxLjQyNjU5IDEyLjk4MzdDLTAuMDgxOTE4NiAxMi4zODYgLTAuNDg3OTgzIDEwLjQzOSAwLjY2MzY4MSA5LjI5MDgzTDAuNjc0MTg5IDkuMjgwMzVDMS41MDA4NiA4LjQ1NjE1IDIuNDMyMTcgNy41Mjc2MiAzLjI3OTk5IDYuNzU0MThDMy43MDU5OSA2LjM2NTU1IDQuMTI0MjEgNi4wMDM3NiA0LjUwODEgNS43MDc4OUM0Ljg3NDY5IDUuNDI1MzIgNS4yNzYyMyA1LjE1MDI2IDUuNjU5MDkgNC45OTE0MUM2LjY5MjMzIDQuNTYyNjkgNy44MTY2NSA0LjQxNjYyIDguOTEwMDkgNC41NzgyMkM5LjU5MDEyIDQuNjc4NzEgMTAuMjA1MSA0LjkyOTYyIDEwLjg2MTcgNS4yODM0QzExLjQ5NTUgNS42MjQ5NyAxMi4yMzA2IDYuMDk4MSAxMy4xMzgzIDYuNjgyMzVMMTMuMzU4MiA2LjgyMzgyTDE3LjMzNTMgMi44NTgzNUMxNy4zODU1IDIuODA4MzkgMTcuNDM0OSAyLjc1OTA1IDE3LjQ4MzcgMi43MTAzNkMxOC41OTIyIDEuNjA0MDMgMTkuMzY4OCAwLjgyODg3NSAyMC4zNzQgMC40MTM3NDhDMjEuMzc5IC0wLjAwMTI1OTE3IDIyLjQ3NzIgLTAuMDAwNzA4Mzc0IDI0LjA0NTggNi41NTg4NGUtMDVaTTExLjczOTggOC40MzczMUMxMC45MDYzIDcuOTAxMzMgMTAuMzA2NCA3LjUyMDI3IDkuODAyNjIgNy4yNDg4MkM5LjI2ODE5IDYuOTYwODMgOC45MTAyNiA2LjgzNTA3IDguNTgzNzIgNi43ODY4MkM3LjkwMTg1IDYuNjg2MDQgNy4xODU0MyA2Ljc3NTIzIDYuNTE0NjggNy4wNTM1NEM2LjQxNDQ5IDcuMDk1MTEgNi4yMDM1MyA3LjIxOTg1IDUuODcwOTkgNy40NzYxN0M1LjU1NTczIDcuNzE5MTYgNS4xODgxOCA4LjAzNTM3IDQuNzg0NTkgOC40MDM1N0MzLjk3NjgxIDkuMTQwNDggMy4wNzc5NSAxMC4wMzY0IDIuMjM5OTEgMTAuODcxOUMyLjIzNTE4IDEwLjg3NjYgMi4yMzM2NyAxMC44NzkyIDIuMjMzNTQgMTAuODc5NEMyLjIzMzU0IDEwLjg3OTQgMi4yMzMzOSAxMC44Nzk3IDIuMjMzNTQgMTAuODc5NEMyLjIzMzM5IDEwLjg4IDIuMjMyMzMgMTAuODg0MyAyLjIzMzczIDEwLjg5MTFDMi4yMzUxMyAxMC44OTc5IDIuMjM3NjYgMTAuOTAxNiAyLjIzODM1IDEwLjkwMjRDMi4yMzg3NiAxMC45MDI3IDIuMjQyMzggMTAuOTA1NSAyLjI0OSAxMC45MDgyTDIuODIwMTMgMTEuMTM0NUMyLjkwNTAxIDExLjE2ODEgMi45NTc1OSAxMS4xODg5IDMuMDA5OTggMTEuMjEwNUMzLjk4OTIyIDExLjYxNCA0Ljg4MjYxIDEyLjE5OTkgNS42NDIyNiAxMi45MzdDNS42ODI5MSAxMi45NzY0IDUuNzIyOTQgMTMuMDE2MyA1Ljc4NzU1IDEzLjA4MDdMNi40OTg2MiAxMy43ODk4QzYuNTk1OTUgMTMuNjY4OCA2LjY5NzU3IDEzLjU0ODggNi44MDI1MSAxMy40MjlDNy4yODE0MiAxMi44ODI0IDcuODk2NzEgMTIuMjY5IDguNjA4OTcgMTEuNTU4OEwxMS43Mzk4IDguNDM3MzFaTTE4LjE2NTEgMjUuNDM2TDE4LjI4NTMgMjUuNTQxNEwxOC4zNjIxIDI1LjYxOEMxOC45NDM1IDI2LjE5NzYgMTkuMzAzOCAyNi41NTY3IDE5LjYxODQgMjYuOTU4M0MxOS44OTc1IDI3LjMxNDMgMjAuMTQ3MSAyNy42OTI1IDIwLjM2NDUgMjguMDg5MkMyMC42MDIyIDI4LjUyMjQgMjAuNzg2MyAyOC45Nzk0IDIxLjA3MzcgMjkuNzAwNEwyMS4xMDM4IDI5LjY3MDNDMjEuOTQxOSAyOC44MzQ3IDIyLjg0MDQgMjcuOTM4NiAyMy41Nzk1IDI3LjEzMzJDMjMuOTQ4OCAyNi43MzA5IDI0LjI2NTkgMjYuMzY0NCAyNC41MDk2IDI2LjA1MDFDMjQuNzY2NiAyNS43MTg1IDI0Ljg5MTUgMjUuNTA4NiAyNC45MzI4IDI1LjQwOTVDMjUuMjExNSAyNC43NDE5IDI1LjMwMDYgMjQuMDI5NCAyNS4xOTk3IDIzLjM1MTVDMjUuMTUxNiAyMy4wMjc1IDI1LjAyNTkgMjIuNjcxNCAyNC43MzczIDIyLjEzODlDMjQuNDY0NSAyMS42MzU3IDI0LjA4MTQgMjEuMDM2MiAyMy41NDE4IDIwLjIwMjRMMjAuNDAzNSAyMy4zMzE0QzE5LjY3NDQgMjQuMDU4MyAxOS4wNDYzIDI0LjY4NDYgMTguNDg3IDI1LjE2NzhDMTguMzgwMSAyNS4yNjAxIDE4LjI3MyAyNS4zNDk2IDE4LjE2NTEgMjUuNDM2Wk0yNC4yNTU1IDIuMjMyNzJDMjIuMzkyNCAyLjIzMjcyIDIxLjc3MDkgMi4yNTIzOSAyMS4yMjYzIDIuNDc3MjhDMjAuNjgyIDIuNzAyMDQgMjAuMjI5MiAzLjEyNTc2IDE4LjkxMTYgNC40MzkzOUwxMC4yMDk1IDEzLjExNTdDOS40Njc2NCAxMy44NTUzIDguOTA1MjcgMTQuNDE2OCA4LjQ4MTYgMTQuOTAwNEM4LjA1NTkzIDE1LjM4NjEgNy44Mzg2NCAxNS43MTg3IDcuNzMyOTkgMTUuOTgxNEM3LjY3MTM5IDE2LjEzNDYgNy42NDY5NSAxNi4yNjY5IDcuNjQ2OTUgMTYuNDAxQzcuNjQ2OTUgMTYuNjU0OCA3LjczMzg5IDE2Ljk1NzIgOC4xMzk4MyAxNy40ODc3QzguNTY1MzYgMTguMDQzOSA5LjIyMzU3IDE4LjcwMzQgMTAuMjA5NSAxOS42ODY1TDEwLjQ0MzQgMTkuOTE5NkwxMi43MjEzIDE3LjY0ODRDMTMuMTU3OCAxNy4yMTMyIDEzLjg2NDYgMTcuMjE0MyAxNC4yOTk4IDE3LjY1MDhDMTQuNzM1MiAxOC4wODc1IDE0LjczNDEgMTguNzk0MiAxNC4yOTc2IDE5LjIyOTVMMTIuMDI0NCAyMS40OTU5TDEyLjI1MzUgMjEuNzI0NEMxMy4yMzk0IDIyLjcwNzMgMTMuOTAxIDIzLjM2MzcgMTQuNDU4OSAyMy43ODhDMTQuOTkwOSAyNC4xOTI3IDE1LjI5NiAyNC4yODA3IDE1LjU1MzUgMjQuMjgwN0MxNS42Nzk3IDI0LjI4MDcgMTUuODAyNSAyNC4yNTk0IDE1Ljk0IDI0LjIwODhDMTYuMjAxIDI0LjExMjcgMTYuNTMzOCAyMy45MDQ2IDE3LjAyNzcgMjMuNDc4QzE3LjUxOTcgMjMuMDUzMiAxOC4wOTIzIDIyLjQ4MzIgMTguODUzMyAyMS43MjQ0TDI3LjU1NTUgMTMuMDQ4MUMyOC44NzM0IDExLjczNDEgMjkuMjk3NyAxMS4yODMgMjkuNTIyNiAxMC43NDE2QzI5Ljc0NzUgMTAuMjAwNSAyOS43NjczIDkuNTgzMTYgMjkuNzY3MyA3LjcyNDc3VjYuODgwNjNDMjkuNzY3MyA1LjQ5MDM0IDI5Ljc2NDkgNC41NjAyNyAyOS42NzE0IDMuODY3MzZDMjkuNTgyNCAzLjIwNjkzIDI5LjQyOTYgMi45MzEzMyAyOS4yNDg3IDIuNzUxMUMyOS4wNjc2IDIuNTcwNDEgMjguNzg5NyAyLjQxNzM2IDI4LjEyNTggMi4zMjgzNUMyNy40MyAyLjIzNTA4IDI2LjQ5NjMgMi4yMzI3MiAyNS4xMDIyIDIuMjMyNzJIMjQuMjU1NVpNMjIuOTQxMyA5LjAzOTc4QzIyLjI0ODIgOC4zNDg2MiAyMS4xMjI4IDguMzQ4NjIgMjAuNDI5NiA5LjAzOTc4QzE5LjczODIgOS43MjkxIDE5LjczODIgMTAuODQ1MyAyMC40Mjk2IDExLjUzNDZDMjEuMTIyOCAxMi4yMjU4IDIyLjI0ODIgMTIuMjI1OCAyMi45NDEzIDExLjUzNDZDMjMuNjMyOCAxMC44NDUzIDIzLjYzMjggOS43MjkxIDIyLjk0MTMgOS4wMzk3OFpNMTguODUzMyA3LjQ1ODc0QzIwLjQxNzggNS44OTg4NSAyMi45NTMxIDUuODk4ODUgMjQuNTE3NiA3LjQ1ODc0QzI2LjA4NDEgOS4wMjA0OCAyNi4wODQxIDExLjU1MzkgMjQuNTE3NiAxMy4xMTU3QzIyLjk1MzEgMTQuNjc1NSAyMC40MTc4IDE0LjY3NTUgMTguODUzMyAxMy4xMTU3QzE3LjI4NjkgMTEuNTUzOSAxNy4yODY5IDkuMDIwNDggMTguODUzMyA3LjQ1ODc0WiIgZmlsbD0iI0UyRTJFQyIvPgo8L3N2Zz4K");
+}
+
+/* ---- About / Backed By and Team: match the reference hierarchy. ---- */
+.is-about-backed-by .fk-backed-by-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  min-height: 400px;
+  padding: 40px;
+}
+.is-about-backed-by .fk-logo-contain {
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
+}
+.is-about-backed-by .fk-backed-by-card:nth-child(1) .fk-logo-contain {
+  width: 329px;
+  height: 90px;
+  margin-top: 36px;
+  margin-bottom: 42px;
+}
+.is-about-backed-by .fk-backed-by-card:nth-child(2) .fk-logo-contain {
+  width: 227px;
+  height: 70px;
+  margin-top: 41px;
+  margin-bottom: 65px;
+}
+.is-about-backed-by .fk-backed-by-name,
+.is-about-backed-by .fk-backed-by-desc { width: 100%; }
+.is-about-backed-by .fk-backed-by-name { font-size: 24px; line-height: 1.5; font-weight: 500; }
+.is-about-backed-by .fk-backed-by-desc { font-size: 18px; line-height: 1.5; font-weight: 300; }
+
+/* ---- About / Team and careers: exact desktop type and grid rhythm. ---- */
+.about-team-wrap .fk-team-role { font-style: italic; font-weight: 300; }
+.about-careers-title { font-size: 36px; line-height: 1.5; font-weight: 500; letter-spacing: -0.05em; }
+.about-careers-copy { font-size: 24px; line-height: 1.5; font-weight: 300; }
+.about-careers-button { min-width: 94px; min-height: 56px; font-size: 24px; font-weight: 300; }
+
+/* ---- About / CTA + footer: About and Blogs use the quieter Figma variant.
+   Scope through the page's unique hero so the shared industry/product CTA and
+   footer retain their stronger type and orange product-link accents. ---- */
+body:has(.about-hero) .fk-cta-banner .fk-cta-banner-content {
+  width: min(100%, 1262px);
+  margin-left: auto;
+  margin-right: auto;
+}
+body:has(.about-hero) .fk-cta-banner .fk-cta-banner-heading {
+  max-width: 940px;
+  font-size: 44px;
+  line-height: 1.25;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+}
+body:has(.about-hero) .fk-cta-banner .fk-cta-accent { font-weight: 500; }
+body:has(.about-hero) .fk-cta-banner .btn-ghost {
+  min-width: 126px;
+  min-height: 56px;
+  font-size: 24px;
+  font-weight: 300;
+}
+body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inherit; }
+
+@media (min-width: 1200px) {
+  .about-team-wrap .team-grid {
+    grid-template-columns: repeat(5, minmax(0, 250px));
+    column-gap: 13px;
+    row-gap: 48px;
+    max-width: 1302px;
+  }
+  .about-team-wrap .fk-team-image { width: 250px; height: 250px; }
+  .about-team-wrap .fk-team-name { font-size: 20px; line-height: 1.25; font-weight: 700; }
+  .about-team-wrap .fk-team-role { font-size: 18px; line-height: 1.25; }
+}
+
+/* ---- About / Hero content: retain the existing art direction while matching
+   the Figma content inset and typography at the 1512px reference width. ---- */
+@media (min-width: 992px) {
+  .about-hero {
+    padding-left: max(78px, calc((100vw - 1356px) / 2));
+    padding-right: max(78px, calc((100vw - 1356px) / 2));
+  }
+  .about-hero-title { font-size: 54px; line-height: 1.5; letter-spacing: -0.05em; }
+  .about-hero .section-eyebrow {
+    padding: 10px 15px;
+    border-radius: 20px;
+    background-color: #111217;
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 991px) {
+  .about-vision { min-height: 0; padding: 72px 5vw; }
+  .about-vision-inner { grid-template-columns: 1fr; row-gap: 40px; }
+  .about-vision-title { font-size: 40px; line-height: 1.25; }
+  .about-vision-copy { max-width: none; }
+  .about-vision-lead,
+  .about-vision-paragraph { font-size: 20px; line-height: 1.5; }
+}
+
+@media (max-width: 767px) {
+  .about-vision { padding: 48px 20px; }
+  .about-vision-inner { row-gap: 28px; }
+  .about-vision-title { font-size: 30px; }
+  .about-vision-lead,
+  .about-vision-paragraph { font-size: 17px; }
+  .about-vision-lead,
+  .about-vision-paragraph { margin-bottom: 24px; }
+  .section-wrapper:has(> .about-founders-title) .fk-founder-info::before { display: none; }
+  .is-about-backed-by .fk-backed-by-card { min-height: 0; padding: 28px; }
+  .is-about-backed-by .fk-backed-by-card:nth-child(1) .fk-logo-contain,
+  .is-about-backed-by .fk-backed-by-card:nth-child(2) .fk-logo-contain {
+    width: auto;
+    height: 62px;
+    margin: 0 auto 24px;
+  }
+  .about-careers-title { font-size: 28px; }
+  .about-careers-copy { font-size: 17px; }
+  .about-careers-button { min-width: 0; min-height: 44px; font-size: 16px; }
+  body:has(.about-hero) .fk-cta-banner .fk-cta-banner-heading {
+    max-width: none;
+    font-size: 26px;
+    line-height: 1.3;
+  }
+  body:has(.about-hero) .fk-cta-banner .btn-ghost {
+    min-width: 0;
+    min-height: 44px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 479px) {
+  body:has(.about-hero) .fk-cta-banner .fk-cta-banner-heading { font-size: 22px; }
+}
 
 /* ---- Field Intelligence / Industry Application cross-link card ---- */
 .fk-xlink-card {
@@ -405,7 +693,7 @@
 @media (max-width: 767px) {
   .fk-xlink-card { padding: 24px; min-height: 300px; }
   .fk-xlink-title { font-size: 24px; }
-  .fk-comparison-table { min-width: 560px; }
+  .fk-comparison-table { min-width: 720px; }
 }
 
 /* ==================================================================
