@@ -47,6 +47,26 @@
   font-weight:500 !important;
   line-height:1.5 !important;
 }
+.fk-product-feature-left > .fk-product-name-dark {
+  white-space:normal !important;
+  overflow-wrap:normal;
+  box-sizing:border-box;
+  padding-right:32px;
+}
+.fk-product-feature-left > .fk-product-name-dark[data-fk-wrap-residual] {
+  max-width:10ch !important;
+}
+.fk-product-block-visual.is-product-dashboard {
+  overflow:hidden !important;
+  border-radius:10px;
+}
+.fk-product-block-visual.is-product-dashboard > img {
+  transform:scale(1.006);
+  transform-origin:50% 50%;
+}
+.fk-product-block-visual.is-product-dashboard > img[src*="fawkes-product-link-health-figma-3x"] {
+  transform:scale(1.012);
+}
 .fk-product-block.has-feature-groups.is-product-feature-section .fk-product-feature-left > .fk-feature-groups.is-product-feature-layout {
   display:flex !important;
   flex-direction:column !important;
@@ -80,7 +100,7 @@
 }
 .fk-product-block.has-feature-groups.is-product-feature-section .is-product-feature-group {
   display:grid !important;
-  grid-template-columns:max-content minmax(0,1fr) !important;
+  grid-template-columns:var(--fk-audience-label-width,64px) minmax(0,1fr) !important;
   column-gap:42px !important;
   row-gap:0 !important;
   flex:0 0 auto !important;
@@ -92,14 +112,15 @@
   display:block;
   grid-column:1 !important;
   grid-row:1 !important;
-  width:auto;
-  max-width:150px;
+  width:100%;
+  max-width:none;
   min-width:0;
   margin:0;
   padding-right:0 !important;
   /* A long audience label may wrap after its slash, but never through a word. */
   overflow-wrap:normal;
   word-break:normal;
+  white-space:normal !important;
   font-size:16px !important;
   font-weight:500 !important;
   line-height:1.5 !important;
@@ -179,6 +200,16 @@
   .fk-product-block.has-feature-groups.is-product-feature-section .fk-product-feature-right > .wb-body-large-24-light { font-size:17px !important; }
 }
 `;document.head.appendChild(s);
+document.querySelectorAll('.fk-product-feature-left > .fk-product-name-dark').forEach((heading)=>{
+  if(heading.textContent.trim()==='Residual Asset Value') heading.setAttribute('data-fk-wrap-residual','');
+});
+/* One shared label width per section keeps every separator on the same axis.
+   Longer audience names use a wider fixed column across that whole section. */
+document.querySelectorAll('.fk-feature-groups.is-product-feature-layout').forEach((groups)=>{
+  const labels=Array.from(groups.querySelectorAll('.is-product-feature-label'));
+  const wide=labels.some(label=>label.textContent.trim().length>8);
+  groups.style.setProperty('--fk-audience-label-width',wide?'150px':'64px');
+});
 /* A slash-separated audience name is one text value in the component prop.
    Add a semantic soft wrap point after each slash without changing that value,
    so a narrow label column never breaks "Insurers" through the middle. */

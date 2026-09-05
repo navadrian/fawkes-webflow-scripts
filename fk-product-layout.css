@@ -715,15 +715,22 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
     padding-right: max(78px, calc((100vw - 1356px) / 2));
   }
   .about-hero-title { font-size: 54px; line-height: 1.5; letter-spacing: -0.05em; }
-  .about-hero .section-eyebrow {
-    padding: 10px 15px;
-    border-radius: 20px;
-    background-color: #111217;
-    font-size: 20px;
-    line-height: 1.5;
-    font-weight: 500;
-    letter-spacing: 1px;
-  }
+}
+
+/* Hero tags hug their label rather than stretching as flex/grid children. */
+.about-hero > .section-eyebrow {
+  display: inline-flex;
+  align-self: flex-start;
+  justify-self: start;
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background-color: #111217;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: .5px;
 }
 
 @media (max-width: 991px) {
@@ -863,6 +870,14 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
 /* ==================================================================
    M: Industry / Product static pages — parity with Home (2026-09-04)
    ================================================================== */
+
+/* Figma process cards have unequal horizontal and vertical gutters. */
+@media (min-width: 768px) {
+  body:has(.fk-product-block.has-feature-groups) .section-wrapper:has(> .fk-process-tile-list.is-columns) > .fk-process-tile-list.is-columns {
+    column-gap: 20px;
+    row-gap: 16px;
+  }
+}
 
 /* ---- M1: RETIRED — `.hero-content { max-width }` → `hero-content-max` token on
    the Designer class; `.wb-hero-title { line-height: 1.14 }` → the Designer
