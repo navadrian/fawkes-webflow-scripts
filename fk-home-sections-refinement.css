@@ -1,0 +1,73 @@
+/* Home-only preview refinement. Keep this separate from shared base/mobile CSS. */
+
+/* HM-07 — give the carousel benefit plate a little more breathing room. */
+.fk-visual-card .fk-vc-features {
+  margin-left: 8px;
+  margin-bottom: 8px;
+}
+
+/* HM-09 — preserve each logo's aspect ratio while reducing displayed scale. */
+.fk-trusted-band .trusted-by-logo-img {
+  transform: scale(.8);
+  transform-origin: center;
+}
+
+/* HM-10/11 — methodology reference treatment (Home only). */
+body:has(.home-product-link) .fk-process-tile .fk-process-tile-number {
+  color: #000 !important;
+}
+
+body:has(.home-product-link) .fk-process-tile {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+/* HM-12 — methodology CTA keeps the quiet default and gets a restrained
+   brand-orange interaction state (Home only). */
+body:has(.home-product-link) .fk-method-cta {
+  box-shadow: none;
+}
+
+body:has(.home-product-link) .fk-method-cta:hover {
+  background-color: #f2971f;
+  color: #111217;
+}
+
+body:has(.home-product-link) .fk-method-cta:focus-visible {
+  outline: 2px solid #f2971f;
+  outline-offset: 3px;
+}
+
+/* HM-08 — the existing native arrow anchor becomes the full-card link. */
+.fk-visual-card.is-full-card-link {
+  position: relative;
+}
+
+.fk-visual-card.is-full-card-link .fk-vc-bottom {
+  position: static;
+}
+
+.fk-visual-card.is-full-card-link .fk-vc-arrow {
+  position: absolute;
+  /* The static bottom wrapper lets the native anchor use the card itself as
+     its containing block, so its hit area matches the card exactly. */
+  inset: 0;
+  z-index: 10;
+  width: auto;
+  height: auto;
+  max-width: none;
+  margin: 0;
+  align-self: stretch;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+}
+
+.fk-visual-card.is-full-card-link .fk-vc-arrow-glyph {
+  display: none !important;
+}
+
+.fk-visual-card.is-full-card-link .fk-vc-arrow:focus-visible {
+  outline: 2px solid #f2971f;
+  outline-offset: -4px;
+}
