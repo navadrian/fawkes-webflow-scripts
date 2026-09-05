@@ -1,0 +1,163 @@
+/* ------------------------------------------------------------------
+   Fawkes Home — product-section refinement (HM-13 to HM-18)
+
+   Figma source: Home 2024:1078. This deliberately scopes to the page
+   carrying the authored two-state Home hero, so Product/Industry template
+   sections and shared Feature Item instances are unaffected.
+   ------------------------------------------------------------------ */
+
+/* Figma 2024:1138 / 1168: 10px horizontal, 5px vertical inset; 10px radius;
+   the dark and light variants only differ in their neutral translucent fill. */
+body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) .tag-row {
+  column-gap: 12px;
+}
+
+body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) .fk-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+
+body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature):not(.light) .fk-tag-chip {
+  background-color: rgba(255, 255, 255, .05);
+  color: rgba(255, 255, 255, .8);
+}
+
+body:has(.home-hero-state-b) .fk-product-block.light .fk-tag-chip {
+  background-color: rgba(0, 0, 0, .05);
+  color: #000;
+}
+
+@media (min-width: 992px) {
+  /* Figma 2024:1307: 30px Inter Medium, 45px leading, -1.5px tracking.
+     Its 47px bottom margin plus the existing 24px grid gap reproduces the
+     116px label-to-tag relationship in the Core reference. */
+  body:has(.home-hero-state-b) .fk-product-block.has-section-label > .fk-product-section-label {
+    width: 396px;
+    margin: 0 42px 47px;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -1.5px;
+  }
+
+  /* Figma 2024:1132 / 1165 (48px, 700, -2.4px) and 2024:1134 / 1136.
+     The stack uses measured Figma relationships: tag -> name 40px,
+     name -> descriptor one 72px line, descriptor -> body 7px. */
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .fk-product-block-content {
+    row-gap: 0;
+  }
+
+  /* Home reference anchors: Core/Arc copy x=90 (2024:1132 / 1133),
+     Link copy x=957 (2024:1165). These move only the copy stack; the native
+     image grid remains responsible for its own responsive geometry. */
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature):not(.light) > .fk-product-block-content {
+    transform: translateX(42px);
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block.light > .fk-product-block-content {
+    transform: translateX(-48px);
+  }
+
+  /* Core's two tags begin 6px inside its copy edge in 2024:1138; Arc's
+     single tag remains on the shared x=90 content edge. */
+  body:has(.home-hero-state-b) .fk-product-block.has-section-label > .fk-product-block-content > .tag-row {
+    padding-left: 6px;
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) .fk-product-name-dark {
+    margin: 6px 0 0;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -2.4px;
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) .wb-desc-heading-44 {
+    margin: 0;
+    font-size: 44px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0;
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) .wb-body-large-24-light.is-home-copy-scoped {
+    margin: 7px 0 0;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* Figma 2024:1155 / 1258: the 3-up feature band spans about 1324px at the
+     1512px reference frame (rather than the current 80% / 1133px treatment),
+     with three equal ~400px cells separated by ~62px. */
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row {
+    position: relative;
+    width: min(1324px, calc(100% - 84px));
+    min-height: 102px;
+    margin-right: 0;
+    margin-left: 42px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 62px;
+    row-gap: 0;
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row .fk-feature-item {
+    min-height: 102px;
+    padding: 0;
+    row-gap: 0;
+    justify-content: flex-start;
+    border-left: 0 !important;
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row .fk-feature-item + .fk-feature-item {
+    padding-left: 0;
+  }
+
+  /* Figma 2024:1151 / 1153 and 1266 / 1267 place the dividers at the
+     midpoint of each 62px gutter: at x=521 and x=983 in the 1512px frame.
+     Keeping them on the row (rather than each item) leaves 31px of breathing
+     room before the next feature description begins. */
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row::before,
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 102px;
+    background: rgba(120, 121, 130, .42);
+    pointer-events: none;
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row::before {
+    left: calc((100% - 124px) / 3 + 31px);
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row::after {
+    left: calc((100% - 124px) / 3 * 2 + 93px);
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row .fk-feature-item-head {
+    gap: 12px;
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row .wb-tags-24 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row .fk-feature-description-dark,
+  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row .fk-feature-description-light {
+    margin-top: 5px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+}

@@ -12,6 +12,7 @@ const mobileFixes = fs.readFileSync("fk-mobile.css", "utf8");
 const aboutTimeline = fs.readFileSync("fk-about-timeline.css", "utf8");
 const heroReadability = fs.readFileSync("fk-hero-readability.css", "utf8");
 const homeSections = fs.readFileSync("fk-home-sections-refinement.css", "utf8");
+const homeProducts = fs.readFileSync("fk-home-products-refinement.css", "utf8");
 const css =
   contrast +
   "\n\n/* ===== fk-mobilenav ===== */\n" + mobile +
@@ -19,7 +20,8 @@ const css =
   "\n\n/* ===== fk-mobile (mobile remediation) ===== */\n" + mobileFixes +
   "\n\n/* ===== About timeline scoped corrections ===== */\n" + aboutTimeline +
   "\n\n/* ===== Shared hero readability ===== */\n" + heroReadability +
-  "\n\n/* ===== Home sections refinements ===== */\n" + homeSections;
+  "\n\n/* ===== Home sections refinements ===== */\n" + homeSections +
+  "\n\n/* ===== Home product Figma refinement ===== */\n" + homeProducts;
 
 const out = `/*! fk-base-styles — Fawkes site-header registered script — v1.0.0
  *  Webflow injects registered "scripts" as <script src>, so a raw .css file
