@@ -217,7 +217,7 @@ body:has(.fk-product-block.has-feature-groups)
   line-height: 1.5;
 }
 body:has(.fk-product-block.has-feature-groups)
-  .fk-process-tile-list.is-columns .fk-process-tile .wb-tags-24 {
+  .fk-process-tile-list.is-columns .fk-process-tile .fk-process-tile-title {
   margin: 0;
   font-size: 32px;
   font-weight: 500;
@@ -225,7 +225,7 @@ body:has(.fk-product-block.has-feature-groups)
   letter-spacing: 0;
 }
 body:has(.fk-product-block.has-feature-groups)
-  .fk-process-tile-list.is-columns .fk-process-tile .wb-body-medium-16-light {
+  .fk-process-tile-list.is-columns .fk-process-tile .fk-process-tile-desc {
   margin: 0;
   font-size: 18px;
   font-weight: 300;
@@ -263,14 +263,14 @@ body:has(.fk-product-block.has-feature-groups)
     padding: 20px;
   }
   body:has(.fk-product-block.has-feature-groups)
-    .fk-process-tile-list.is-columns .fk-process-tile .wb-tags-24 {
+    .fk-process-tile-list.is-columns .fk-process-tile .fk-process-tile-title {
     font-size: 24px;
     line-height: 1.3;
   }
   body:has(.fk-product-block.has-feature-groups)
     .fk-process-tile-list.is-columns .fk-process-tile-number,
   body:has(.fk-product-block.has-feature-groups)
-    .fk-process-tile-list.is-columns .fk-process-tile .wb-body-medium-16-light {
+    .fk-process-tile-list.is-columns .fk-process-tile .fk-process-tile-desc {
     font-size: 16px;
   }
 }
