@@ -55,7 +55,7 @@
 
     // Parallax hero — no pin.
     document.querySelectorAll(HERO).forEach(function (hero) {
-      var img = hero.querySelector(".image-fill");
+      var images = hero.querySelectorAll(".image-fill, .home-hero-media-b");
       var scrim = hero.querySelector(".hero-scrim");
       var content = hero.querySelector(".hero-content");
       var statRow = hero.querySelector(".hero-stat-row");
@@ -64,7 +64,7 @@
         scrub: true, invalidateOnRefresh: true
       };
 
-      if (img) {
+      images.forEach(function (img) {
         // Responsive image selection must describe the transformed footprint,
         // not the pre-transform 100vw layout box. Without this, browsers pick
         // a source roughly 24% smaller than the 1.32x rendered hero.
@@ -76,7 +76,7 @@
           { yPercent: -14 },
           { yPercent: 14, ease: "none", immediateRender: false,
             scrollTrigger: Object.assign({}, range) });
-      }
+      });
 
       // Gentle darken as the hero leaves — nowhere near a full black-out.
       if (scrim) gsap.fromTo(scrim,
@@ -88,7 +88,7 @@
       if (content) gsap.to(content,
         { autoAlpha: 0.55, ease: "none",
           scrollTrigger: Object.assign({}, range) });
-      if (statRow) gsap.to(statRow,
+      if (statRow && !hero.querySelector('.home-hero-state-b')) gsap.to(statRow,
         { autoAlpha: 0.4, ease: "none",
           scrollTrigger: Object.assign({}, range) });
     });

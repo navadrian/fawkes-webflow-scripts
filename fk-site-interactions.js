@@ -259,7 +259,7 @@
     // .hero-stat-row's opacity for its scroll-scrub fade. rAF + timeout
     // trigger; failsafe force-shows if a throttled tab never runs it.
     var kpiRow = document.querySelector('.hero-stat-row');
-    if (kpiRow &&
+    if (kpiRow && !document.querySelector('.home-hero-state-b') &&
         !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
         window.matchMedia('(min-width: 768px)').matches) {
       var kpiTarget = document.querySelector('.fk-hero-target');

@@ -18,11 +18,11 @@
     '.fk-nav-pill .fk-nav-dropdown-wrapper{margin-right:0!important;position:relative;min-width:0}',
     '.fk-nav-pill[data-nav-open]{padding-bottom:calc(13px + var(--fk-nav-open-height,110px))!important;background-color:rgba(6,7,9,.92);border-color:rgba(255,255,255,.18)}',
     '.fk-nav-pill .fk-nav-dropdown-panel{display:none!important}',
-    '.fk-nav-pill .fk-nav-dropdown-wrapper.is-open>.fk-nav-dropdown-panel{display:flex!important;min-width:0;max-width:min(380px,calc(100vw - 64px));white-space:normal;padding-top:18px;row-gap:10px}',
+    '.fk-nav-pill .fk-nav-dropdown-wrapper.is-open>.fk-nav-dropdown-panel{display:flex!important;width:max-content!important;min-width:220px;max-width:calc(100vw - 48px);white-space:nowrap;padding-top:18px;row-gap:10px}',
     '.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link{position:relative;transition:font-weight .15s ease,opacity .15s ease}',
     '.fk-nav-pill .fk-nav-dropdown-wrapper.is-open>.fk-nav-link,.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link.is-current-section{font-weight:600}',
     '.fk-nav-pill .fk-nav-dropdown-wrapper.is-open>.fk-nav-link:after,.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link.is-current-section:after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:rgba(255,255,255,.58)}',
-    '.fk-nav-pill .fk-nav-dropdown-item{color:#fff;font-weight:300;white-space:normal;transition:opacity .15s ease}',
+    '.fk-nav-pill .fk-nav-dropdown-item{color:#fff;font-weight:300;white-space:nowrap!important;transition:opacity .15s ease}',
     '.fk-nav-pill .fk-nav-dropdown-item:hover,.fk-nav-pill .fk-nav-dropdown-item:focus-visible{opacity:.72}',
     '.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link:focus-visible,.fk-nav-pill .fk-nav-dropdown-item:focus-visible{outline:2px solid rgba(242,151,31,.85);outline-offset:4px}',
     '.fk-nav-pill[data-nav-open] .fk-nav-cta-button{background-color:#000;border-color:#fff}',
@@ -62,6 +62,13 @@
       });
       pill.setAttribute('data-nav-open', 'true');
       var panel = wrapper.querySelector(':scope > .fk-nav-dropdown-panel');
+      if (panel) {
+        panel.style.left = '0px';
+        var bounds = panel.getBoundingClientRect();
+        var shift = Math.min(0, window.innerWidth - 24 - bounds.right);
+        shift = Math.max(shift, 24 - bounds.left);
+        panel.style.left = shift + 'px';
+      }
       var openHeight = panel ? Math.ceil(panel.scrollHeight) : 110;
       pill.style.setProperty('--fk-nav-open-height', openHeight + 'px');
     }
@@ -133,6 +140,10 @@
     });
     window.addEventListener('resize', function () {
       if (!isDesktop()) closeDesktop();
+      else {
+        var active = pill.querySelector('.fk-nav-dropdown-wrapper.is-open');
+        if (active) openDesktop(active);
+      }
     });
   }
 
