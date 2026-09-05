@@ -272,3 +272,14 @@
    scroll lives on the documentElement, so body-only clip still lets it scroll.
    .case-study-row keeps its own overflow-x:auto (horizontal card list). */
 html, body { overflow-x: clip; }
+
+/* Shrink the title flex child rather than silently clipping long benefit text. */
+@media (max-width: 767px) {
+  .fk-feature-item,
+  .fk-feature-item-head { min-width: 0; }
+  .fk-feature-item-head .is-industry-feature-title {
+    min-width: 0;
+    flex: 1 1 0;
+    overflow-wrap: anywhere;
+  }
+}

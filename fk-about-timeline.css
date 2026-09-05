@@ -1,0 +1,92 @@
+/* ------------------------------------------------------------------
+   About timeline — connector and content-offset correction
+
+   Published bundle stylesheet. Scope is limited to the authored About
+   timeline classes: no product, hero, or shared layout selectors are touched.
+   Existing `about-milestone-left/right` placement continues to alternate the
+   desktop cards around the central rail.
+   ------------------------------------------------------------------ */
+
+/* The icon and axis dot are both centred on y=18px. Draw a dotted segment
+   between them, rather than asking the text card to imply that relationship. */
+.about-timeline .about-milestone {
+  --about-connector-y: 18px;
+}
+
+.about-timeline .about-milestone::after {
+  content: "";
+  position: absolute;
+  top: var(--about-connector-y);
+  height: 0;
+  border-top: 1px dotted rgba(17, 18, 23, 0.52);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Left milestones run from the outer icon toward the central rail; right
+   milestones mirror the same relation without changing the native classes. */
+.about-timeline .about-milestone-left::after { left: 36px; right: 0; }
+.about-timeline .about-milestone-right::after { left: 0; right: 36px; }
+
+.about-timeline .about-milestone-icon,
+.about-timeline .about-milestone-dot {
+  z-index: 1;
+}
+
+/* The date, title, and body should read as the detail beneath the connector,
+   not as a label competing with the axis dot on its horizontal line. */
+@media (min-width: 768px) {
+  .about-timeline .about-milestone {
+    padding-top: 34px;
+  }
+}
+
+/* Phone layout becomes one chronological column. The rail moves just to the
+   right of the outer icon, leaving a short visible dotted run; content starts
+   below that run and clear of the rail. This avoids the current overlapping
+   icon/dot at the left edge while keeping the same three milestone nodes. */
+@media (max-width: 767px) {
+  .about-timeline .about-timeline-list {
+    height: auto;
+  }
+
+  .about-timeline .about-timeline-rail {
+    left: 54px;
+    top: 18px;
+    bottom: 54px;
+    height: auto;
+  }
+
+  .about-timeline .about-milestone,
+  .about-timeline .about-milestone-left,
+  .about-timeline .about-milestone-right {
+    height: auto;
+    min-height: 0;
+    margin-left: 0;
+    padding: 54px 0 0 78px;
+  }
+
+  .about-timeline .about-milestone:last-child { margin-bottom: 0; }
+
+  .about-timeline .about-milestone-icon,
+  .about-timeline .about-icon-left,
+  .about-timeline .about-icon-right {
+    left: 0;
+    right: auto;
+  }
+
+  .about-timeline .about-milestone-dot,
+  .about-timeline .about-dot-left,
+  .about-timeline .about-dot-right {
+    left: 50px;
+    right: auto;
+  }
+
+  .about-timeline .about-milestone::after,
+  .about-timeline .about-milestone-left::after,
+  .about-timeline .about-milestone-right::after {
+    left: 36px;
+    right: auto;
+    width: 18px;
+  }
+}
