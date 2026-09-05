@@ -1,6 +1,7 @@
 /* Shared hero title rhythm; scoped away from section headings and card text. */
 :root { --fk-hero-title-leading: 1.3; }
 .wb-hero-title,
+.fk-visual-card .fk-vc-headline,
 .about-hero .about-hero-title,
 .casestudies-hero_content .heading-hero {
   line-height: var(--fk-hero-title-leading) !important;
