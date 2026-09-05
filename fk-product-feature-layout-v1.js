@@ -64,8 +64,8 @@
   transform:scale(1.006);
   transform-origin:50% 50%;
 }
-.fk-product-block-visual.is-product-dashboard > img[src*="fawkes-product-link-health-figma-3x"] {
-  transform:scale(1.012);
+.fk-product-block-visual.is-product-dashboard > img[src*="fawkes-product-link-"] {
+  transform:scale(1.025);
 }
 .fk-product-block.has-feature-groups.is-product-feature-section .fk-product-feature-left > .fk-feature-groups.is-product-feature-layout {
   display:flex !important;
@@ -116,7 +116,9 @@
   max-width:none;
   min-width:0;
   margin:0;
-  padding-right:0 !important;
+  box-sizing:border-box;
+  padding-right:16px !important;
+  text-align:right;
   /* A long audience label may wrap after its slash, but never through a word. */
   overflow-wrap:normal;
   word-break:normal;
@@ -184,6 +186,7 @@
     grid-column:1 !important;
     grid-row:1 !important;
     max-width:none;
+    text-align:left;
   }
   .fk-product-block.has-feature-groups.is-product-feature-section .is-product-feature-rows {
     grid-column:1 !important;
@@ -200,6 +203,7 @@
   .fk-product-block.has-feature-groups.is-product-feature-section .fk-product-feature-right > .wb-body-large-24-light { font-size:17px !important; }
 }
 `;document.head.appendChild(s);
+function initializeFeatureLabels(){
 document.querySelectorAll('.fk-product-feature-left > .fk-product-name-dark').forEach((heading)=>{
   if(heading.textContent.trim()==='Residual Asset Value') heading.setAttribute('data-fk-wrap-residual','');
 });
@@ -208,7 +212,7 @@ document.querySelectorAll('.fk-product-feature-left > .fk-product-name-dark').fo
 document.querySelectorAll('.fk-feature-groups.is-product-feature-layout').forEach((groups)=>{
   const labels=Array.from(groups.querySelectorAll('.is-product-feature-label'));
   const wide=labels.some(label=>label.textContent.trim().length>8);
-  groups.style.setProperty('--fk-audience-label-width',wide?'150px':'64px');
+  groups.style.setProperty('--fk-audience-label-width',wide?'170px':'80px');
 });
 /* A slash-separated audience name is one text value in the component prop.
    Add a semantic soft wrap point after each slash without changing that value,
@@ -217,4 +221,13 @@ document.querySelectorAll('.fk-product-block.has-feature-groups.is-product-featu
   if(label.querySelector('wbr') || !label.textContent.includes('/')) return;
   label.innerHTML=label.innerHTML.replace(/\//g,'/<wbr>');
 });
+}
+function initializeWhenReady(){
+  initializeFeatureLabels();
+  // Recheck once hydrated component content has settled; initialization is idempotent.
+  setTimeout(initializeFeatureLabels,500);
+  setTimeout(initializeFeatureLabels,2000);
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initializeWhenReady,{once:true});
+else initializeWhenReady();
 })();

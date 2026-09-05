@@ -611,6 +611,38 @@ body:has(.fk-product-block.has-feature-groups)
 
 /* ---- About / Journey: replace placeholder font glyphs with the exact Figma
    vector exports while retaining the existing accessible milestone text. ---- */
+/* Both founder cutouts use one plate alignment and a transparent image layer. */
+.section-wrapper:has(> .about-founders-title) .fk-founder-image {
+  background: transparent;
+  overflow: hidden;
+}
+.section-wrapper:has(> .about-founders-title) .fk-founder-image > img.image-fill {
+  object-fit: contain;
+  object-position: center bottom;
+  background: transparent;
+  transform-origin: center top;
+}
+.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-image > img.image-fill {
+  transform: scale(1.6);
+}
+.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-image > img.image-fill {
+  transform: translateY(-55%) scale(1.6);
+}
+.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(n) .fk-founder-info::before {
+  left: -10%;
+  top: 60px;
+  width: 120%;
+  height: auto;
+  aspect-ratio: 565 / 319;
+  transform: none;
+}
+@media (max-width: 767px) {
+  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(n) .fk-founder-info::before {
+    left: 0;
+    width: 100%;
+    top: 40px;
+  }
+}
 .about-timeline .about-milestone-icon {
   font-size: 0;
   background-repeat: no-repeat;
@@ -872,6 +904,17 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
    ================================================================== */
 
 /* Figma process cards have unequal horizontal and vertical gutters. */
+.is-product-hero-content .fk-product-hero-copy { row-gap: 20px; }
+@media (min-width: 992px) {
+  .hero-wrapper:has(> .is-product-hero-content) > .is-product-hero-content {
+    position: absolute;
+    top: 55%;
+    bottom: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
+}
 @media (min-width: 768px) {
   body:has(.fk-product-block.has-feature-groups) .section-wrapper:has(> .fk-process-tile-list.is-columns) > .fk-process-tile-list.is-columns {
     column-gap: 20px;
