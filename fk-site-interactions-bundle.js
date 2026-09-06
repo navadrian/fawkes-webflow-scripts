@@ -339,57 +339,93 @@
       }, 4400);
     }
 
-    // 6. Home case-study cards — auto-scroll marquee. Wrap the row's children
-    // (+ one cloned set) in a flex track and drive it with translateX — a
-    // transform takes sub-pixel values and is GPU-composited, unlike
-    // element.scrollLeft which several browsers round to whole pixels (so a
-    // <1px/frame step never moves). Pause on hover/focus; respect
-    // prefers-reduced-motion.
-    var csRow = document.querySelector('.case-study-row');
-    if (csRow && csRow.children.length &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-        csRow.scrollWidth > csRow.clientWidth + 4) {
-      var csGap = getComputedStyle(csRow).columnGap;
-      if (!csGap || csGap === 'normal') csGap = getComputedStyle(csRow).gap;
-      if (!csGap || csGap === 'normal') csGap = '24px';
-      var csTrack = document.createElement('div');
-      csTrack.style.cssText = 'display:flex;flex:0 0 auto;column-gap:' + csGap + ';will-change:transform';
-      var csOriginals = Array.prototype.slice.call(csRow.children);
-      var csCardW = csOriginals[0].getBoundingClientRect().width;
-      while (csRow.firstChild) { csTrack.appendChild(csRow.firstChild); }
-      csOriginals.forEach(function (card) {
-        var clone = card.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        clone.tabIndex = -1;
-        csTrack.appendChild(clone);
-      });
-      // keep each card at its natural width inside the track (guard against a
-      // flex:1 basis collapsing them now that the track has no fixed width)
-      Array.prototype.forEach.call(csTrack.children, function (card) {
-        card.style.flex = '0 0 ' + Math.round(csCardW) + 'px';
-      });
-      csRow.appendChild(csTrack);
-      csRow.style.overflow = 'hidden';
-      // loop period = left edge of the first clone minus left edge of the first card
-      var firstCardLeft = csTrack.children[0].getBoundingClientRect().left;
-      var csLoop = csTrack.children[csOriginals.length].getBoundingClientRect().left - firstCardLeft;
-      var CS_SPEED = 0.5; // px per frame ≈ 30px/s at 60fps
-      var csPos = 0;
-      var csPaused = false;
-      ['mouseenter', 'focusin'].forEach(function (ev) {
-        csRow.addEventListener(ev, function () { csPaused = true; });
-      });
-      ['mouseleave', 'focusout'].forEach(function (ev) {
-        csRow.addEventListener(ev, function () { csPaused = false; });
-      });
-      (function csTick() {
-        if (!csPaused && !document.hidden && csLoop > 0) {
-          csPos -= CS_SPEED;
-          if (csPos <= -csLoop) { csPos += csLoop; }
-          csTrack.style.transform = 'translateX(' + csPos + 'px)';
+    // Manual case-study navigation is initialized below; no autoplay or clones.
+  }
+
+  function initReviewInteractions() {
+    var row = document.querySelector('.fk-home-case-section-exact .case-study-row');
+    if (row && !row.dataset.fkManualCases) {
+      row.dataset.fkManualCases = 'true';
+      row.classList.add('fk-manual-cases');
+      row.setAttribute('aria-label', 'Case studies');
+      var cards = Array.prototype.slice.call(row.children);
+      var heading = row.parentElement.querySelector('.home-case-label-exact');
+      var controls = document.createElement('div');
+      controls.className = 'fk-case-controls';
+      var index = 0;
+      function button(label, glyph, delta) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'fk-case-control';
+        b.setAttribute('aria-label', label);
+        b.textContent = glyph;
+        b.addEventListener('click', function () {
+          index = Math.max(0, Math.min(cards.length - 1, index + delta));
+          show(true);
+        });
+        controls.appendChild(b);
+        return b;
+      }
+      var previous = button('Previous case study', '\u2190', -1);
+      var next = button('Next case study', '\u2192', 1);
+      var status = document.createElement('span');
+      status.className = 'fk-case-status';
+      status.setAttribute('aria-live', 'polite');
+      controls.appendChild(status);
+      if (heading) {
+        var head = document.createElement('div');
+        head.className = 'fk-case-heading-row';
+        heading.parentElement.insertBefore(head, heading);
+        head.appendChild(heading);
+        head.appendChild(controls);
+      } else row.parentElement.insertBefore(controls, row);
+      function show(smooth) {
+        if (!cards.length) return;
+        var target = cards[index].offsetLeft - cards[0].offsetLeft;
+        row.scrollTo({left: target, behavior: smooth && !window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant'});
+        previous.disabled = index === 0;
+        next.disabled = index === cards.length - 1;
+        status.textContent = (index + 1) + ' / ' + cards.length;
+      }
+      window.addEventListener('resize', function () { show(false); });
+      show(false);
+    }
+
+    var toc = document.querySelector('.article-toc-rt');
+    if (toc && !toc.dataset.fkActiveContents) {
+      toc.dataset.fkActiveContents = 'true';
+      var entries = Array.prototype.map.call(toc.querySelectorAll('a[href^="#"]'), function (link) {
+        var id;
+        try { id = decodeURIComponent(link.hash.slice(1)); } catch (_) { id = link.hash.slice(1); }
+        return {link: link, section: document.getElementById(id)};
+      }).filter(function (entry) { return entry.section; });
+      var pending = false;
+      var active;
+      function updateContents() {
+        pending = false;
+        if (!entries.length) return;
+        var current = entries[0];
+        entries.forEach(function (entry) { if (entry.section.getBoundingClientRect().top <= 150) current = entry; });
+        if (current === active) return;
+        active = current;
+        entries.forEach(function (entry) {
+          var selected = entry === current;
+          entry.link.classList.toggle('is-current-section', selected);
+          if (selected) entry.link.setAttribute('aria-current', 'location');
+          else entry.link.removeAttribute('aria-current');
+        });
+        var linkBox = current.link.getBoundingClientRect();
+        var tocBox = toc.getBoundingClientRect();
+        if (linkBox.top < tocBox.top || linkBox.bottom > tocBox.bottom) {
+          toc.scrollTop += linkBox.top - tocBox.top - 12;
         }
-        window.requestAnimationFrame(csTick);
-      })();
+      }
+      window.addEventListener('scroll', function () {
+        if (!pending) { pending = true; window.requestAnimationFrame(updateContents); }
+      }, {passive: true});
+      window.addEventListener('resize', updateContents);
+      window.addEventListener('hashchange', updateContents);
+      updateContents();
     }
   }
 
@@ -398,8 +434,9 @@
   // run — so dispatch immediately when the document is already parsed.
   if (document.readyState !== 'loading') {
     init();
+    initReviewInteractions();
   } else {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
+    document.addEventListener('DOMContentLoaded', function () { init(); initReviewInteractions(); }, { once: true });
   }
 })();
 

@@ -161,3 +161,25 @@ body:has(.home-hero-state-b) .fk-product-block.light .fk-tag-chip {
     line-height: 1.5;
   }
 }
+/* Approved review corrections: manual cases and article contents. */
+.fk-case-heading-row { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:32px; }
+.fk-case-heading-row .home-case-label-exact { margin-bottom:0 !important; }
+.fk-case-controls { display:flex; align-items:center; gap:12px; }
+.fk-case-control { width:48px; height:48px; border:1px solid currentColor; border-radius:50%; background:transparent; color:inherit; font:300 28px/1 Inter,sans-serif; cursor:pointer; }
+.fk-case-control:hover:not(:disabled) { background:#f2971f; color:#111217; }
+.fk-case-control:focus-visible { outline:2px solid #f2971f; outline-offset:4px; }
+.fk-case-control:disabled { opacity:.3; cursor:default; }
+.fk-case-status { font:400 14px/20px Inter,sans-serif; white-space:nowrap; }
+.case-study-row.fk-manual-cases { display:flex !important; overflow-x:auto !important; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:none; }
+.case-study-row.fk-manual-cases::-webkit-scrollbar { display:none; }
+.fk-manual-cases > * { flex:0 0 min(700px,100%) !important; scroll-snap-align:start; }
+.fk-manual-cases::after { content:''; flex:0 0 max(0px,calc(100% - 700px - 34px)); }
+.article-toc-heading { font-family:Inter,sans-serif; font-size:24px; line-height:36px; font-weight:500; }
+.article-toc-rt { max-height:calc(100vh - 180px); overflow-y:auto; scrollbar-width:thin; scrollbar-color:#111217 #d1d1d6; padding-right:12px; }
+.article-toc-rt ul { list-style-type:decimal; padding-left:24px; margin:0; }
+.article-toc-rt li { font:300 16px/24px Inter,sans-serif; color:rgba(0,0,0,.7); margin-bottom:12px; padding-left:0; }
+.article-toc-rt a { text-decoration:none !important; font-family:Inter,sans-serif; }
+.article-toc-rt a.is-current-section { font-weight:700 !important; color:#111217; }
+.article-toc-rt::-webkit-scrollbar { width:2px; }
+.article-toc-rt::-webkit-scrollbar-track { background:#d1d1d6; }
+.article-toc-rt::-webkit-scrollbar-thumb { background:#111217; border-radius:2px; }
