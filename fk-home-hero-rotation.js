@@ -34,6 +34,7 @@
       "." + ROOT_CLASS + " .home-hero-stat-card .home-hero-stat-label{order:0;text-transform:uppercase;font-size:10px;line-height:1.5;letter-spacing:-.5px;max-width:102px;text-align:center;}" +
       "." + ROOT_CLASS + " .home-hero-stat-card .home-hero-stat-value{order:1;font-size:32px;line-height:1;font-weight:700;}" +
       "." + ROOT_CLASS + " .home-hero-stat-card .home-hero-stat-unit{order:2;font-size:10px;line-height:1.15;}" +
+      "." + ROOT_CLASS + " .home-hero-stat-card{font-family:Inter,sans-serif;}" +
       "." + ROOT_CLASS + " .home-hero-target-b{position:absolute;inset:0;z-index:2;pointer-events:none;}" +
       "." + ROOT_CLASS + " .hero-content{z-index:4;}" +
       "." + ROOT_CLASS + " .fk-home-hero-delay{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}" +
@@ -226,7 +227,7 @@
   Rotation.prototype.primeB = function () {
     set(this.bKpi, { opacity: "1", "clip-path": "inset(0 0 100% 0)", "-webkit-clip-path": "inset(0 0 100% 0)" });
     set(this.bDot, { opacity: "0", transform: "scale(.35)" });
-    set(this.bConnector, { opacity: "0", "clip-path": "inset(0 100% 0 0)", "-webkit-clip-path": "inset(0 100% 0 0)" });
+    set(this.bConnector, { opacity: "0", "clip-path": "inset(0 0 100% 0)", "-webkit-clip-path": "inset(0 0 100% 0)" });
     this.bCards.forEach(function (card) { set(card, { opacity: "0", transform: "translateY(14px)" }); });
   };
 
@@ -264,7 +265,7 @@
       [{ opacity: 0, transform: "scale(.35)" }, { opacity: 1, transform: "scale(1)" }],
       { duration: 900, delay: 250, fill: "forwards", easing: "cubic-bezier(.18,.7,.3,1)" }));
     if (!mobile && this.bConnector) jobs.push(this.animate(this.bConnector,
-      [{ opacity: 0, clipPath: "inset(0 100% 0 0)", webkitClipPath: "inset(0 100% 0 0)" }, { opacity: 1, clipPath: "inset(0 0 0 0)", webkitClipPath: "inset(0 0 0 0)" }],
+      [{ opacity: 0, clipPath: "inset(0 0 100% 0)", webkitClipPath: "inset(0 0 100% 0)" }, { opacity: 1, clipPath: "inset(0 0 0 0)", webkitClipPath: "inset(0 0 0 0)" }],
       { duration: 850, delay: 950, fill: "forwards", easing: "ease" }));
     if (this.bKpi) jobs.push(this.animate(this.bKpi,
       [{ opacity: 1, clipPath: "inset(0 0 100% 0)", webkitClipPath: "inset(0 0 100% 0)" }, { opacity: 1, clipPath: "inset(0 0 0 0)", webkitClipPath: "inset(0 0 0 0)" }],

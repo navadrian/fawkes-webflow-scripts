@@ -368,10 +368,6 @@
       }
       var previous = button('Previous case study', '\u2190', -1);
       var next = button('Next case study', '\u2192', 1);
-      var status = document.createElement('span');
-      status.className = 'fk-case-status';
-      status.setAttribute('aria-live', 'polite');
-      controls.appendChild(status);
       if (heading) {
         var head = document.createElement('div');
         head.className = 'fk-case-heading-row';
@@ -385,7 +381,6 @@
         row.scrollTo({left: target, behavior: smooth && !window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant'});
         previous.disabled = index === 0;
         next.disabled = index === cards.length - 1;
-        status.textContent = (index + 1) + ' / ' + cards.length;
       }
       window.addEventListener('resize', function () { show(false); });
       show(false);
