@@ -7,7 +7,7 @@
 /* Full-bleed track; inset only the snap origin, not the visible viewport. */
 .fk-home-case-section-exact .case-study-row.fk-manual-cases {
  box-sizing:border-box; width:var(--fk-case-viewport,100vw)!important; max-width:none!important;
- margin-left:calc(-1 * var(--fk-case-inset,48px))!important; margin-right:0!important;
+ margin-left:calc(-1 * var(--fk-case-origin,48px))!important; margin-right:0!important;
  padding-left:var(--fk-case-inset,48px)!important; padding-right:var(--fk-case-inset,48px)!important;
  scroll-padding-left:var(--fk-case-inset,48px); scroll-padding-right:0;
 }

@@ -378,6 +378,8 @@
       function alignTrack() {
         var inset = heading ? heading.getBoundingClientRect().left : row.parentElement.getBoundingClientRect().left;
         row.style.setProperty('--fk-case-inset', Math.max(0, inset) + 'px');
+        var parent = row.parentElement;
+        row.style.setProperty('--fk-case-origin', (parent.getBoundingClientRect().left + parseFloat(window.getComputedStyle(parent).paddingLeft)) + 'px');
         row.style.setProperty('--fk-case-viewport', document.documentElement.clientWidth + 'px');
       }
       function updateButtons() {
