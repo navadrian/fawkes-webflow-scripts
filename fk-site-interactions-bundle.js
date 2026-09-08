@@ -375,14 +375,35 @@
         head.appendChild(heading);
         head.appendChild(controls);
       } else row.parentElement.insertBefore(controls, row);
+      function alignTrack() {
+        var inset = heading ? heading.getBoundingClientRect().left : row.parentElement.getBoundingClientRect().left;
+        row.style.setProperty('--fk-case-inset', Math.max(0, inset) + 'px');
+        row.style.setProperty('--fk-case-viewport', document.documentElement.clientWidth + 'px');
+      }
+      function updateButtons() {
+        previous.disabled = index === 0;
+        next.disabled = index === cards.length - 1;
+      }
       function show(smooth) {
         if (!cards.length) return;
         var target = cards[index].offsetLeft - cards[0].offsetLeft;
         row.scrollTo({left: target, behavior: smooth && !window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant'});
-        previous.disabled = index === 0;
-        next.disabled = index === cards.length - 1;
+        updateButtons();
       }
-      window.addEventListener('resize', function () { show(false); });
+      var scrollTimer;
+      row.addEventListener('scroll', function () {
+        window.clearTimeout(scrollTimer);
+        scrollTimer = window.setTimeout(function () {
+          var closest = Infinity;
+          cards.forEach(function (card, i) {
+            var distance = Math.abs(card.offsetLeft - cards[0].offsetLeft - row.scrollLeft);
+            if (distance < closest) { closest = distance; index = i; }
+          });
+          updateButtons();
+        }, 150);
+      }, {passive:true});
+      window.addEventListener('resize', function () { alignTrack(); show(false); });
+      alignTrack();
       show(false);
     }
 

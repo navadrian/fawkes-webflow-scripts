@@ -2,6 +2,15 @@
 .hero-wrapper .fk-tag-chip, .fk-link-hero-frame .fk-tag-chip { font-size:20px!important; line-height:30px!important; padding:6px 14px!important; border-radius:8px!important; background:rgba(17,18,23,.8)!important; }
 [data-fk-bess-heading] { white-space:pre-line; }
 .fk-case-study-card, .fk-case-study-card .fk-cs-card-link { box-shadow:none!important; }
+.fk-home-case-section-exact { row-gap:18px!important; }
+.fk-home-case-section-exact .fk-case-heading-row { margin-bottom:0!important; }
+/* Full-bleed track; inset only the snap origin, not the visible viewport. */
+.fk-home-case-section-exact .case-study-row.fk-manual-cases {
+ box-sizing:border-box; width:var(--fk-case-viewport,100vw)!important; max-width:none!important;
+ margin-left:calc(-1 * var(--fk-case-inset,48px))!important; margin-right:0!important;
+ padding-left:var(--fk-case-inset,48px)!important; padding-right:var(--fk-case-inset,48px)!important;
+ scroll-padding-left:var(--fk-case-inset,48px); scroll-padding-right:0;
+}
 .fk-xlink-card .fk-xlink-product-title { margin-bottom:12px!important; }
 .fk-xlink-card .fk-xlink-description { margin-top:0!important; }
 .fk-comparison-table tbody td:not(:last-child), .fk-comparison-table tbody th { color:#c4c4ca!important; }
