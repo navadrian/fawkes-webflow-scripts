@@ -62,6 +62,9 @@
 .fk-cta-banner > .btn-ghost { background:transparent!important; border:1px solid rgba(255,255,255,.65)!important; color:white!important; border-radius:10px; padding:12px 20px; font-size:20px; line-height:24px; font-weight:500; align-self:flex-start; }
 @media(max-width:991px) { .fk-review-product-card { padding:40px 28px; } .fk-review-product-card .fk-xlink-title { font-size:38px; } .fk-review-product-card .fk-xlink-description { font-size:26px; } }
 @media(max-width:767px) {
+ .fk-manual-cases .fk-case-study-stat-block { inset:auto 16px 16px!important; width:auto!important; height:auto!important; min-height:0!important; padding:16px!important; display:flex!important; flex-direction:column; gap:10px!important; }
+ .fk-manual-cases .fk-case-study-stat-block > .fk-tag-chip, .fk-manual-cases .fk-case-study-stat-block > .wb-card-text-36 { position:static!important; inset:auto!important; width:auto!important; height:auto!important; max-width:100%!important; }
+ .fk-manual-cases .fk-case-study-stat-block > .fk-tag-chip { align-self:flex-start; }
  .contact-form-panel:not(.fk-application-panel) { width:100%; padding:112px 24px 48px; }
  .contact-form-panel:not(.fk-application-panel) .contact-subheading { margin-bottom:32px; }
  .hero-wrapper .fk-tag-chip, .fk-link-hero-frame .fk-tag-chip { font-size:14px!important; line-height:21px!important; padding:6px 10px!important; }
