@@ -36,12 +36,21 @@
 [data-fk-more-cases] .w-dyn-item[hidden] { display:none!important; }
 .contact-form-panel textarea.form-input { height:86px; }
 .contact-form-panel .form-input { border-color:rgba(0,0,0,.3); }
+.contact-form-panel:not(.fk-application-panel) { padding:120px 103px 75px 65px; height:auto; min-height:100svh; justify-content:flex-start; }
+.contact-form-panel:not(.fk-application-panel) .form-input { height:65px!important; margin:0!important; font-size:18px; border-radius:10px; background:transparent; }
+.contact-form-panel:not(.fk-application-panel) textarea.form-input { height:86px!important; }
+.contact-form-panel:not(.fk-application-panel) .form-field { margin-bottom:20px; }
+.contact-form-panel:not(.fk-application-panel) .form-row { margin-bottom:0; }
+.contact-form-panel:not(.fk-application-panel) .form-label { margin-bottom:5px; font-size:16px; line-height:24px; text-transform:uppercase; }
+.contact-form-panel:not(.fk-application-panel) .contact-subheading { margin-bottom:68px; }
 /* Official Lucide paperclip, replacing only Webflow's decorative upload glyph. */
 .fk-application-upload .w-icon-file-upload-icon { width:18px; height:18px; flex:0 0 18px; margin:0; background:currentColor; -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551'/%3E%3C/svg%3E") center/contain no-repeat; }
 .fk-application-upload .w-icon-file-upload-icon::before { content:none!important; }
 .fk-cta-banner > .btn-ghost { background:transparent!important; border:1px solid rgba(255,255,255,.65)!important; color:white!important; border-radius:10px; padding:12px 20px; font-size:20px; line-height:24px; font-weight:500; align-self:flex-start; }
 @media(max-width:991px) { .fk-review-product-card { padding:40px 28px; } .fk-review-product-card .fk-xlink-title { font-size:38px; } .fk-review-product-card .fk-xlink-description { font-size:26px; } }
 @media(max-width:767px) {
+ .contact-form-panel:not(.fk-application-panel) { width:100%; padding:112px 24px 48px; }
+ .contact-form-panel:not(.fk-application-panel) .contact-subheading { margin-bottom:32px; }
  .hero-wrapper .hero-content .fk-tag-chip { font-size:14px!important; line-height:21px!important; padding:6px 10px!important; }
  [data-fk-bess-heading] { white-space:normal; }
  .article-toc { position:relative!important; top:auto!important; }
