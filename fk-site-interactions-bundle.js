@@ -394,6 +394,18 @@
         try { id = decodeURIComponent(link.hash.slice(1)); } catch (_) { id = link.hash.slice(1); }
         return {link: link, section: document.getElementById(id)};
       }).filter(function (entry) { return entry.section; });
+      // Keep CMS anchors reliable after the article header joins the content column.
+      // Webflow's delegated smooth-scroll handler can cancel these clicks.
+      entries.forEach(function (entry) {
+        entry.link.addEventListener('click', function (event) {
+          if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          event.stopPropagation();
+          window.scrollTo({top: Math.max(0, window.scrollY + entry.section.getBoundingClientRect().top - 120), behavior: 'instant'});
+          history.replaceState(null, '', entry.link.hash);
+          updateContents();
+        });
+      });
       var pending = false;
       var active;
       function updateContents() {
@@ -977,6 +989,7 @@
      var industries={
       'EV Fleets':{url:'/ev-fleets',image:'6a98ffae2efaf3ef3178f187_fawkescore-industry-fleets.png'},
       'EV Financiers':{url:'/ev-financiers',image:'6a98ffaa2efaf3ef3178ee51_fawkeslink-industry-application-card.png'},
+      'Battery Energy Storage Systems':{url:'/bess',image:'6a98ffae460b99379e4496ff_fawkescore-industry-bess.png'},
       'BESS':{url:'/bess',image:'6a98ffae460b99379e4496ff_fawkescore-industry-bess.png'}
      };
      var label=Object.keys(industries).find(function(key){return card.textContent.indexOf(key)!==-1;});

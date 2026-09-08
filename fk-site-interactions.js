@@ -394,6 +394,18 @@
         try { id = decodeURIComponent(link.hash.slice(1)); } catch (_) { id = link.hash.slice(1); }
         return {link: link, section: document.getElementById(id)};
       }).filter(function (entry) { return entry.section; });
+      // Keep CMS anchors reliable after the article header joins the content column.
+      // Webflow's delegated smooth-scroll handler can cancel these clicks.
+      entries.forEach(function (entry) {
+        entry.link.addEventListener('click', function (event) {
+          if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          event.stopPropagation();
+          window.scrollTo({top: Math.max(0, window.scrollY + entry.section.getBoundingClientRect().top - 120), behavior: 'instant'});
+          history.replaceState(null, '', entry.link.hash);
+          updateContents();
+        });
+      });
       var pending = false;
       var active;
       function updateContents() {

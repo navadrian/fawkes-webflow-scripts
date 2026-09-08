@@ -40,6 +40,7 @@
      var industries={
       'EV Fleets':{url:'/ev-fleets',image:'6a98ffae2efaf3ef3178f187_fawkescore-industry-fleets.png'},
       'EV Financiers':{url:'/ev-financiers',image:'6a98ffaa2efaf3ef3178ee51_fawkeslink-industry-application-card.png'},
+      'Battery Energy Storage Systems':{url:'/bess',image:'6a98ffae460b99379e4496ff_fawkescore-industry-bess.png'},
       'BESS':{url:'/bess',image:'6a98ffae460b99379e4496ff_fawkescore-industry-bess.png'}
      };
      var label=Object.keys(industries).find(function(key){return card.textContent.indexOf(key)!==-1;});
