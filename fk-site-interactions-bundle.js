@@ -1005,6 +1005,14 @@
    // Explicit associations verified against CMS and article content, September 8.
    var mapping={'ev-fleet-false-positive-reduction':'FawkesCore','ev-financier-resale-confidence':'FawkesLink','bess-unplanned-downtime-reduction':'FawkesCore'};
    var name=mapping[location.pathname.split('/').filter(Boolean).pop()];
+   // Reuse the approved association when legacy draft-product bindings render empty.
+   document.querySelectorAll('.casestudy-rail_item').forEach(function(item) {
+    var label=item.querySelector('.casestudy-rail_label'), value=item.querySelector('.casestudy-rail_value');
+    if(name && label && /^product$/i.test(label.textContent.trim()) && value && !value.textContent.trim()) {
+     var link=document.createElement('a'); link.href=products[name].url; link.textContent=name;
+     value.classList.remove('w-dyn-bind-empty'); value.appendChild(link);
+    }
+   });
    var cards=related.querySelectorAll('a');
    cards.forEach(function(card){
     if(/RELATED PRODUCT/i.test(card.textContent)&&name) {card.parentElement.classList.add('fk-review-related-row'); productCard(card,name);}

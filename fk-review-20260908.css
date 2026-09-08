@@ -2,6 +2,8 @@
 .hero-wrapper .fk-tag-chip, .fk-link-hero-frame .fk-tag-chip { font-size:20px!important; line-height:30px!important; padding:6px 14px!important; border-radius:8px!important; background:rgba(17,18,23,.8)!important; }
 [data-fk-bess-heading] { white-space:pre-line; }
 .fk-case-study-card, .fk-case-study-card .fk-cs-card-link { box-shadow:none!important; }
+/* Match the existing -2px image inset: native 100% sizing exposed a dark 2px edge. */
+.fk-case-study-card > img.image-fill { width:calc(100% + 4px)!important; height:calc(100% + 4px)!important; max-width:none!important; }
 .fk-home-case-section-exact { row-gap:18px!important; }
 .fk-home-case-section-exact .fk-case-heading-row { margin-bottom:0!important; }
 /* Full-bleed track; inset only the snap origin, not the visible viewport. */
