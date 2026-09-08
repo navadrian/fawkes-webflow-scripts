@@ -1,0 +1,29 @@
+/* Product batch: phone-only reflow, no base or tablet declarations. */
+@media (max-width:767px) {
+ body:has(.is-product-feature-section) .section-wrapper.fk-feature-padding-host { padding:0!important; margin:0!important; width:100%!important; }
+ body:has(.is-product-hero-content) .hero-wrapper { padding:112px 24px 48px!important; min-height:640px!important; height:auto!important; }
+ .hero-wrapper .hero-content.is-product-hero-content { width:100%!important; max-width:none!important; left:auto!important; right:auto!important; gap:24px!important; }
+ .is-product-hero-content .fk-product-hero-copy { width:100%!important; }
+ .is-product-hero-content .is-product-hero-description { font-size:26px!important; line-height:1.4!important; letter-spacing:-.5px!important; width:100%!important; }
+ .fk-link-hero-layout .fk-link-hero-title { font-size:36px!important; line-height:1.2!important; }
+ .fk-link-hero-layout .fk-link-hero-description { font-size:24px!important; line-height:1.4!important; letter-spacing:-.5px!important; }
+ .fk-product-block.has-feature-groups.fk-product-padding-exact.fk-product-padding-priority.is-product-feature-section { padding:48px 24px!important; gap:24px!important; width:100%!important; }
+ .fk-product-block.has-feature-groups.is-product-feature-section .fk-product-feature-left > .fk-product-name-dark { font-size:26px!important; line-height:1.3!important; padding:0!important; }
+ .fk-product-block.has-feature-groups.is-product-feature-section .fk-product-feature-right > .wb-body-large-24-light { font-size:18px!important; line-height:1.5!important; }
+ .fk-product-block.has-feature-groups.is-product-feature-section .fk-feature-group.is-product-feature-group { width:100%!important; grid-template-columns:minmax(0,1fr)!important; gap:12px!important; }
+ .fk-product-block.has-feature-groups.is-product-feature-section .fk-feature-group .is-product-feature-label { width:100%!important; border-right:0!important; padding:0 0 8px!important; }
+ .fk-product-block.has-feature-groups.is-product-feature-section .fk-feature-group .is-product-feature-rows { width:100%!important; grid-area:auto!important; }
+ .section-wrapper.fk-core-process-canvas-exact, .section-wrapper.fk-core-comparison-section, .section-wrapper.fk-product-faq-industry-inset { padding:48px 24px!important; }
+ .fk-core-process-canvas-exact .fk-process-tile-list.is-columns.fk-core-process-staggered { display:grid!important; grid-template-columns:minmax(0,1fr)!important; width:100%!important; margin:0!important; gap:16px!important; }
+ .fk-core-process-canvas-exact .fk-process-tile-list .fk-process-tile { grid-area:auto!important; width:100%!important; min-width:0!important; height:auto!important; min-height:0!important; margin:0!important; padding:24px!important; }
+ .fk-core-process-canvas-exact .fk-process-tile-number { margin-bottom:28px!important; }
+ .fk-core-process-canvas-exact .fk-process-tile-title { font-size:24px!important; line-height:1.3!important; margin:0!important; }
+ .fk-core-process-canvas-exact .fk-process-tile-desc { font-size:16px!important; line-height:1.5!important; }
+ .fk-core-comparison-section .fk-comparison-title { font-size:28px!important; line-height:1.3!important; letter-spacing:-.5px!important; }
+ .fk-core-comparison-section .fk-comparison-scroll { width:100%!important; min-width:0!important; max-width:100%!important; overflow-x:auto!important; overscroll-behavior-x:contain; }
+ .fk-core-comparison-section .fk-core-comparison-native-table.fk-comparison-table { width:800px!important; min-width:800px!important; table-layout:fixed!important; }
+ .fk-core-comparison-section .fk-core-comparison-native-table.fk-comparison-table :is(th,td) { width:auto!important; }
+ .fk-core-comparison-section .fk-core-comparison-cell { font-size:16px!important; line-height:1.5!important; }
+ .fk-product-faq-industry-inset .fk-faq-question-text { font-size:18px!important; line-height:1.5!important; }
+ .fk-product-faq-industry-inset .fk-faq-answer-text { width:100%!important; font-size:16px!important; line-height:1.5!important; }
+}
