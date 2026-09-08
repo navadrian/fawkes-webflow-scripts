@@ -13,7 +13,7 @@
 .article-layout > * { min-width:0; }
 .article-layout .article-header-section .article-wrap { max-width:none; width:100%; padding:0; }
 .article-layout .article-header-section h1 { overflow-wrap:break-word; }
-.article-toc-rt { scrollbar-width:auto; }
+.article-toc-rt { scrollbar-width:auto; scrollbar-color:auto; }
 .article-toc-rt::-webkit-scrollbar { width:4px; }
 .article-toc-rt::-webkit-scrollbar-button { display:none; width:0; height:0; }
 .article-toc-rt::-webkit-scrollbar-button:single-button { display:none; }
@@ -30,6 +30,8 @@
 .fk-review-product-card .fk-xlink-btn { display:inline-flex; padding:12px 20px; border:1px solid rgba(255,255,255,.65); border-radius:10px; font-size:20px; line-height:1.2; color:white; background:transparent; }
 .casestudy-related_inner { max-width:1404px; }
 .fk-review-related-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.fk-review-related-row > .fk-review-product-card { height:100%; align-self:stretch; }
+[data-fk-case-slug], [data-fk-product-choice] { display:none!important; }
 [data-fk-more-cases] { grid-column:1/-1; width:100%; }
 [data-fk-more-cases] > .w-dyn-items { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
 [data-fk-more-cases] .fk-case-study-card { width:100%!important; max-width:none!important; min-height:420px; }
