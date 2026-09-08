@@ -1,5 +1,5 @@
 /* Direct browser review fixes. Native CMS bindings remain the source of content. */
-.hero-wrapper .fk-tag-chip { font-size:20px!important; line-height:30px!important; padding:6px 14px!important; border-radius:8px!important; background:rgba(17,18,23,.8)!important; }
+.hero-wrapper .fk-tag-chip, .fk-link-hero-frame .fk-tag-chip { font-size:20px!important; line-height:30px!important; padding:6px 14px!important; border-radius:8px!important; background:rgba(17,18,23,.8)!important; }
 [data-fk-bess-heading] { white-space:pre-line; }
 .fk-case-study-card, .fk-case-study-card .fk-cs-card-link { box-shadow:none!important; }
 .fk-xlink-card .fk-xlink-product-title { margin-bottom:12px!important; }
@@ -53,7 +53,7 @@
 @media(max-width:767px) {
  .contact-form-panel:not(.fk-application-panel) { width:100%; padding:112px 24px 48px; }
  .contact-form-panel:not(.fk-application-panel) .contact-subheading { margin-bottom:32px; }
- .hero-wrapper .fk-tag-chip { font-size:14px!important; line-height:21px!important; padding:6px 10px!important; }
+ .hero-wrapper .fk-tag-chip, .fk-link-hero-frame .fk-tag-chip { font-size:14px!important; line-height:21px!important; padding:6px 10px!important; }
  [data-fk-bess-heading] { white-space:normal; }
  .article-toc { position:relative!important; top:auto!important; }
  .article-toc-rt { max-height:240px; }
