@@ -1,0 +1,31 @@
+/* Industry batch: phone overrides only; protected widths start at 768px. */
+@media (max-width:767px) {
+ body:has(.fk-industry-hero-exact) .hero-wrapper { padding:112px 24px 48px!important; min-height:640px!important; height:auto!important; }
+ body:has(.fk-industry-hero-exact) .hero-content { width:100%!important; max-width:none!important; left:auto!important; right:auto!important; }
+ .hero-content .wb-hero-title.fk-industry-hero-exact { font-size:32px!important; line-height:1.25!important; letter-spacing:-1px!important; }
+ .fk-industry-hero-exact br { display:none; }
+ .fk-product-block.is-industry-feature { display:flex!important; flex-direction:column!important; padding:48px 24px!important; width:100%!important; height:auto!important; min-height:0!important; gap:24px!important; }
+ .fk-product-block.is-industry-feature > * { width:100%!important; min-width:0!important; max-width:none!important; margin:0!important; grid-area:auto!important; transform:none!important; }
+ .is-industry-feature .fk-product-name-dark { font-size:26px!important; line-height:1.3!important; letter-spacing:-.5px!important; }
+ .is-industry-feature .feature-row.is-industry-benefits { display:grid!important; grid-template-columns:minmax(0,1fr)!important; gap:24px!important; }
+ .is-industry-benefits::before, .is-industry-benefits::after { content:none!important; }
+ .is-industry-benefits .fk-feature-item { width:100%!important; min-width:0!important; height:auto!important; min-height:0!important; padding:0!important; border:0!important; }
+ .is-industry-benefits .fk-feature-item-head { gap:10px!important; }
+ .is-industry-benefits .fk-feature-icon { flex:0 0 24px!important; width:24px!important; }
+ .is-industry-benefits .wb-tags-24.is-industry-feature-title { width:auto!important; min-width:0!important; font-size:18px!important; line-height:1.4!important; letter-spacing:0!important; }
+ .is-industry-benefits .fk-feature-description-dark { width:100%!important; max-width:none!important; margin:8px 0 0!important; font-size:16px!important; line-height:1.5!important; }
+ .section-wrapper.fk-fleets-process-section-exact, .section-wrapper.fk-industry-faq-section-inset, .section-wrapper.fk-industry-xlink-section-exact { padding:48px 24px!important; }
+ .section-wrapper .fk-industry-process-heading-inset { padding:0!important; margin:0 0 24px!important; }
+ .fk-process-tile-list.is-columns.fk-industry-process-grid-exact.fk-industry-gap-priority { display:grid!important; grid-template-columns:minmax(0,1fr)!important; width:100%!important; min-width:0!important; margin:0!important; padding:0!important; gap:16px!important; }
+ .fk-industry-process-grid-exact .fk-process-tile { width:100%!important; min-width:0!important; min-height:0!important; height:auto!important; padding:24px!important; }
+ .fk-industry-process-grid-exact .fk-process-tile-number { margin-bottom:28px!important; }
+ .fk-industry-process-grid-exact .fk-process-tile-title { font-size:24px!important; line-height:1.3!important; }
+ .fk-industry-process-grid-exact .fk-process-tile-desc { font-size:16px!important; line-height:1.5!important; white-space:normal!important; }
+ .fk-industry-faq-section-inset > *, .fk-industry-faq-list-90 { width:100%!important; margin-left:0!important; margin-right:0!important; }
+ .fk-industry-faq-section-inset .fk-faq-question-text { font-size:18px!important; line-height:1.5!important; }
+ .fk-industry-faq-section-inset .fk-faq-answer-text { width:100%!important; font-size:16px!important; line-height:1.5!important; }
+ .fk-xlink-card { padding:32px 24px!important; width:100%!important; min-width:0!important; min-height:0!important; height:auto!important; gap:12px!important; }
+ .fk-xlink-card .fk-xlink-product-title { font-size:32px!important; line-height:1.2!important; letter-spacing:-1px!important; }
+ .fk-xlink-card .fk-xlink-description { font-size:24px!important; line-height:1.35!important; width:100%!important; }
+ .fk-xlink-card .fk-xlink-btn { font-size:16px!important; line-height:1.5!important; white-space:normal!important; max-width:100%!important; }
+}
