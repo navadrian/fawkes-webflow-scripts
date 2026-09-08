@@ -25,7 +25,8 @@ const css =
   "\n\n/* ===== September review corrections ===== */\n" + fs.readFileSync("fk-review-20260908.css", "utf8") +
   "\n\n/* ===== Desktop-locked responsive rollout ===== */\n" + fs.readFileSync("fk-responsive-locked.css", "utf8") +
   "\n\n/* ===== Phone industry sections ===== */\n" + fs.readFileSync("fk-responsive-industry.css", "utf8") +
-  "\n\n/* ===== Phone product sections ===== */\n" + fs.readFileSync("fk-responsive-products.css", "utf8");
+  "\n\n/* ===== Phone product sections ===== */\n" + fs.readFileSync("fk-responsive-products.css", "utf8") +
+  "\n\n/* ===== Phone content sections ===== */\n" + fs.readFileSync("fk-responsive-content.css", "utf8");
 
 const out = `/*! fk-base-styles — Fawkes site-header registered script — v1.0.0
  *  Webflow injects registered "scripts" as <script src>, so a raw .css file
