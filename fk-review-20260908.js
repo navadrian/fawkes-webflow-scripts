@@ -23,6 +23,15 @@
  function run() {
   // The source exports previously contained the wrong pre-crop. Preserve card geometry.
   function source(img,url) { if(!img)return; img.removeAttribute('srcset'); img.src=url; }
+  if(location.pathname.replace(/\/$/,'')==='/contact') {
+   var contactPanel=document.querySelector('.contact-image-panel');
+   if(contactPanel) {
+    source(contactPanel.querySelector('img'),'https://cdn.jsdelivr.net/gh/navadrian/fawkes-webflow-scripts@3509143294e31e233ae3fb0677ffadd59c507778/contact-panel-figma.png');
+    // Exact Figma panel export already includes its 70% dark scrim.
+    var contactScrim=contactPanel.querySelector('.hero-scrim');
+    if(contactScrim) contactScrim.style.opacity='0';
+   }
+  }
   if(location.pathname.replace(/\/$/,'')==='/bess') {
    source(document.querySelector('[data-wf--case-study-card--variant="industry-bess-lower-crop"] > img'),reviewAssets+'bess-case-study-figma-original.png');
   }
