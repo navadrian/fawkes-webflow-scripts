@@ -51,7 +51,7 @@
 
   /* product name (orange accent span inherits size) */
   .fk-product-name-dark { font-size: 32px; line-height: 1.1; }
-  .fk-product-block .fk-product-name-dark { font-size: 30px; line-height: 1.1; }
+  .fk-product-block:where(:not(.is-industry-feature)) .fk-product-name-dark { font-size: 30px; line-height: 1.1; }
   .hero-wrapper .fk-product-name-dark,
   .hero-content .fk-product-name-dark { font-size: 34px; line-height: 1.12; letter-spacing: -0.4px; }
 
@@ -106,7 +106,7 @@
   .hero-wrapper .wb-desc-heading-44,
   .hero-content .wb-desc-heading-44 { font-size: 20px; line-height: 1.25; }
   .fk-product-name-dark { font-size: 27px; }
-  .fk-product-block .fk-product-name-dark { font-size: 25px; }
+  .fk-product-block:where(:not(.is-industry-feature)) .fk-product-name-dark { font-size: 25px; }
   .hero-wrapper .fk-product-name-dark,
   .hero-content .fk-product-name-dark { font-size: 29px; }
   .wb-tags-24 { font-size: 17px; }

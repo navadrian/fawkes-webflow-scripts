@@ -32,7 +32,7 @@
 .fk-product-block > .fk-product-block-content { row-gap: 12px; align-self: start; }
 
 /* type scale — Figma product section */
-.fk-product-block .fk-product-name-dark { font-size: 44px; line-height: 1.08; }
+.fk-product-block:where(:not(.is-industry-feature)) .fk-product-name-dark { font-size: 44px; line-height: 1.08; }
 .fk-product-block .wb-desc-heading-44   { font-size: 33px; line-height: 1.15; }
 .fk-product-block .wb-body-large-24-light { font-size: 16px; line-height: 1.5; }
 .fk-product-block .wb-tags-24 { font-size: 17px; line-height: 1.35; }
