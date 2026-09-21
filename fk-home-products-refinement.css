@@ -174,8 +174,6 @@ body:has(.home-hero-state-b) .fk-product-block.light .fk-tag-chip {
 .case-study-row.fk-manual-cases::-webkit-scrollbar { display:none; }
 .fk-manual-cases > * { flex:0 0 min(700px,100%) !important; scroll-snap-align:start; }
 .fk-manual-cases::after { content:''; flex:0 0 max(0px,calc(100% - 700px - 34px)); }
-.article-toc-heading { font-family:Inter,sans-serif; font-size:24px; line-height:36px; font-weight:500; }
-.article-toc-rt { max-height:calc(100vh - 180px); overflow-y:auto; scrollbar-width:thin; scrollbar-color:#111217 #d1d1d6; padding-right:12px; }
 .article-toc-rt ul { list-style-type:decimal; padding-left:24px; margin:0; }
 .article-toc-rt li { font:300 16px/24px Inter,sans-serif; color:rgba(0,0,0,.7); margin-bottom:12px; padding-left:0; }
 .article-toc-rt a { text-decoration:none !important; font-family:Inter,sans-serif; }
