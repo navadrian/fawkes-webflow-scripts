@@ -445,94 +445,31 @@
 /* ---- About / Founders: restore the separate angled Figma image plates. The
    plates remain decorative layers behind the real portrait images and HTML
    text, matching the source file instead of rasterising the whole row. ---- */
-.section-wrapper:has(> .about-founders-title) .fk-founder-row { align-items: start; }
-.section-wrapper:has(> .about-founders-title) .fk-founder-bio { white-space: pre-line; }
-.section-wrapper:has(> .about-founders-title) .fk-founder-info {
-  position: relative;
-  isolation: isolate;
-}
-.section-wrapper:has(> .about-founders-title) .fk-founder-info::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  width: 565px;
-  height: 319px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  transform: rotate(180deg);
-  pointer-events: none;
-}
-.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-info::before {
-  left: -103px;
-  top: 90px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 565 319'%3E%3Cpath d='M565 319H0L132.966 0H565V319Z' fill='%23E8E8E8'/%3E%3C/svg%3E");
-}
-.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-info::before {
-  left: -52px;
-  top: 37px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 565 319'%3E%3Cpath d='M565 319H0L122.196 0H565V319Z' fill='%23E8E8E8'/%3E%3C/svg%3E");
-}
+
+
+
+
+
+
 @media (min-width: 992px) {
-  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) {
-    grid-template-columns: 454px 625px;
-    column-gap: 148px;
-    justify-content: center;
-  }
-  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-info {
-    width: 454px;
-    transform: translateX(11px);
-  }
-  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-bio {
-    transform: translateX(11px);
-  }
-  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-info,
-  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-bio {
-    transform: translateX(-52px);
-  }
-  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-image {
-    width: 454px;
-    height: 449px;
-  }
-  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-image {
-    width: 404px;
-    height: 396px;
-  }
+
+
+
+
+
+
 }
 
 /* ---- About / Journey: replace placeholder font glyphs with the exact Figma
    vector exports while retaining the existing accessible milestone text. ---- */
 /* Both founder cutouts use one plate alignment and a transparent image layer. */
-.section-wrapper:has(> .about-founders-title) .fk-founder-image {
-  background: transparent;
-  overflow: hidden;
-}
-.section-wrapper:has(> .about-founders-title) .fk-founder-image > img.image-fill {
-  object-fit: contain;
-  object-position: center bottom;
-  background: transparent;
-  transform-origin: center top;
-}
-.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(1) .fk-founder-image > img.image-fill {
-  transform: scale(1.6);
-}
-.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(2) .fk-founder-image > img.image-fill {
-  transform: translateY(-55%) scale(1.6);
-}
-.section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(n) .fk-founder-info::before {
-  left: -10%;
-  top: 60px;
-  width: 120%;
-  height: auto;
-  aspect-ratio: 565 / 319;
-  transform: none;
-}
+
+
+
+
+
 @media (max-width: 767px) {
-  .section-wrapper:has(> .about-founders-title) .fk-founder-row:nth-of-type(n) .fk-founder-info::before {
-    left: 0;
-    width: 100%;
-    top: 40px;
-  }
+
 }
 .about-timeline .about-milestone-icon {
   font-size: 0;
@@ -673,7 +610,7 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
   .about-vision-paragraph { font-size: 17px; }
   .about-vision-lead,
   .about-vision-paragraph { margin-bottom: 24px; }
-  .section-wrapper:has(> .about-founders-title) .fk-founder-info::before { display: none; }
+
   .is-about-backed-by .fk-backed-by-card { min-height: 0; padding: 28px; }
   .is-about-backed-by .fk-backed-by-card:nth-child(1) .fk-logo-contain,
   .is-about-backed-by .fk-backed-by-card:nth-child(2) .fk-logo-contain {
