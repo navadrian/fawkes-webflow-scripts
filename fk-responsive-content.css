@@ -2,12 +2,6 @@
 @media (max-width:767px) {
 
 
- .fk-use-cases-bar { position:relative!important; height:auto!important; padding:24px!important; margin:0!important; }
- .fk-use-cases-bar .fk-use-cases-inner { display:grid!important; grid-template-columns:minmax(0,1fr)!important; width:100%!important; max-width:100%!important; gap:20px!important; }
- .fk-use-cases-bar .fk-use-cases-slot, .fk-use-cases-bar .fk-use-case-item { width:100%!important; min-width:0!important; padding:0!important; margin:0!important; }
- .fk-use-cases-bar .fk-use-case-head { width:100%!important; gap:12px!important; }
- .fk-use-cases-bar .fk-use-case-title { font-size:20px!important; line-height:1.4!important; white-space:normal!important; width:auto!important; min-width:0!important; }
- .fk-use-cases-bar .fk-use-case-sub { font-size:16px!important; line-height:1.5!important; white-space:normal!important; width:100%!important; }
  .blog-index_section { padding:112px 24px 48px!important; }
  .blog-index_section .blog-index_hero { width:100%!important; margin:0 0 28px!important; padding:0!important; }
  .blog-index_section .fk-blog-editorial-heading { width:100%!important; font-size:32px!important; line-height:1.25!important; margin:0!important; }

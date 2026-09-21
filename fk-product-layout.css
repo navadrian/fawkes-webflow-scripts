@@ -213,11 +213,7 @@
    on the Designer classes (token-bound). The bundle keeps ONLY what Webflow
    can't express: the 100vw full-bleed on the bar, and the adjacent-sibling
    divider rule between items. ---- */
-.fk-use-cases-bar {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-}
+/* Full-bleed sizing is owned by native Use Cases Bar styles. */
 .fk-use-cases-slot > .fk-use-case-item + .fk-use-case-item {
   border-left: 1px solid var(--_fawkes-energy-design-system---overlay-black-10);
 }
