@@ -187,28 +187,9 @@
 
 /* ---- H: Footer - logo as the left column (vertically centred against the link
    columns, per Figma), centered 2-line copyright below ---- */
-.fk-footer-columns > .fk-nav-logo {
-  flex: 0 0 auto;
-  align-self: center;
-  width: 188px;
-  height: 44px;
-  margin-right: 24px;
-  font-size: 0;
-  background-image: url("https://cdn.prod.website-files.com/6a8826652e72a7fcc7c3bf57/6a8fbeca5a721e180eb80cb0_nav-logo-fawkes-energy-clean.svg");
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: contain;
-}
-.fk-footer-bottom { justify-content: center; }
-.fk-footer-copyright {
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  font-weight: 300;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.7);
-}
+
+
+
 
 /* ---- J: Trusted By band - match Figma logo scale + band height ---- */
 .fk-trusted-band { min-height: 200px; padding-top: 20px; padding-bottom: 20px; }

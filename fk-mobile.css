@@ -89,7 +89,7 @@
   .fk-trusted-band .fk-trusted-label { font-size: 16px; line-height: 1.1; }
 
   /* CTA banner headings */
-  .fk-cta-banner-heading { font-size: 26px; line-height: 1.3; }
+
 
   /* Industries tab pills — scoped .tab-row .tab-pill (0,2,0) so bundle order is irrelevant */
 
@@ -119,7 +119,7 @@
   .fk-visual-card-title { font-size: 18px; }
 
 
-  .fk-cta-banner-heading { font-size: 22px; line-height: 1.3; }
+
   /* .fk-cta-banner.is-left … retired — Left variant of the CTA Banner component now owns this (text-cta-heading token = 22px at ≤479). */
   .fk-trusted-band .fk-trusted-label { font-size: 15px; }
 
@@ -132,8 +132,8 @@
 @media (max-width: 767px) {
   /* section / banner / vision padding + gaps */
   .section-wrapper { padding: 40px 20px; grid-row-gap: 24px; row-gap: 24px; }
-  .fk-cta-banner   { padding: 40px 20px; }
-  .fk-cta-banner   { padding-top: 40px; padding-bottom: 40px; }
+
+
 
   /* About /about#vision band stacks (also fixes the 400px overflow child) */
   .vision-wrapper { flex-direction: column; gap: 24px; padding: 40px 20px; }
@@ -205,38 +205,17 @@
   /* -------- FOOTER --------
      was a single stacked column of 5 link groups + an absolutely-positioned
      logo (from the desktop H-fix) that landed mid-footer over the columns. */
-  .fk-footer-wrapper { padding-left: 22px; padding-right: 22px; padding-top: 44px; padding-bottom: 28px; }
-  .fk-footer-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 26px 16px;
-    width: 100%;
-    padding-bottom: 28px;
-  }
-  .fk-footer-column { width: auto; }
-  .fk-footer-bottom {
-    flex-direction: column;
-    align-items: center;
-    row-gap: 12px;
-    margin-top: 8px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-  }
-  .fk-footer-wrapper .fk-footer-bottom .fk-nav-logo {
-    position: static;
-    transform: none;
-    left: auto;
-    top: auto;
-    margin: 0 auto;
-    width: 148px;
-    height: 34px;
-  }
-  .fk-footer-copyright { margin-top: 0; }
+
+
+
+
+
+
 }
 
 @media (max-width: 479px) {
   .section-wrapper { padding: 32px 16px; grid-row-gap: 20px; row-gap: 20px; }
-  .fk-cta-banner   { padding: 32px 16px; }
+
   .vision-wrapper  { padding: 32px 16px; }
   .vision-wrapper .wb-h2-section-title,
   .vision-wrapper .vision-heading { font-size: 24px; }
@@ -246,7 +225,7 @@
 
   .fk-process-tile .methodology-icon { height: 52px; }
   .fk-process-tile-list { gap: 8px; }
-  .fk-footer-columns { gap: 22px 14px; }
+
 }
 
 /* page-level horizontal-overflow guard. Unscoped: inert when nothing overflows
