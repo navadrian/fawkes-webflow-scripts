@@ -86,23 +86,9 @@
 
 /* ---- D: Home Case Study cards (section 10:714) ---- */
 /* D1 - stat text near-black on the orange caption plate (Figma 7:722: Inter Medium, -1.8px, #000) */
-.fk-case-study-stat-block .wb-card-text-36 {
-  color: #000000;
-  font-weight: 500;
-  letter-spacing: -1.8px;
-}
+
 /* D2 - category chip = "Tag Pill / Light": pale translucent-white, black text, Title case, no blur */
-.fk-case-study-stat-block .fk-tag-chip {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #000000;
-  font-weight: 500;
-  letter-spacing: normal;
-  text-transform: none;
-  border-radius: 10px;
-  padding: 5px 10px;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
+
 /* D3 - "read case study" arrow, bottom-right of BOTH cards (they're now clickable). Decorative.
    Descendant (not child) combinator: fk-site-interactions wraps the cards in a
    marquee track, so they are no longer direct children of .case-study-row. */
@@ -130,15 +116,7 @@
    image sits flush. Overscale via top/left + auto right/bottom so width/height aren't
    over-constrained and reliably apply — the old inset:-1px + calc width left a 1px
    gap on the right edge that showed the dark card background as a hairline. */
-.fk-case-study-card > .image-fill {
-  top: -2px;
-  left: -2px;
-  right: auto;
-  bottom: auto;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  max-width: none;   /* Webflow's img{max-width:100%} was clamping the overscale, leaving an edge hairline */
-}
+
 
 /* D5 - whole card is a link */
 .fk-cs-card-link { position: absolute; inset: 0; z-index: 6; display: block; }

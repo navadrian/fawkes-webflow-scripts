@@ -3,7 +3,7 @@
 [data-fk-bess-heading] { white-space:pre-line; }
 .fk-case-study-card, .fk-case-study-card .fk-cs-card-link { box-shadow:none!important; }
 /* Match the existing -2px image inset: native 100% sizing exposed a dark 2px edge. */
-.fk-case-study-card > img.image-fill { width:calc(100% + 4px)!important; height:calc(100% + 4px)!important; max-width:none!important; }
+
 .fk-home-case-section-exact { row-gap:18px!important; }
 .fk-home-case-section-exact .fk-case-heading-row { margin-bottom:0!important; }
 /* Full-bleed track; inset only the snap origin, not the visible viewport. */
