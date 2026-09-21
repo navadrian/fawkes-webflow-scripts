@@ -13,17 +13,12 @@
 
 
 
- .section-wrapper.fk-core-comparison-section, .section-wrapper.fk-product-faq-industry-inset{ padding:48px 24px!important; }
+ .section-wrapper.fk-product-faq-industry-inset{ padding:48px 24px!important; }
 
 
 
 
 
- .fk-core-comparison-section .fk-comparison-title { font-size:28px!important; line-height:1.3!important; letter-spacing:-.5px!important; }
- .fk-core-comparison-section .fk-comparison-scroll { width:100%!important; min-width:0!important; max-width:100%!important; overflow-x:auto!important; overscroll-behavior-x:contain; }
- .fk-core-comparison-section .fk-core-comparison-native-table.fk-comparison-table { width:800px!important; min-width:800px!important; table-layout:fixed!important; }
- .fk-core-comparison-section .fk-core-comparison-native-table.fk-comparison-table :is(th,td) { width:auto!important; }
- .fk-core-comparison-section .fk-core-comparison-cell { font-size:16px!important; line-height:1.5!important; }
  .fk-product-faq-industry-inset .fk-faq-question-text { font-size:18px!important; line-height:1.5!important; }
  .fk-product-faq-industry-inset .fk-faq-answer-text { width:100%!important; font-size:16px!important; line-height:1.5!important; }
 }

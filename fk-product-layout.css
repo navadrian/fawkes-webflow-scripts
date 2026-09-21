@@ -296,7 +296,7 @@
 }
 
 /* ---- Comparison Table (product pages) ---- */
-.fk-comparison-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.fk-comparison-scroll { -webkit-overflow-scrolling: touch; }
 .fk-comparison-band .section-wrapper > .wb-h2-section-title {
   margin-left: 5vw;
   margin-right: 5vw;
@@ -305,20 +305,10 @@
    owns horizontal scrolling; changing the table itself to display:block made
    WebKit recalculate the four columns independently and broke Figma parity. */
 @media (max-width: 991px) {
-  .section-wrapper .fk-comparison-scroll {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .section-wrapper .fk-comparison-table { display: table; min-width: 760px; }
+
+
 }
-.fk-comparison-table {
-  width: 100%;
-  min-width: 860px;
-  border-collapse: collapse;
-  table-layout: fixed;
-  font-family: Inter, sans-serif;
-}
+
 .fk-comparison-table th,
 .fk-comparison-table td {
   padding: 12px 24px 12px 0;
@@ -601,7 +591,7 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
 @media (max-width: 767px) {
   .fk-xlink-card:where(:not(.fk-xlink-native)) { padding: 24px; min-height: 300px; }
   .fk-xlink-title:where(:not(.fk-xlink-native-title)) { font-size: 24px; }
-  .fk-comparison-table { min-width: 720px; }
+
 }
 
 /* ==================================================================
