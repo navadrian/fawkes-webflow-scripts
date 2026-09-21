@@ -24,8 +24,8 @@
  .fk-industry-faq-section-inset > *, .fk-industry-faq-list-90 { width:100%!important; margin-left:0!important; margin-right:0!important; }
  .fk-industry-faq-section-inset .fk-faq-question-text { font-size:18px!important; line-height:1.5!important; }
  .fk-industry-faq-section-inset .fk-faq-answer-text { width:100%!important; font-size:16px!important; line-height:1.5!important; }
- .fk-xlink-card { padding:32px 24px!important; width:100%!important; min-width:0!important; min-height:0!important; height:auto!important; gap:12px!important; }
- .fk-xlink-card .fk-xlink-product-title { font-size:32px!important; line-height:1.2!important; letter-spacing:-1px!important; }
- .fk-xlink-card .fk-xlink-description { font-size:24px!important; line-height:1.35!important; width:100%!important; }
- .fk-xlink-card .fk-xlink-btn { font-size:16px!important; line-height:1.5!important; white-space:normal!important; max-width:100%!important; }
+ .fk-xlink-card:where(:not(.fk-xlink-native)) { padding:32px 24px!important; width:100%!important; min-width:0!important; min-height:0!important; height:auto!important; gap:12px!important; }
+ .fk-xlink-card:where(:not(.fk-xlink-native)) .fk-xlink-product-title { font-size:32px!important; line-height:1.2!important; letter-spacing:-1px!important; }
+ .fk-xlink-card:where(:not(.fk-xlink-native)) .fk-xlink-description { font-size:24px!important; line-height:1.35!important; width:100%!important; }
+ .fk-xlink-card:where(:not(.fk-xlink-native)) .fk-xlink-btn:where(:not(.fk-xlink-native-button)) { font-size:16px!important; line-height:1.5!important; white-space:normal!important; max-width:100%!important; }
 }

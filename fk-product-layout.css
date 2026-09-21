@@ -810,7 +810,7 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
 }
 
 /* ---- Field Intelligence / Industry Application cross-link card ---- */
-.fk-xlink-card {
+.fk-xlink-card:where(:not(.fk-xlink-native)) {
   position: relative;
   border-radius: 15px;
   overflow: hidden;
@@ -821,18 +821,18 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
   padding: 40px;
   isolation: isolate;
 }
-.fk-xlink-card > .image-fill { z-index: -1; }
-.fk-xlink-card::after {
+.fk-xlink-card:where(:not(.fk-xlink-native)) > .image-fill { z-index: -1; }
+.fk-xlink-card:where(:not(.fk-xlink-native))::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%);
 }
-.fk-xlink-eyebrow {
+.fk-xlink-eyebrow:where(:not(.fk-xlink-native-eyebrow)) {
   font-family: Inter, sans-serif; font-size: 15px; font-weight: 500;
   letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255, 255, 255, 0.8);
   margin-bottom: 10px;
 }
-.fk-xlink-title { font-family: Inter, sans-serif; font-size: 34px; font-weight: 500; color: #fff; line-height: 1.15; margin-bottom: 20px; }
-.fk-xlink-btn {
+.fk-xlink-title:where(:not(.fk-xlink-native-title)) { font-family: Inter, sans-serif; font-size: 34px; font-weight: 500; color: #fff; line-height: 1.15; margin-bottom: 20px; }
+.fk-xlink-btn:where(:not(.fk-xlink-native-button)) {
   align-self: flex-start;
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 10px;
@@ -841,10 +841,10 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
   color: #fff; text-decoration: none;
   transition: background-color .16s;
 }
-.fk-xlink-btn:hover { background-color: rgba(255, 255, 255, 0.14); }
+.fk-xlink-btn:where(:not(.fk-xlink-native-button)):hover { background-color: rgba(255, 255, 255, 0.14); }
 @media (max-width: 767px) {
-  .fk-xlink-card { padding: 24px; min-height: 300px; }
-  .fk-xlink-title { font-size: 24px; }
+  .fk-xlink-card:where(:not(.fk-xlink-native)) { padding: 24px; min-height: 300px; }
+  .fk-xlink-title:where(:not(.fk-xlink-native-title)) { font-size: 24px; }
   .fk-comparison-table { min-width: 720px; }
 }
 
