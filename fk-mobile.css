@@ -79,8 +79,8 @@
 
   /* Industries / Products-template visual card */
   .fk-visual-card-title { font-size: 20px; }
-  .fk-vc-headline       { font-size: 19px; line-height: 1.25; }
-  .fk-vc-feature-item   { font-size: 14px; line-height: 1.35; }
+
+
 
   /* Home case-study card stat + chip */
 
@@ -92,7 +92,7 @@
   .fk-cta-banner-heading { font-size: 26px; line-height: 1.3; }
 
   /* Industries tab pills — scoped .tab-row .tab-pill (0,2,0) so bundle order is irrelevant */
-  .tab-row .tab-pill { font-size: 14px; line-height: 1.3; padding: 10px 14px; }
+
 }
 
 @media (max-width: 479px) {
@@ -117,12 +117,12 @@
   .fk-feature-description-light { font-size: 13px; }
   .wb-body-pointers-18 { font-size: 14px; }
   .fk-visual-card-title { font-size: 18px; }
-  .fk-vc-headline       { font-size: 18px; }
-  .fk-vc-feature-item   { font-size: 13px; }
+
+
   .fk-cta-banner-heading { font-size: 22px; line-height: 1.3; }
   /* .fk-cta-banner.is-left … retired — Left variant of the CTA Banner component now owns this (text-cta-heading token = 22px at ≤479). */
   .fk-trusted-band .fk-trusted-label { font-size: 15px; }
-  .tab-row .tab-pill { font-size: 13px; padding: 9px 12px; }
+
   .fk-process-tile .wb-tags-24 { font-size: 16px; line-height: 1.3; letter-spacing: -0.3px; }
 }
 
@@ -166,9 +166,9 @@
      kill the min-height:420 + space-between void that reads as an empty card */
   .fk-visual-card { min-height: 0; padding: 16px; justify-content: flex-start; row-gap: 16px; }
   .fk-visual-card-title { max-width: 100%; padding: 10px 14px; }
-  .fk-vc-bottom  { flex-direction: column; align-items: stretch; row-gap: 14px; }
-  .fk-vc-features { width: 100%; }
-  .fk-vc-arrow    { align-self: flex-end; }
+
+
+
 
   /* "Trusted By" band stacks so the logos get width */
   .fk-trusted-band {
@@ -188,20 +188,10 @@
 
   /* Industries tabs on ONE line — nowrap; tight enough to fit ~360px+, with a
      horizontal-swipe fallback (scrollbar hidden, right edge faded) for narrower. */
-  .tab-row {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    row-gap: 0;
-    column-gap: 6px;
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
-    mask-image: linear-gradient(to right, #000 calc(100% - 20px), transparent);
-  }
-  .tab-row::-webkit-scrollbar { display: none; }
-  .tab-row .tab-pill { flex: 0 0 auto; white-space: nowrap; }
-  .tab-row .tab-pill span { white-space: nowrap; }
+
+
+
+
 
   /* About — founder card: .fk-founder-info / -image have a hard width:440px
      that overflows a 375px viewport (same R2 fixed-px root cause) */
@@ -253,7 +243,7 @@
   .hero-wrapper { padding-bottom: 28px; }   /* min-height:100svh + padding-top stay from the @767 rule */
   .fk-product-block { row-gap: 14px; padding: 24px 16px; }
   .fk-trusted-band .trusted-by-logo-img { height: 34px; }
-  .tab-row .tab-pill { font-size: 12px; padding: 8px 10px; }
+
   .fk-process-tile .methodology-icon { height: 52px; }
   .fk-process-tile-list { gap: 8px; }
   .fk-footer-columns { gap: 22px 14px; }

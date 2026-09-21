@@ -11,6 +11,7 @@
 
   function init() {
     document.querySelectorAll(".fk-visual-card").forEach(function (card) {
+      if (card.classList.contains("fk-home-industry-slide")) return;
       var link = card.querySelector(".fk-vc-arrow[href]");
       if (!link) return;
       card.classList.add("is-full-card-link");

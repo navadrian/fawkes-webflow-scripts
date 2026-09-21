@@ -3,11 +3,8 @@
  *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle
  *    3. Mobile nav dropdown expand
- *    4. Home industries tab switcher — fades the card background image and
- *       swaps headline (with orange accent spans) + a 3-item feature list per
- *       tab, matching the Figma card (v1.2.0)
- *    4b. Home industries carousel AUTOPLAY — advances a tab every 5s; pauses on
- *        hover / backgrounded tab; any manual pill click resets the clock.
+ *    4. Home industries content and controls are native Webflow Tabs.
+ *       Autoplay/progress is provided by the behavior-only native Tabs controller.
  *    5. Home hero KPI reveal — slow sequenced intro: dot scales up, connector
  *       line wipes toward the cards, the KPI plate wipes in from the top, then
  *       the three stat cards rise + fade in staggered (~3.8s total). Inline
@@ -92,160 +89,7 @@
       });
     });
 
-    // Home page industries tab switcher. Figma designed this as a 3-slide carousel
-    // but defined no transition. The existing `.image-fill` remains the only
-    // background layer so an outgoing slide can never reappear over the selected
-    // image. Each target image is preloaded, then the base image fades out, swaps
-    // source, and fades back in while preserving its parallax behavior.
-    var CDN = 'https://cdn.prod.website-files.com/6a8826652e72a7fcc7c3bf57/';
-    var INDUSTRY_DATA = {
-      fleets: {
-        headlineHTML: 'Protect <span class="fk-hl-accent">EV fleet economics</span> through continuous battery intelligence',
-        features: ['Reduce Downtime', 'Preventive Maintenance', 'Resale Value'],
-        href: '/industries/ev-fleets',
-        img: CDN + '6a88772c3c2f1ca033218736_home-hero-bus.png'
-      },
-      financiers: {
-        headlineHTML: '<span class="fk-hl-accent">De-risk EV lending</span> with data-backed residual value forecasting',
-        features: ['Residual Value Estimate', 'Asset Categorization', 'Financial Modelling'],
-        href: '/industries/ev-financiers',
-        img: CDN + '6a96287b31837461f1a07309_home-carousel-financiers.jpg'
-      },
-      bess: {
-        headlineHTML: 'Protect <span class="fk-hl-accent">contracted revenue</span> across full BESS system lifetime',
-        features: ['Degradation Modelling', 'Safety Risk Management', 'Predictive Maintenance'],
-        href: '/industries/bess',
-        img: CDN + '6a96287c6f1d9c22615b98d4_home-carousel-bess.jpg'
-      }
-    };
-    var tabRow = document.querySelector('.tab-row');
-    if (tabRow) {
-      var visualCard = document.querySelector('.fk-visual-card');
-      var baseImg = visualCard ? visualCard.querySelector('.image-fill') : null;
-      var headlineEl = visualCard ? visualCard.querySelector('.fk-vc-headline') : null;
-      var titleWrap = visualCard ? visualCard.querySelector('.fk-visual-card-title') : null;
-      var bottomRow = visualCard ? visualCard.querySelector('.fk-vc-bottom') : null;
-      var featureEls = visualCard ? visualCard.querySelectorAll('.fk-vc-feature-item') : [];
-      var arrowLink = visualCard ? visualCard.querySelector('.fk-vc-arrow') : null;
-      var scrimEl = visualCard ? visualCard.querySelector('.fk-vc-scrim') : null;
-      var current = 'fleets';
-
-      // Preload the other two backgrounds so the first crossfade is instant.
-      Object.keys(INDUSTRY_DATA).forEach(function (k) {
-        var p = new Image();
-        p.src = INDUSTRY_DATA[k].img;
-      });
-
-      if (baseImg) baseImg.style.transition = 'opacity .3s ease';
-      [titleWrap, bottomRow].forEach(function (el) {
-        if (el) { el.style.transition = 'opacity .25s ease'; }
-      });
-
-      var busy = false;
-      function activate(key, pill) {
-        var data = INDUSTRY_DATA[key];
-        if (!data || key === current || busy) {
-          if (data && key === current) {
-            tabRow.querySelectorAll('.tab-pill').forEach(function (p) { p.classList.remove('is-active'); });
-            pill.classList.add('is-active');
-          }
-          return;
-        }
-        busy = true;
-        tabRow.querySelectorAll('.tab-pill').forEach(function (p) { p.classList.remove('is-active'); });
-        pill.classList.add('is-active');
-
-        // Copy swaps behind a short fade of the headline plate + feature row.
-        if (titleWrap) titleWrap.style.opacity = '0';
-        if (bottomRow) bottomRow.style.opacity = '0';
-        window.setTimeout(function () {
-          if (headlineEl) headlineEl.innerHTML = data.headlineHTML;
-          for (var i = 0; i < featureEls.length; i++) {
-            featureEls[i].textContent = data.features[i] || '';
-          }
-          if (arrowLink) arrowLink.setAttribute('href', data.href);
-          if (scrimEl) scrimEl.classList.toggle('is-bright', key === 'bess');
-          if (titleWrap) titleWrap.style.opacity = '1';
-          if (bottomRow) bottomRow.style.opacity = '1';
-        }, 200);
-
-        // Swap the single background layer after the target asset is ready.
-        if (baseImg) {
-          baseImg.style.opacity = '0';
-          var nextImg = new Image();
-          var swapped = false;
-          var reveal = function () {
-            if (swapped) return;
-            swapped = true;
-            baseImg.setAttribute('src', data.img);
-            baseImg.removeAttribute('srcset');
-            window.requestAnimationFrame(function () {
-              window.requestAnimationFrame(function () { baseImg.style.opacity = '1'; });
-            });
-            current = key;
-            busy = false;
-          };
-          nextImg.onload = reveal;
-          nextImg.onerror = function () {
-            baseImg.style.opacity = '1';
-            busy = false;
-          };
-          nextImg.src = data.img;
-          if (nextImg.complete) reveal();
-        } else {
-          current = key;
-          busy = false;
-        }
-      }
-
-      // Paint the initial (fleets) state: the Webflow-rendered headline is plain
-      // text, so apply the accent markup + feature labels once on load.
-      (function () {
-        var d = INDUSTRY_DATA[current];
-        if (headlineEl && d) headlineEl.innerHTML = d.headlineHTML;
-        for (var i = 0; i < featureEls.length; i++) {
-          featureEls[i].textContent = (d && d.features[i]) || '';
-        }
-        if (arrowLink && d) arrowLink.setAttribute('href', d.href);
-        if (scrimEl) scrimEl.classList.toggle('is-bright', current === 'bess');
-      })();
-
-      // 4b. Autoplay — advance to the next tab every 5s. Figma drew this as a
-      // rotating 3-slide carousel; the crossfade above is the transition. The
-      // timer is paused while the pointer is over the card or the tab row and
-      // while the tab is backgrounded; a manual pill click restarts the clock.
-      var AUTOPLAY_MS = 5000;
-      var order = ['fleets', 'financiers', 'bess'];
-      var autoTimer = null;
-      var hovering = false;
-      function stopAuto() { if (autoTimer) { window.clearTimeout(autoTimer); autoTimer = null; } }
-      function scheduleAuto() {
-        stopAuto();
-        autoTimer = window.setTimeout(function () {
-          if (!hovering && !document.hidden && !busy) {
-            var i = order.indexOf(current);
-            var nextKey = order[(i + 1) % order.length];
-            var nextPill = tabRow.querySelector('.tab-pill[data-industry="' + nextKey + '"]');
-            if (nextPill) activate(nextKey, nextPill);
-          }
-          scheduleAuto();
-        }, AUTOPLAY_MS);
-      }
-      [visualCard, tabRow].forEach(function (el) {
-        if (!el) return;
-        el.addEventListener('mouseenter', function () { hovering = true; });
-        el.addEventListener('mouseleave', function () { hovering = false; });
-      });
-
-      tabRow.querySelectorAll('.tab-pill').forEach(function (pill) {
-        pill.addEventListener('click', function () {
-          activate(pill.getAttribute('data-industry'), pill);
-          scheduleAuto();
-        });
-      });
-
-      scheduleAuto();
-    }
+    // Home industries: native Tabs and native component props own all slide content.
 
     // 5. Home hero KPI reveal — a slow, sequenced intro:
     //    (a) the pulse dot scales up
@@ -952,6 +796,7 @@
 
   function init() {
     document.querySelectorAll(".fk-visual-card").forEach(function (card) {
+      if (card.classList.contains("fk-home-industry-slide")) return;
       var link = card.querySelector(".fk-vc-arrow[href]");
       if (!link) return;
       card.classList.add("is-full-card-link");
@@ -1108,3 +953,248 @@
  }
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);else run();
 })();
+
+;
+/*
+ * F8 Home native Tabs behavior — offline integration artifact.
+ *
+ * Contract:
+ *   .fk-home-industry-carousel.w-tabs       native Webflow Tabs root
+ *   .fk-home-industry-tab.w-tab-link        native Webflow tab links
+ *   .w-tab-pane                             existing native slide records
+ *
+ * Webflow owns tab display, current-state classes, focus, and keyboard
+ * activation. This controller owns only one autoplay clock and its active-tab
+ * progress fill. It never writes slide content, image src/crop, href, markup,
+ * pane visibility, or tab ARIA state.
+ *
+ * Source behavior retained from the read-only runtime audit:
+ *   fk-site-interactions.js:214-247  5s order / hover / hidden / manual reset
+ *   fk-industry-carousel-progress-v1.js:1  active-tab gradient appearance
+ *
+ * Native tab transitions remain Webflow-owned. Do not add a second fade here;
+ * the parent-owned native Tabs attributes are expected to be 300ms/300ms.
+ */
+(function () {
+  "use strict";
+
+  var ROOT_SELECTOR = ".fk-home-industry-carousel.w-tabs";
+  var LINK_SELECTOR = ".fk-home-industry-tab.w-tab-link";
+  var ACTIVE_CLASS = "w--current";
+  var AUTOPLAY_MS = 5000;
+  var PROGRESS_COLOR = "rgb(226, 226, 236)";
+
+  function ready(fn) {
+    if (document.readyState !== "loading") fn();
+    else document.addEventListener("DOMContentLoaded", fn, { once: true });
+  }
+
+  function reducedMotion() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function activeLink(links) {
+    for (var i = 0; i < links.length; i += 1) {
+      if (links[i].classList.contains(ACTIVE_CLASS) || links[i].getAttribute("aria-selected") === "true") {
+        return links[i];
+      }
+    }
+    return links[0] || null;
+  }
+
+  function clearProgress(link) {
+    if (!link) return;
+    link.style.removeProperty("background-color");
+    link.style.removeProperty("background-image");
+    link.style.removeProperty("background-position");
+    link.style.removeProperty("background-size");
+    link.style.removeProperty("background-repeat");
+  }
+
+  function paintProgress(link, fraction) {
+    if (!link || reducedMotion()) {
+      clearProgress(link);
+      return;
+    }
+    var percent = Math.max(0, Math.min(100, fraction * 100));
+    // Native .w--current owns black text on a transparent background. Keep
+    // that baseline while the progress image fills from left to right.
+    link.style.backgroundColor = "transparent";
+    link.style.backgroundImage = "linear-gradient(" + PROGRESS_COLOR + " 0 0)";
+    link.style.backgroundPosition = "0 center";
+    link.style.backgroundRepeat = "no-repeat";
+    link.style.backgroundSize = percent + "% 100%";
+  }
+
+  function init(root) {
+    if (root.__fkHomeTabsNative) return;
+
+    var links = Array.prototype.slice.call(root.querySelectorAll(LINK_SELECTOR));
+    if (links.length !== 3) return;
+
+    var state = {
+      elapsed: 0,
+      lastTime: null,
+      frame: 0,
+      hovering: false,
+      hidden: document.hidden,
+      keyboardPause: false,
+      active: null,
+      destroyed: false
+    };
+
+    function paused() {
+      return state.hovering || state.hidden || state.keyboardPause || reducedMotion();
+    }
+
+    function syncActive(resetClock) {
+      var next = activeLink(links);
+      if (!next) return;
+      var changed = next !== state.active;
+      state.active = next;
+      links.forEach(function (link) {
+        if (link !== next) clearProgress(link);
+      });
+      if (changed || resetClock) state.elapsed = 0;
+      if (reducedMotion()) clearProgress(next);
+      else paintProgress(next, state.elapsed / AUTOPLAY_MS);
+    }
+
+    function stopFrame() {
+      if (state.frame) {
+        window.cancelAnimationFrame(state.frame);
+        state.frame = 0;
+      }
+    }
+
+    function tick(now) {
+      if (state.destroyed) return;
+      if (reducedMotion()) {
+        clearProgress(activeLink(links));
+        stopFrame();
+        return;
+      }
+      if (state.lastTime === null) state.lastTime = now;
+      var delta = Math.max(0, now - state.lastTime);
+      state.lastTime = now;
+
+      if (!paused()) {
+        state.elapsed += delta;
+        if (state.elapsed >= AUTOPLAY_MS) {
+          state.elapsed = 0;
+          syncActive(false);
+          var index = links.indexOf(state.active);
+          var next = links[(index + 1) % links.length];
+          if (next) {
+          // Native Webflow Tabs receives the click and owns display/focus/ARIA.
+          // Restore the user's prior focus so autoplay never moves focus.
+          var priorFocus = document.activeElement;
+          next.click();
+          if (priorFocus && priorFocus !== document.body && typeof priorFocus.focus === "function") {
+            priorFocus.focus({ preventScroll: true });
+          } else if (document.activeElement === next && typeof next.blur === "function") {
+            next.blur();
+          }
+          }
+        }
+        paintProgress(activeLink(links), state.elapsed / AUTOPLAY_MS);
+      }
+
+      state.frame = window.requestAnimationFrame(tick);
+    }
+
+    function resetManual() {
+      state.elapsed = 0;
+      state.lastTime = window.performance.now();
+      syncActive(true);
+    }
+
+    function onVisibility() {
+      state.hidden = document.hidden;
+      state.lastTime = window.performance.now();
+    }
+
+    function onMediaChange() {
+      state.lastTime = window.performance.now();
+      syncActive(true);
+      if (reducedMotion()) {
+        stopFrame();
+        clearProgress(activeLink(links));
+      } else if (!state.frame) {
+        state.frame = window.requestAnimationFrame(tick);
+      }
+    }
+
+    function onMouseEnter() { state.hovering = true; }
+    function onMouseLeave() {
+      state.hovering = false;
+      state.lastTime = window.performance.now();
+    }
+    function onKeydown() {
+      // A keyboard user may be moving through native tabs; leave focus and
+      // selection ownership to Webflow and stop autoplay until pointer use or
+      // an explicit controller teardown.
+      state.keyboardPause = true;
+      state.lastTime = window.performance.now();
+    }
+    function onPointerDown() { state.keyboardPause = false; }
+    function onLinkClick() {
+      resetManual();
+      window.requestAnimationFrame(function () { syncActive(false); });
+    }
+    root.addEventListener("mouseenter", onMouseEnter, false);
+    root.addEventListener("mouseleave", onMouseLeave, false);
+    root.addEventListener("pointerdown", onPointerDown, false);
+    links.forEach(function (link) {
+      link.addEventListener("keydown", onKeydown, false);
+      link.addEventListener("click", onLinkClick, false);
+    });
+    document.addEventListener("visibilitychange", onVisibility, false);
+
+    var media = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    if (media) {
+      if (media.addEventListener) media.addEventListener("change", onMediaChange);
+      else if (media.addListener) media.addListener(onMediaChange);
+    }
+
+    var observer = new MutationObserver(function (records) {
+      for (var i = 0; i < records.length; i += 1) {
+        if (records[i].attributeName === "class" || records[i].attributeName === "aria-selected") {
+          syncActive(false);
+          break;
+        }
+      }
+    });
+    observer.observe(root, { subtree: true, attributes: true, attributeFilter: ["class", "aria-selected"] });
+
+    function destroy() {
+      if (state.destroyed) return;
+      state.destroyed = true;
+      stopFrame();
+      observer.disconnect();
+      root.removeEventListener("mouseenter", onMouseEnter, false);
+      root.removeEventListener("mouseleave", onMouseLeave, false);
+      root.removeEventListener("pointerdown", onPointerDown, false);
+      links.forEach(function (link) {
+        link.removeEventListener("keydown", onKeydown, false);
+        link.removeEventListener("click", onLinkClick, false);
+      });
+      document.removeEventListener("visibilitychange", onVisibility, false);
+      if (media) {
+        if (media.removeEventListener) media.removeEventListener("change", onMediaChange);
+        else if (media.removeListener) media.removeListener(onMediaChange);
+      }
+      links.forEach(clearProgress);
+    }
+
+    root.__fkHomeTabsNative = { destroy: destroy };
+
+    syncActive(true);
+    state.lastTime = window.performance.now();
+    if (!reducedMotion()) state.frame = window.requestAnimationFrame(tick);
+  }
+
+  ready(function () {
+    document.querySelectorAll(ROOT_SELECTOR).forEach(init);
+  });
+}());

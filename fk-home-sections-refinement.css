@@ -1,10 +1,7 @@
 /* Home-only preview refinement. Keep this separate from shared base/mobile CSS. */
 
 /* HM-07 — give the carousel benefit plate a little more breathing room. */
-.fk-visual-card .fk-vc-features {
-  margin-left: 8px;
-  margin-bottom: 8px;
-}
+
 
 /* HM-09 — preserve each logo's aspect ratio while reducing displayed scale. */
 .fk-trusted-band .trusted-by-logo-img {

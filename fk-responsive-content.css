@@ -1,7 +1,7 @@
 /* Content batch: mobile layouts only, desktop locked at 768px and above. */
 @media (max-width:767px) {
- body:has(.home-hero-state-b) .tab-row { display:flex!important; flex-wrap:wrap!important; gap:8px!important; }
- body:has(.home-hero-state-b) .tab-pill { max-width:100%!important; white-space:normal!important; }
+
+
  .fk-use-cases-bar { position:relative!important; height:auto!important; padding:24px!important; margin:0!important; }
  .fk-use-cases-bar .fk-use-cases-inner { display:grid!important; grid-template-columns:minmax(0,1fr)!important; width:100%!important; max-width:100%!important; gap:20px!important; }
  .fk-use-cases-bar .fk-use-cases-slot, .fk-use-cases-bar .fk-use-case-item { width:100%!important; min-width:0!important; padding:0!important; margin:0!important; }
