@@ -1,9 +1,9 @@
 /* Approved responsive rollout. Desktop/tablet >=768px intentionally untouched. */
 @media (max-width:767px) {
  /* Shared shell */
- .fk-nav-pill .fk-nav-hamburger { min-width:44px; min-height:44px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
- .fk-nav-hamburger:focus-visible { outline:2px solid #f2971f; outline-offset:2px; }
- .fk-nav-hamburger .fk-nav-hamburger-bar { width:24px!important; }
+ /* F9a: presentation now owned by native Site Nav styles. */
+ /* F9a: presentation now owned by native Site Nav styles. */
+ /* F9a: presentation now owned by native Site Nav styles. */
  .fk-cta-banner { height:auto!important; min-height:0!important; padding:48px 24px!important; gap:24px!important; }
  .fk-cta-banner .fk-cta-banner-heading { width:100%!important; max-width:none!important; font-size:28px!important; line-height:1.3!important; letter-spacing:-.7px!important; }
  .fk-cta-banner .fk-cta-banner-heading > span { font-size:inherit!important; line-height:inherit!important; }

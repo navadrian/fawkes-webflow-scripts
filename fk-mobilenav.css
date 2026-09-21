@@ -23,15 +23,15 @@
 
   /* NAV-1 — "Let's Talk" is a direct child of .fk-nav-pill, OUTSIDE .fk-nav-links,
      so .fk-nav-links{display:none} never touches it. Hide it while collapsed. */
-  .fk-nav-pill:not(.mobile-menu-open) .fk-nav-cta-button { display: none; }
+  /* F9a: presentation now owned by native Site Nav styles. */
 
   /* NAV-2 — shorter collapsed pill (longhand keeps Webflow's L/R 14/18px) */
-  .fk-nav-pill:not(.mobile-menu-open) { padding-top: 10px; padding-bottom: 10px; row-gap: 0; }
+  /* F9a: presentation now owned by native Site Nav styles. */
 
   /* NAV-3 — collapsed pill fully opaque so scrolled-under content can't read
      through. backdrop-filter:blur(16px) is left in place (harmless behind an
      opaque fill). */
-  .fk-nav-pill { background-color: #08090b; }
+  /* F9a: presentation now owned by native Site Nav styles. */
 
   /* -------- open menu: a real full-viewport panel (NAV-5) -------- */
   .fk-nav-pill.mobile-menu-open {
@@ -129,5 +129,5 @@
 
 @media screen and (max-width: 479px) {
   /* held at 10px (not 8px) to keep a ~44px vertical tap area on the hamburger */
-  .fk-nav-pill:not(.mobile-menu-open) { padding-top: 10px; padding-bottom: 10px; }
+  /* F9a: presentation now owned by native Site Nav styles. */
 }
