@@ -411,33 +411,14 @@
 .fk-comparison-table.on-dark tbody td:last-child { color: #fff; }
 
 /* ---- About / Vision: exact desktop typography from Figma 2024:2863 + 2024:2936 ---- */
-.about-vision {
-  min-height: 807px;
-  padding: 104px 5vw;
-}
-.about-vision-inner {
-  width: 100%;
-  max-width: 1360px;
-  margin-left: auto;
-  margin-right: auto;
-  grid-template-columns: 1fr 1.25fr;
-  column-gap: 96px;
-  align-items: start;
-}
-.about-vision-title {
-  font-size: 48px;
-  line-height: 1.5;
-  letter-spacing: -0.05em;
-}
-.about-vision-copy { max-width: 744px; }
-.about-vision-lead,
-.about-vision-paragraph {
-  font-size: 24px;
-  line-height: 1.5;
-}
-.about-vision-lead { font-weight: 700; margin-bottom: 36px; }
-.about-vision-paragraph { font-weight: 300; margin-bottom: 36px; }
-.about-vision-paragraph:last-child { margin-bottom: 0; }
+
+
+
+
+
+
+
+
 
 /* Preserve the line structure of the Figma milestone lists. */
 .about-timeline .about-milestone-body { white-space: pre-line; }
@@ -594,22 +575,19 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
 }
 
 @media (max-width: 991px) {
-  .about-vision { min-height: 0; padding: 72px 5vw; }
-  .about-vision-inner { grid-template-columns: 1fr; row-gap: 40px; }
-  .about-vision-title { font-size: 40px; line-height: 1.25; }
-  .about-vision-copy { max-width: none; }
-  .about-vision-lead,
-  .about-vision-paragraph { font-size: 20px; line-height: 1.5; }
+
+
+
+
+
 }
 
 @media (max-width: 767px) {
-  .about-vision { padding: 48px 20px; }
-  .about-vision-inner { row-gap: 28px; }
-  .about-vision-title { font-size: 30px; }
-  .about-vision-lead,
-  .about-vision-paragraph { font-size: 17px; }
-  .about-vision-lead,
-  .about-vision-paragraph { margin-bottom: 24px; }
+
+
+
+
+
 
   .is-about-backed-by .fk-backed-by-card { min-height: 0; padding: 28px; }
   .is-about-backed-by .fk-backed-by-card:nth-child(1) .fk-logo-contain,
