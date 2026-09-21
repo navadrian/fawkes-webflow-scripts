@@ -126,10 +126,7 @@
 /* Industry dashboard exports include a sub-pixel light outline at their outer
    rounded edge. Let the clipped frame trim that source outline so the corner
    radius reads as one continuous curve instead of a pale arc. */
-.fk-product-block.is-industry-feature > .fk-product-block-visual.is-dashboard > .image-fill.is-dashboard-image {
-  transform: scale(1.006);
-  transform-origin: 50% 50%;
-}
+
 
 /* D6 - 3rd card (BESS) chip/stat are <h3>/<h2> (headless builder can only set text on
    headings); neutralise heading defaults so they render like the other cards' divs. */
@@ -835,13 +832,13 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
    icon + title in .fk-feature-item-head; here we kill the icon's stacked
    margin and size the SVG. Shared by Home "Our Products" + every industry /
    product feature section (27 instances). ---- */
-.fk-feature-item-head {
+.fk-feature-item-head:where(:not(.is-industry-feature *)) {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 8px;
 }
-.fk-feature-item-head > .fk-feature-icon {
+.fk-feature-item-head:where(:not(.is-industry-feature *)) > .fk-feature-icon {
   flex: 0 0 auto;
   width: 20px;
   height: 20px;
@@ -850,12 +847,12 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
   align-items: center;
   justify-content: center;
 }
-.fk-feature-item-head > .fk-feature-icon > img {
+.fk-feature-item-head:where(:not(.is-industry-feature *)) > .fk-feature-icon > img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.fk-feature-item-head > .wb-tags-24 { margin: 0; }
+.fk-feature-item-head:where(:not(.is-industry-feature *)) > .wb-tags-24 { margin: 0; }
 
 /* ---- L2: cap non-hero content on wide screens. Best practice: the page
    background / full-bleed colour bands stay edge-to-edge, the *content* is
