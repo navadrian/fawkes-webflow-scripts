@@ -18,9 +18,6 @@
 .fk-comparison-table tbody td:not(:last-child), .fk-comparison-table tbody th { color:#c4c4ca!important; }
 .fk-comparison-table thead th:not(:last-child), .fk-comparison-table thead td:not(:last-child) { color:#a5a5ad!important; }
 
-.blog-card .blog-card_meta { margin-top:8px!important; }
-.blog-card.is-compact { row-gap:0!important; }
-.w-dyn-items:has(> .w-dyn-item > .blog-card.is-compact) { display:flex; flex-direction:column; gap:28px; }
 .article-layout > * { min-width:0; }
 .article-layout .article-header-section .article-wrap { max-width:none; width:100%; padding:0; }
 .article-layout .article-header-section h1 { overflow-wrap:break-word; }
