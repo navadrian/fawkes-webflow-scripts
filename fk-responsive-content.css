@@ -49,13 +49,13 @@
 
 
 
- .about-timeline .about-timeline-list { width:100%!important; margin:0!important; left:auto!important; transform:none!important; height:auto!important; }
- .about-timeline .about-milestone { width:100%!important; position:relative!important; inset:auto!important; transform:none!important; padding:72px 0 0!important; margin:0 0 40px!important; min-height:0!important; height:auto!important; text-align:left!important; }
- .about-timeline .about-milestone :is(.about-milestone-date,.about-milestone-heading,.about-milestone-body) { width:100%!important; text-align:left!important; }
- .about-timeline .about-milestone-icon { top:0!important; left:0!important; right:auto!important; transform:none!important; }
- .about-timeline .about-milestone-dot { top:24px!important; left:auto!important; right:0!important; }
- .about-timeline .about-milestone::after { left:60px!important; right:0!important; top:30px!important; width:auto!important; }
- .about-timeline .about-timeline-rail { display:none!important; }
+
+
+
+
+
+
+
  .contact-wrapper .contact-form-panel { padding:40px 24px 48px!important; }
  .contact-form-panel .contact-heading { font-size:36px!important; line-height:1.2!important; margin-bottom:20px!important; }
  .contact-form-panel .form-row.fk-application-row { grid-template-columns:minmax(0,1fr)!important; gap:24px!important; }

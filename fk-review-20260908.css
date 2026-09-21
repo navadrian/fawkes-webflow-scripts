@@ -17,7 +17,7 @@
 .fk-xlink-card .fk-xlink-description { margin-top:0!important; }
 .fk-comparison-table tbody td:not(:last-child), .fk-comparison-table tbody th { color:#c4c4ca!important; }
 .fk-comparison-table thead th:not(:last-child), .fk-comparison-table thead td:not(:last-child) { color:#a5a5ad!important; }
-.about-timeline .about-milestone::after { height:1px; border:0; background:repeating-linear-gradient(to right,rgba(17,18,23,.52) 0 10px,transparent 10px 18px); }
+
 .blog-card .blog-card_meta { margin-top:8px!important; }
 .blog-card.is-compact { row-gap:0!important; }
 .w-dyn-items:has(> .w-dyn-item > .blog-card.is-compact) { display:flex; flex-direction:column; gap:28px; }
