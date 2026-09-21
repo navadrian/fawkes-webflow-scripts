@@ -7,17 +7,8 @@
  .article-layout .article-toc-rt a { display:inline-block; padding:4px 0; }
  .article-body-rt :is(h2,h3) { scroll-margin-top:104px; }
  .article-body-rt table { display:block; max-width:100%; overflow-x:auto; }
- .casestudy-hero_section { padding:112px 24px 48px!important; gap:24px!important; }
- .casestudy-hero_section .casestudy-hero_title { font-size:34px!important; line-height:1.2!important; letter-spacing:-.7px!important; }
  .casestudy-hero_section .casestudy-hero_stat { font-size:24px!important; line-height:1.4!important; }
- .casestudy-hero_section .casestudy-hero_lead { font-size:20px!important; line-height:1.5!important; }
- .casestudy-body_section, .casestudy-related_section { padding:48px 24px!important; }
- .casestudy-body_section .casestudy-body_layout { grid-template-columns:minmax(0,1fr)!important; gap:32px!important; }
- .casestudy-body_layout .casestudy-rail { position:static!important; width:100%!important; }
- .casestudy-body_layout .casestudy-main { width:100%!important; min-width:0!important; }
  .casestudy-body_layout .casestudy-metrics { grid-template-columns:minmax(0,1fr)!important; width:100%!important; }
- .casestudy-body_layout .casestudy-quote { padding:20px!important; margin:0!important; width:100%!important; }
- .casestudy-body_layout .casestudy-quote_text { padding:0!important; margin:0 0 16px!important; font-size:20px!important; line-height:1.5!important; }
  .casestudy-body_layout .casestudy-block_title { font-size:26px!important; line-height:1.3!important; }
  .about-hero { padding:112px 24px 48px!important; }
  .about-hero .about-hero-title { font-size:32px!important; line-height:1.3!important; letter-spacing:-.7px!important; }
