@@ -85,7 +85,8 @@
       link.addEventListener('click', function (e) {
         if (window.innerWidth > 767) return;
         e.preventDefault();
-        link.closest('.fk-nav-dropdown-wrapper').classList.toggle('dropdown-expanded');
+        var open = link.closest('.fk-nav-dropdown-wrapper').classList.toggle('dropdown-expanded');
+        link.setAttribute('aria-expanded', String(open));
       });
     });
 
