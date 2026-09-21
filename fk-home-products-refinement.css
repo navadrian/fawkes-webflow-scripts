@@ -39,32 +39,19 @@ body:has(.home-hero-state-b) .fk-product-block.light .fk-tag-chip {
   /* Figma 2024:1307: 30px Inter Medium, 45px leading, -1.5px tracking.
      Its 47px bottom margin plus the existing 24px grid gap reproduces the
      116px label-to-tag relationship in the Core reference. */
-  body:has(.home-hero-state-b) .fk-product-block.has-section-label > .fk-product-section-label {
-    width: 396px;
-    margin: 0 42px 47px;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 1.5;
-    letter-spacing: -1.5px;
-  }
+  /* Native Home copy/label classes own this layout. */
 
   /* Figma 2024:1132 / 1165 (48px, 700, -2.4px) and 2024:1134 / 1136.
      The stack uses measured Figma relationships: tag -> name 40px,
      name -> descriptor one 72px line, descriptor -> body 7px. */
-  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .fk-product-block-content {
-    row-gap: 0;
-  }
+  /* Native Home copy/label classes own this layout. */
 
   /* Home reference anchors: Core/Arc copy x=90 (2024:1132 / 1133),
      Link copy x=957 (2024:1165). These move only the copy stack; the native
      image grid remains responsible for its own responsive geometry. */
-  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature):not(.light) > .fk-product-block-content {
-    transform: translateX(42px);
-  }
+  /* Native Home copy/label classes own this layout. */
 
-  body:has(.home-hero-state-b) .fk-product-block.light > .fk-product-block-content {
-    transform: translateX(-48px);
-  }
+  /* Native Home copy/label classes own this layout. */
 
   /* Core's two tags begin 6px inside its copy edge in 2024:1138; Arc's
      single tag remains on the shared x=90 content edge. */
