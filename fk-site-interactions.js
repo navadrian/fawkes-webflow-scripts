@@ -1,4 +1,4 @@
-/*! fk-site-interactions — Fawkes site-header registered script — v1.6.0
+/*! fk-site-interactions — Fawkes site-header registered script — v1.7.0
  *  Freeform Part 4, reduced. Independent blocks, no shared state:
  *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle

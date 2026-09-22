@@ -1,4 +1,360 @@
-/*! fk-site-interactions — Fawkes site-header registered script — v1.6.0
+/* Fawkes nav disclosure v1.0.0
+ * One desktop disclosure at a time, with keyboard/touch support and the
+ * existing mobile hamburger/accordion contract preserved.
+ */
+(function () {
+  'use strict';
+
+  if (window.__fkNavDisclosureV1) return;
+  window.__fkNavDisclosureV1 = true;
+
+  var style = document.createElement('style');
+  style.setAttribute('data-fk-nav-disclosure', '1');
+  style.textContent = [
+    '@media (min-width:768px){',
+    '.fk-nav-pill{transition:background-color .2s ease,border-color .2s ease,padding-bottom .2s ease}',
+    '.fk-nav-pill:not([data-nav-open]){padding-bottom:13px!important}',
+    '.fk-nav-pill .fk-nav-links{column-gap:clamp(28px,3.2vw,52px)!important}',
+    '.fk-nav-pill .fk-nav-dropdown-wrapper{margin-right:0!important;position:relative;min-width:0}',
+    '.fk-nav-pill[data-nav-open]{padding-bottom:calc(13px + var(--fk-nav-open-height,110px))!important;background-color:rgba(6,7,9,.92);border-color:rgba(255,255,255,.18)}',
+    '.fk-nav-pill .fk-nav-dropdown-panel{display:none!important}',
+    '.fk-nav-pill .fk-nav-dropdown-wrapper.is-open>.fk-nav-dropdown-panel{display:flex!important;width:max-content!important;min-width:220px;max-width:calc(100vw - 48px);white-space:nowrap;padding-top:18px;row-gap:10px}',
+    '.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link{position:relative;transition:font-weight .15s ease,opacity .15s ease}',
+    '.fk-nav-pill .fk-nav-dropdown-wrapper.is-open>.fk-nav-link,.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link.is-current-section{font-weight:600}',
+    '.fk-nav-pill .fk-nav-dropdown-wrapper.is-open>.fk-nav-link:after,.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link.is-current-section:after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:rgba(255,255,255,.58)}',
+    '.fk-nav-pill .fk-nav-dropdown-item{color:#fff;font-weight:300;white-space:nowrap!important;transition:opacity .15s ease}',
+    '.fk-nav-pill .fk-nav-dropdown-item:hover,.fk-nav-pill .fk-nav-dropdown-item:focus-visible{opacity:.72}',
+    '.fk-nav-pill .fk-nav-links>.fk-nav-link{position:relative}',
+    '.fk-nav-pill .fk-nav-links>.fk-nav-link:hover:after,.fk-nav-pill .fk-nav-links>.fk-nav-link:focus-visible:after,.fk-nav-pill .fk-nav-links>.fk-nav-link.w--current:after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:rgba(255,255,255,.58)}',
+    '.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link:focus-visible,.fk-nav-pill .fk-nav-dropdown-item:focus-visible{outline:2px solid rgba(242,151,31,.85);outline-offset:4px}',
+    '.fk-nav-pill[data-nav-open] .fk-nav-cta-button{background-color:#000;border-color:#fff}',
+    '}',
+    '.fk-nav-pill .fk-nav-cta-button{transition:background-color .2s ease,border-color .2s ease,color .2s ease}',
+    '.fk-nav-pill .fk-nav-cta-button:hover,.fk-nav-pill .fk-nav-cta-button:focus-visible{background-color:#f2971f!important;border-color:#f2971f!important;color:#111217!important}',
+    '@media (prefers-reduced-motion:reduce){.fk-nav-pill,.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link{transition:none!important}}'
+  ].join('');
+  document.head.appendChild(style);
+
+  function initPill(pill, pillIndex) {
+    // Move the actual node so visual, keyboard and mobile reading order agree.
+    var links = pill.querySelector('.fk-nav-links');
+    var about = links && links.querySelector(':scope > a.fk-nav-link[href="/about"]');
+    if (about) links.appendChild(about);
+    var wrappers = Array.prototype.slice.call(pill.querySelectorAll('.fk-nav-dropdown-wrapper'));
+    var closeTimer = 0;
+
+    function isDesktop() {
+      return window.matchMedia('(min-width:768px)').matches;
+    }
+
+    function closeDesktop(restoreFocus) {
+      window.clearTimeout(closeTimer);
+      wrappers.forEach(function (wrapper) {
+        var trigger = wrapper.querySelector(':scope > .fk-nav-link');
+        wrapper.classList.remove('is-open');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      });
+      pill.removeAttribute('data-nav-open');
+      pill.style.removeProperty('--fk-nav-open-height');
+      if (restoreFocus && restoreFocus.focus) restoreFocus.focus();
+    }
+
+    function openDesktop(wrapper) {
+      if (!isDesktop()) return;
+      window.clearTimeout(closeTimer);
+      wrappers.forEach(function (candidate) {
+        var candidateTrigger = candidate.querySelector(':scope > .fk-nav-link');
+        var active = candidate === wrapper;
+        candidate.classList.toggle('is-open', active);
+        if (candidateTrigger) candidateTrigger.setAttribute('aria-expanded', active ? 'true' : 'false');
+      });
+      pill.setAttribute('data-nav-open', 'true');
+      var panel = wrapper.querySelector(':scope > .fk-nav-dropdown-panel');
+      if (panel) {
+        panel.style.left = '0px';
+        var bounds = panel.getBoundingClientRect();
+        var shift = Math.min(0, window.innerWidth - 24 - bounds.right);
+        shift = Math.max(shift, 24 - bounds.left);
+        panel.style.left = shift + 'px';
+      }
+      var openHeight = panel ? Math.ceil(panel.scrollHeight) : 110;
+      pill.style.setProperty('--fk-nav-open-height', openHeight + 'px');
+    }
+
+    wrappers.forEach(function (wrapper, wrapperIndex) {
+      var trigger = wrapper.querySelector(':scope > .fk-nav-link');
+      var panel = wrapper.querySelector(':scope > .fk-nav-dropdown-panel');
+      if (!trigger || !panel) return;
+
+      var panelId = panel.id || 'fk-nav-panel-' + pillIndex + '-' + wrapperIndex;
+      panel.id = panelId;
+      trigger.setAttribute('role', 'button');
+      trigger.setAttribute('aria-haspopup', 'true');
+      trigger.setAttribute('aria-controls', panelId);
+      trigger.setAttribute('aria-expanded', 'false');
+
+      if (panel.querySelector('a.w--current,[aria-current="page"]')) {
+        trigger.classList.add('is-current-section');
+      }
+
+      wrapper.addEventListener('pointerenter', function () {
+        if (window.matchMedia('(min-width:768px) and (hover:hover) and (pointer:fine)').matches) openDesktop(wrapper);
+      });
+      wrapper.addEventListener('focusin', function () { openDesktop(wrapper); });
+
+      trigger.addEventListener('click', function (event) {
+        if (!isDesktop()) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        if (wrapper.classList.contains('is-open')) closeDesktop();
+        else openDesktop(wrapper);
+      }, true);
+
+      trigger.addEventListener('keydown', function (event) {
+        if (!isDesktop() || (event.key !== ' ' && event.key !== 'Enter')) return;
+        event.preventDefault();
+        if (wrapper.classList.contains('is-open')) closeDesktop();
+        else openDesktop(wrapper);
+      });
+    });
+
+    pill.querySelectorAll(':scope > .fk-nav-links > .fk-nav-link, :scope > .fk-nav-logo, :scope > .fk-nav-cta-button').forEach(function (item) {
+      item.addEventListener('pointerenter', function () {
+        if (isDesktop()) closeDesktop();
+      });
+    });
+
+    pill.addEventListener('pointerleave', function () {
+      if (!isDesktop()) return;
+      closeTimer = window.setTimeout(function () {
+        if (!pill.matches(':focus-within')) closeDesktop();
+      }, 150);
+    });
+    pill.addEventListener('pointerenter', function () { window.clearTimeout(closeTimer); });
+    pill.addEventListener('focusout', function (event) {
+      if (isDesktop() && !pill.contains(event.relatedTarget)) closeDesktop();
+    });
+    pill.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape') return;
+      var activeTrigger = pill.querySelector('.fk-nav-dropdown-wrapper.is-open > .fk-nav-link');
+      if (activeTrigger) {
+        event.preventDefault();
+        closeDesktop(activeTrigger);
+      }
+    });
+
+    document.addEventListener('pointerdown', function (event) {
+      if (isDesktop() && !pill.contains(event.target)) closeDesktop();
+    });
+    window.addEventListener('resize', function () {
+      if (!isDesktop()) closeDesktop();
+      else {
+        var active = pill.querySelector('.fk-nav-dropdown-wrapper.is-open');
+        if (active) openDesktop(active);
+      }
+    });
+  }
+
+  function init() {
+    document.querySelectorAll('.fk-nav-pill').forEach(initPill);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+;
+/*! heropinv3 — Fawkes site-header registered script — v1.4.0
+ *  Plain parallax hero. NO pin — the page keeps scrolling normally; the hero
+ *  background just drifts slower than the scroll (classic parallax) and the
+ *  hero's own overflow:hidden crops it. Everything is `scrub`ed to the scroll
+ *  position, so scrolling back up retraces the exact same frames — no snap.
+ *
+ *  History: v1.0 tried to pin the absolutely-positioned .image-fill/.hero-scrim
+ *  (GSAP can't box those — never pinned). v1.1 pinned the whole .hero-wrapper
+ *  section — that DID pin, but it froze the page while darkening, which read as
+ *  broken. v1.2 drops pinning entirely and just does the parallax + a gentle
+ *  scrim lift.
+ *
+ *  Requires gsapcore + gsapscrolltrigger first. .hero-wrapper keeps its Webflow
+ *  overflow:hidden. About Us has no .hero-wrapper and is untouched.
+ */
+(function () {
+  "use strict";
+  if (window.__FK_HERO_V3__) return;
+  window.__FK_HERO_V3__ = true;
+
+  var HERO = ".hero-wrapper";
+  var FURNITURE = ".image-fill, .hero-scrim, .hero-content, .hero-stat-row";
+  var AMOUNT = 100;
+
+  var REDUCED = !!(window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  function init() {
+    // The hero image carried data-parallax="0.25" (driven by the generic loop
+    // below). Drive it explicitly in the hero block instead so we control the
+    // scale/headroom, and strip the attr so it isn't double-animated.
+    document.querySelectorAll(HERO).forEach(function (hero) {
+      hero.querySelectorAll("[data-parallax]").forEach(function (el) {
+        if (el.matches(FURNITURE)) el.removeAttribute("data-parallax");
+      });
+    });
+
+    if (REDUCED || !window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    // Generic parallax — product dashboards, case-study card images, etc.
+    document.querySelectorAll("[data-parallax]").forEach(function (el) {
+      if (el.closest(HERO)) return;
+      var speed = parseFloat(el.getAttribute("data-parallax")) || 0.15;
+      gsap.to(el, {
+        y: function () { return -(speed * AMOUNT); },
+        ease: "none",
+        scrollTrigger: {
+          trigger: el, start: "top bottom", end: "bottom top",
+          scrub: true, invalidateOnRefresh: true
+        }
+      });
+    });
+
+    // Parallax hero — no pin.
+    document.querySelectorAll(HERO).forEach(function (hero) {
+      var images = hero.querySelectorAll(".image-fill, .home-hero-media-b");
+      var scrim = hero.querySelector(".hero-scrim");
+      var content = hero.querySelector(".hero-content");
+      var statRow = hero.querySelector(".hero-stat-row");
+      var range = {
+        trigger: hero, start: "top top", end: "bottom top",
+        scrub: true, invalidateOnRefresh: true
+      };
+
+      images.forEach(function (img) {
+        // Responsive image selection must describe the transformed footprint,
+        // not the pre-transform 100vw layout box. Without this, browsers pick
+        // a source roughly 24% smaller than the 1.32x rendered hero.
+        img.setAttribute("sizes", "132vw");
+        // Overscale so the drift never exposes an edge, then move ~28% of the
+        // hero height across the whole scroll-through (well slower than the page).
+        gsap.set(img, { scale: 1.32, transformOrigin: "50% 50%", willChange: "transform" });
+        gsap.fromTo(img,
+          { yPercent: -14 },
+          { yPercent: 14, ease: "none", immediateRender: false,
+            scrollTrigger: Object.assign({}, range) });
+      });
+
+      // Gentle darken as the hero leaves — nowhere near a full black-out.
+      if (scrim) gsap.fromTo(scrim,
+        { backgroundColor: "rgba(17,18,23,0.45)" },
+        { backgroundColor: "rgba(17,18,23,0.72)", ease: "none", immediateRender: false,
+          scrollTrigger: Object.assign({}, range) });
+
+      // Copy just fades a touch (no vertical lift — that was tried and rejected).
+      if (content) gsap.to(content,
+        { autoAlpha: 0.55, ease: "none",
+          scrollTrigger: Object.assign({}, range) });
+      if (statRow && !hero.querySelector('.home-hero-state-b')) gsap.to(statRow,
+        { autoAlpha: 0.4, ease: "none",
+          scrollTrigger: Object.assign({}, range) });
+    });
+
+    window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+    }
+  }
+
+  if (document.readyState !== "loading") init();
+  else document.addEventListener("DOMContentLoaded", init, { once: true });
+})();
+;
+/*! fk-reveal — Fawkes site-header registered script — v1.2.0
+ *  Super-subtle "animate into view" for whole content blocks: a short opacity +
+ *  10px rise the first time each block enters the viewport.
+ *
+ *  Uses IntersectionObserver (not ScrollTrigger.batch, which drops elements on
+ *  fast scroll / when they start above the fold).
+ *
+ *  v1.2.0 — the reveal path now uses gsap.set (synchronous, no rAF) with a CSS
+ *  transition for the fade, so blocks still un-hide in environments where
+ *  requestAnimationFrame is throttled/stopped (background tabs, headless/automation).
+ *  gsap.to tweens were freezing at autoAlpha:0 there, leaving the whole page
+ *  invisible. Hard failsafe also un-hides everything after 1.8s and on tab-hide.
+ *  Respects prefers-reduced-motion. Hero / nav / footer bottom are left alone.
+ */
+(function () {
+  "use strict";
+  if (window.__FK_REVEAL__) return;
+  window.__FK_REVEAL__ = true;
+
+  var REDUCED = !!(window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  // Whole blocks — one gentle fade per section/card, never per leaf node.
+  var SELECTOR = [
+    ".section-wrapper",
+    ".fk-product-block",
+    ".fk-cta-banner",
+    ".fk-trusted-band",
+    ".fk-use-cases-bar",
+    ".fk-xlink-card"
+  ].join(",");
+
+  function init() {
+    var els = Array.prototype.slice.call(document.querySelectorAll(SELECTOR))
+      .filter(function (el) { return !el.closest(".hero-wrapper, nav, .fk-nav-wrapper"); });
+    if (!els.length) return;
+
+    if (REDUCED || !window.gsap) return; // leave everything visible
+
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var hidden = [];
+
+    els.forEach(function (el) {
+      // already in view on load → don't touch it (no flash, no CLS)
+      if (el.getBoundingClientRect().top < vh * 0.9) return;
+      // CSS transition drives the fade so we never depend on the rAF ticker.
+      el.style.transition = "opacity .5s ease, transform .5s ease";
+      gsap.set(el, { autoAlpha: 0, y: 10 });
+      hidden.push(el);
+    });
+    if (!hidden.length) return;
+
+    function reveal(el) {
+      if (el.__fkDone) return;
+      el.__fkDone = true;
+      // gsap.set is synchronous — applies instantly even with no rAF. The inline
+      // CSS transition above animates opacity/transform to the new values.
+      gsap.set(el, { autoAlpha: 1, y: 0 });
+    }
+    function revealAll() { hidden.forEach(reveal); }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); }
+        });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
+      hidden.forEach(function (el) { io.observe(el); });
+    } else {
+      revealAll();
+      return;
+    }
+
+    // Failsafes — nothing may ever stay invisible.
+    setTimeout(revealAll, 1800);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) revealAll();
+    });
+    window.addEventListener("pagehide", revealAll);
+    window.addEventListener("load", function () { setTimeout(revealAll, 1200); });
+  }
+
+  if (document.readyState !== "loading") init();
+  else document.addEventListener("DOMContentLoaded", init, { once: true });
+})();
+;
+/*! fk-site-interactions — Fawkes site-header registered script — v1.7.0
  *  Freeform Part 4, reduced. Independent blocks, no shared state:
  *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle
@@ -1187,3 +1543,305 @@
     initializeWhenReady();
   }
 })();
+;
+(function (window, document) {
+  "use strict";
+
+  if (!window || !document || window.FqNativeFAQ) return;
+
+  var ITEM_SELECTOR = ".fk-faq-item";
+  var ROW_SELECTOR = ".fk-faq-question-row";
+  var WRAPPER_SELECTOR = ".fk-faq-answer-wrapper";
+  var ANSWER_SELECTOR = ".fk-faq-answer-text";
+  var CHEVRON_SELECTOR = ".fk-faq-chevron";
+  var OPEN_ITEM_CLASS = "faq-open";
+  var OPEN_WRAPPER_CLASS = "fk-faq-answer-open";
+  var OPEN_CHEVRON_CLASS = "fk-faq-chevron-open";
+  var REDUCED_CLASS = "fk-faq-reduced-motion";
+  var HEIGHT_PROPERTY = "--fk-faq-answer-height";
+  var HEIGHT_ALLOWANCE = 40;
+
+  var states = new WeakMap();
+  var pending = new Set();
+  var frame = 0;
+  var sequence = 0;
+  var mutationObserver = null;
+  var resizeObserver = null;
+  var globalListenersStarted = false;
+  var reducedMotion = null;
+
+  function requestFrame(callback) {
+    if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
+    return window.setTimeout(callback, 16);
+  }
+
+  function clearKeyboardClickGuard(state) {
+    (window.setTimeout || setTimeout)(function () {
+      state.suppressKeyboardClick = false;
+    }, 0);
+  }
+
+  function idIsUnique(element, id) {
+    if (!id) return false;
+    var matches = document.querySelectorAll("[id]");
+    var count = 0;
+    for (var index = 0; index < matches.length; index += 1) {
+      if (matches[index].id === id) {
+        count += 1;
+        if (matches[index] !== element || count > 1) return false;
+      }
+    }
+    return count === 1;
+  }
+
+  function ensureUniqueId(element, stem) {
+    if (idIsUnique(element, element.id)) return element.id;
+    var candidate;
+    do {
+      sequence += 1;
+      candidate = "fq-native-" + stem + "-" + sequence;
+    } while (document.getElementById(candidate));
+    element.id = candidate;
+    return candidate;
+  }
+
+  function isNativeButton(element) {
+    var tag = String(element.tagName || "").toLowerCase();
+    if (tag === "button") return true;
+    if (tag !== "input") return false;
+    var type = String(element.getAttribute("type") || "").toLowerCase();
+    return type === "button" || type === "submit" || type === "reset";
+  }
+
+  function isFragmentAnchor(element) {
+    if (String(element.tagName || "").toLowerCase() !== "a") return false;
+    var href = String(element.getAttribute("href") || "").trim();
+    return href === "" || href.charAt(0) === "#";
+  }
+
+  function applyReducedMotion(state) {
+    var reduced = Boolean(reducedMotion && reducedMotion.matches);
+    state.wrapper.classList.toggle(REDUCED_CLASS, reduced);
+    if (state.chevron) state.chevron.classList.toggle(REDUCED_CLASS, reduced);
+  }
+
+  function measure(state) {
+    if (!state || !state.wrapper) return;
+    var measured = Math.max(0, Number(state.wrapper.scrollHeight) || 0);
+    state.wrapper.style.setProperty(HEIGHT_PROPERTY, measured + HEIGHT_ALLOWANCE + "px");
+  }
+
+  function flushMeasurements() {
+    frame = 0;
+    var work = Array.from(pending);
+    pending.clear();
+    for (var index = 0; index < work.length; index += 1) measure(work[index]);
+  }
+
+  function scheduleMeasurement(state) {
+    if (!state) return;
+    pending.add(state);
+    if (!frame) frame = requestFrame(flushMeasurements);
+  }
+
+  function setOpen(state, open) {
+    state.item.classList.toggle(OPEN_ITEM_CLASS, open);
+    state.wrapper.classList.toggle(OPEN_WRAPPER_CLASS, open);
+    if (state.chevron) state.chevron.classList.toggle(OPEN_CHEVRON_CLASS, open);
+    state.row.setAttribute("aria-expanded", open ? "true" : "false");
+    state.wrapper.setAttribute("aria-hidden", open ? "false" : "true");
+
+    if (open) {
+      state.wrapper.removeAttribute("inert");
+      try { state.wrapper.inert = false; } catch (_) {}
+      scheduleMeasurement(state);
+    } else {
+      state.wrapper.setAttribute("inert", "");
+      try { state.wrapper.inert = true; } catch (_) {}
+    }
+  }
+
+  function toggle(state) {
+    setOpen(state, !state.item.classList.contains(OPEN_ITEM_CLASS));
+  }
+
+  function handleClick(state, event) {
+    if (isFragmentAnchor(state.row) && event && event.preventDefault) event.preventDefault();
+    if (state.suppressKeyboardClick && (!event || event.detail === 0 || event.detail == null)) {
+      state.suppressKeyboardClick = false;
+      return;
+    }
+    state.suppressKeyboardClick = false;
+    toggle(state);
+  }
+
+  function handleKeydown(state, event) {
+    var key = event && event.key;
+    if (key !== "Enter" && key !== " " && key !== "Spacebar") return;
+    if (event.repeat) return;
+    if (event.preventDefault) event.preventDefault();
+    state.suppressKeyboardClick = true;
+    toggle(state);
+    clearKeyboardClickGuard(state);
+  }
+
+  function observeSize(state) {
+    if (!resizeObserver) return;
+    var target = state.wrapper.querySelector(ANSWER_SELECTOR) || state.wrapper.firstElementChild || state.wrapper;
+    if (state.resizeTarget === target) return;
+    if (state.resizeTarget && resizeObserver.unobserve) resizeObserver.unobserve(state.resizeTarget);
+    state.resizeTarget = target;
+    resizeObserver.observe(target);
+  }
+
+  function initializeItem(item) {
+    var row = item.querySelector(ROW_SELECTOR);
+    var wrapper = item.querySelector(WRAPPER_SELECTOR);
+    if (!row || !wrapper) return null;
+
+    var state = states.get(item);
+    if (!state) {
+      state = {
+        item: item,
+        row: row,
+        wrapper: wrapper,
+        chevron: item.querySelector(CHEVRON_SELECTOR),
+        suppressKeyboardClick: false,
+        resizeTarget: null
+      };
+      states.set(item, state);
+
+      row.addEventListener("click", function (event) { handleClick(state, event); });
+      row.addEventListener("keydown", function (event) { handleKeydown(state, event); });
+    } else {
+      state.chevron = item.querySelector(CHEVRON_SELECTOR);
+    }
+
+    if (!isNativeButton(row)) {
+      row.setAttribute("role", "button");
+      if (!row.hasAttribute("tabindex")) row.setAttribute("tabindex", "0");
+    }
+
+    var rowId = ensureUniqueId(row, "question");
+    var wrapperId = ensureUniqueId(wrapper, "answer");
+    row.setAttribute("aria-controls", wrapperId);
+    wrapper.setAttribute("role", "region");
+    wrapper.setAttribute("aria-labelledby", rowId);
+
+    applyReducedMotion(state);
+    setOpen(state, item.classList.contains(OPEN_ITEM_CLASS));
+    scheduleMeasurement(state);
+    observeSize(state);
+    return state;
+  }
+
+  function itemsWithin(root) {
+    var items = [];
+    if (root && root.matches && root.matches(ITEM_SELECTOR)) items.push(root);
+    if (root && root.querySelectorAll) {
+      var descendants = root.querySelectorAll(ITEM_SELECTOR);
+      for (var index = 0; index < descendants.length; index += 1) items.push(descendants[index]);
+    }
+    return items;
+  }
+
+  function initializeWithin(root) {
+    var items = itemsWithin(root || document);
+    for (var index = 0; index < items.length; index += 1) initializeItem(items[index]);
+    return items.length;
+  }
+
+  function scheduleWithin(root) {
+    var items = itemsWithin(root || document);
+    for (var index = 0; index < items.length; index += 1) {
+      scheduleMeasurement(states.get(items[index]) || initializeItem(items[index]));
+    }
+  }
+
+  function startResizeObserver() {
+    if (resizeObserver || !window.ResizeObserver) return;
+    resizeObserver = new window.ResizeObserver(function (entries) {
+      for (var index = 0; index < entries.length; index += 1) {
+        var target = entries[index].target;
+        var item = target.closest ? target.closest(ITEM_SELECTOR) : null;
+        if (item) scheduleMeasurement(states.get(item));
+      }
+    });
+  }
+
+  function startGlobalListeners() {
+    if (globalListenersStarted) return;
+    globalListenersStarted = true;
+
+    reducedMotion = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    if (reducedMotion) {
+      var onMotionChange = function () {
+        var items = itemsWithin(document);
+        for (var index = 0; index < items.length; index += 1) {
+          var state = states.get(items[index]);
+          if (state) applyReducedMotion(state);
+        }
+      };
+      if (reducedMotion.addEventListener) reducedMotion.addEventListener("change", onMotionChange);
+      else if (reducedMotion.addListener) reducedMotion.addListener(onMotionChange);
+    }
+
+    window.addEventListener("resize", function () { scheduleWithin(document); });
+
+    if (document.fonts) {
+      if (document.fonts.ready && document.fonts.ready.then) {
+        document.fonts.ready.then(function () { scheduleWithin(document); });
+      }
+      if (document.fonts.addEventListener) {
+        document.fonts.addEventListener("loadingdone", function () { scheduleWithin(document); });
+      }
+    }
+  }
+
+  function startMutationObserver() {
+    if (mutationObserver || !window.MutationObserver) return;
+    mutationObserver = new window.MutationObserver(function (records) {
+      for (var index = 0; index < records.length; index += 1) {
+        var record = records[index];
+        if (record.type === "childList") {
+          for (var added = 0; added < record.addedNodes.length; added += 1) {
+            var node = record.addedNodes[added];
+            if (node && node.nodeType === 1) initializeWithin(node);
+          }
+        }
+        var item = record.target && record.target.closest ? record.target.closest(ITEM_SELECTOR) : null;
+        if (item) scheduleMeasurement(states.get(item) || initializeItem(item));
+      }
+    });
+    mutationObserver.observe(document.body || document.documentElement, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+  }
+
+  function init(options) {
+    options = options || {};
+    startResizeObserver();
+    startGlobalListeners();
+    var count = initializeWithin(options.root || document);
+    if (options.observe !== false) startMutationObserver();
+    return count;
+  }
+
+  function update(root) {
+    initializeWithin(root || document);
+    scheduleWithin(root || document);
+  }
+
+  window.FqNativeFAQ = {
+    init: init,
+    update: update
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () { init(); }, { once: true });
+  } else {
+    init();
+  }
+})(window, document);
