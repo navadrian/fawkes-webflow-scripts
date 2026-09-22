@@ -1,0 +1,30 @@
+/* Product Feature Section behavior-dependent presentation.
+ * These rules remain custom because they depend on conditional component
+ * visibility, exact approved text wrapping, or source-specific crop trimming.
+ * Static layout and typography remain native Webflow styles.
+ */
+.fk-product-feature-left > .fk-product-name-dark[data-fk-wrap-residual] {
+  max-width: 10ch !important;
+}
+
+.fk-product-block.has-feature-groups.is-product-feature-section .is-product-feature-label:empty {
+  display: none;
+}
+
+.fk-product-block.has-feature-groups.is-product-feature-section .is-product-feature-label:empty + .is-product-feature-rows {
+  grid-column: 1 / -1 !important;
+}
+
+.fk-product-block.has-feature-groups.is-product-feature-section .is-product-feature-group:not(:has(> .is-product-feature-label:not(.w-condition-invisible))) > .is-product-feature-rows {
+  grid-column: 1 / -1 !important;
+}
+
+.fk-product-block-visual.is-product-dashboard > img {
+  transform: scale(1.006);
+  transform-origin: 50% 50%;
+}
+
+.fk-product-block-visual.is-product-dashboard > img[src*="fawkes-product-link-"] {
+  transform: scale(1.025);
+}
+

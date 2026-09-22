@@ -1,4 +1,4 @@
-/*! fk-site-interactions — Fawkes site-header registered script — v1.5.0
+/*! fk-site-interactions — Fawkes site-header registered script — v1.6.0
  *  Freeform Part 4, reduced. Independent blocks, no shared state:
  *    1. Empty-slot hiding for .fk-visual-card, .fk-process-tile and .fk-faq-item
  *    2. Mobile nav hamburger toggle
@@ -314,7 +314,6 @@
     document.addEventListener('DOMContentLoaded', function () { init(); initReviewInteractions(); }, { once: true });
   }
 })();
-
 ;
 /*! fk-home-hero-rotation — homepage A/B hero stage
  *
@@ -782,7 +781,6 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
 })();
-
 ;
 /* Home carousel: stretch the existing native destination anchor over the card.
    The carousel's own controller continues to update that anchor's href. */
@@ -814,7 +812,6 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
 })();
-
 ;
 /* CMS option presentation and dynamic current-item exclusion in existing bundle. */
 (function () {
@@ -875,7 +872,6 @@
  window.Webflow.push(watchMoreCases);
  window.setTimeout(watchMoreCases,0);
 })();
-
 ;
 /* Mobile-only enhancement. Restores original attributes/state on leaving <=767px. */
 (function () {
@@ -915,7 +911,6 @@
  }
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);else run();
 })();
-
 ;
 /*
  * F8 Home native Tabs behavior — offline integration artifact.
@@ -1160,3 +1155,35 @@
     document.querySelectorAll(ROOT_SELECTOR).forEach(init);
   });
 }());
+;
+/*! Product Feature Section behavior retained after native consolidation. */
+(function () {
+  "use strict";
+
+  function initializeProductFeatureDetails() {
+    document.querySelectorAll('.fk-product-feature-left > .fk-product-name-dark').forEach(function (heading) {
+      if (heading.textContent.trim() === 'Residual Asset Value') {
+        heading.setAttribute('data-fk-wrap-residual', '');
+      }
+    });
+
+    /* A slash-separated audience name is one editable component value. Add a
+       soft wrap opportunity without changing that value or breaking a word. */
+    document.querySelectorAll('.fk-product-block.has-feature-groups.is-product-feature-section .is-product-feature-label').forEach(function (label) {
+      if (label.querySelector('wbr') || !label.textContent.includes('/')) return;
+      label.innerHTML = label.innerHTML.replace(/\//g, '/<wbr>');
+    });
+  }
+
+  function initializeWhenReady() {
+    initializeProductFeatureDetails();
+    setTimeout(initializeProductFeatureDetails, 500);
+    setTimeout(initializeProductFeatureDetails, 2000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeWhenReady, { once: true });
+  } else {
+    initializeWhenReady();
+  }
+})();
