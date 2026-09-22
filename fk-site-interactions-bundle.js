@@ -823,6 +823,14 @@
  var linkPattern = 'https://cdn.prod.website-files.com/6a8826652e72a7fcc7c3bf57/6a9b99732ce0ff1e9454a8fc_fawkeslink-pattern-4k.webp';
  var reviewAssets = 'https://cdn.jsdelivr.net/gh/navadrian/fawkes-webflow-scripts@419078329bb4bbbc260dea3dff5b3342087a4c2b/';
  function text(tag, cls, value) { var e=document.createElement(tag); e.className=cls; e.textContent=value; return e; }
+ function syncMoreCases() {
+  document.querySelectorAll('[data-fk-more-cases] .w-dyn-item').forEach(function(item) {
+   var marker=item.querySelector('[data-fk-case-slug]'); var slug=marker&&marker.textContent.trim(); if(!slug) return;
+   var path='/case-studies/'+slug;
+   item.hidden=location.pathname.replace(/\/$/,'')===path;
+   item.querySelectorAll('a.fk-cs-card-link').forEach(function(a){a.href=path;});
+  });
+ }
  function run() {
   // The source exports previously contained the wrong pre-crop. Preserve card geometry.
   function source(img,url) { if(!img)return; img.removeAttribute('srcset'); img.src=url; }
@@ -868,13 +876,11 @@
    }
    if(link) link.textContent='Explore '+name;
   });
-  document.querySelectorAll('[data-fk-more-cases] .w-dyn-item').forEach(function(item) {
-   var marker=item.querySelector('[data-fk-case-slug]'); var slug=marker&&marker.textContent.trim(); if(!slug) return;
-   var path='/case-studies/'+slug; if(location.pathname.replace(/\/$/,'')===path) {item.hidden=true;return;}
-   item.querySelectorAll('a.fk-cs-card-link').forEach(function(a){a.href=path;});
-  });
+  syncMoreCases();
  }
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
+ window.Webflow=window.Webflow||[];
+ window.Webflow.push(syncMoreCases);
 })();
 
 ;
