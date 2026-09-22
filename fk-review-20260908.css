@@ -25,15 +25,6 @@
 .article-layout .w-richtext table th { background:#e2e2ec; text-align:left; padding:12px; border-bottom:1px solid #f2971f; }
 .article-layout .w-richtext table td { padding:12px; border-bottom:1px solid #d1d1d6; vertical-align:top; }
 .article-layout .w-richtext blockquote { margin:24px 0; padding:16px 20px; background:#e2e2ec; border-left:3px solid #111217; border-radius:5px; font-size:22px; line-height:1.5; font-style:italic; }
-.fk-review-product-card { position:relative; overflow:hidden; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:0; padding:64px 48px 48px; border-radius:12px; color:#fff; text-decoration:none; background:#111217; min-height:320px; }
-.fk-review-product-card > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
-.fk-review-product-card > :not(img) { position:relative; z-index:1; }
-.fk-review-product-card .fk-xlink-eyebrow { margin:0 0 12px; font-size:16px; line-height:24px; text-transform:uppercase; }
-.fk-review-product-card .fk-xlink-title { margin:0 0 12px!important; font-size:48px; line-height:1.2; font-weight:700; letter-spacing:-2px; }
-.fk-review-product-card .fk-xlink-description { margin:0 0 24px!important; font-size:32px; line-height:1.3; font-weight:500; }
-.fk-review-product-card .fk-xlink-btn { display:inline-flex; padding:12px 20px; border:1px solid rgba(255,255,255,.65); border-radius:10px; font-size:20px; line-height:1.2; color:white; background:transparent; }
-.fk-review-related-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
-.fk-review-related-row > .fk-review-product-card { height:100%; align-self:stretch; }
 [data-fk-case-slug], [data-fk-product-choice] { display:none!important; }
 [data-fk-more-cases] { grid-column:1/-1; width:100%; }
 [data-fk-more-cases] > .w-dyn-items { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
@@ -86,9 +77,6 @@
 
 
 @media(max-width:991px) {
- .fk-review-product-card { padding:40px 28px; }
- .fk-review-product-card .fk-xlink-title { font-size:38px; }
- .fk-review-product-card .fk-xlink-description { font-size:26px; }
  .article-inline-cta { padding:40px 28px 60px 52px!important; }
  .article-inline-cta [data-fk-product-choice] { font-size:48px!important; }
  .article-inline-cta .article-inline-cta-heading { font-size:26px!important; line-height:1.3!important; }
@@ -102,10 +90,7 @@
  .hero-wrapper .fk-tag-chip, .fk-link-hero-frame .fk-tag-chip { font-size:14px!important; line-height:21px!important; padding:6px 10px!important; }
  [data-fk-bess-heading] { white-space:normal; }
  .article-layout .w-richtext table { display:block; overflow-x:auto; }
- .fk-review-related-row, [data-fk-more-cases] > .w-dyn-items { grid-template-columns:minmax(0,1fr); }
- .fk-review-product-card { padding:40px 24px; min-height:280px; }
- .fk-review-product-card .fk-xlink-title { font-size:36px; }
- .fk-review-product-card .fk-xlink-description { font-size:24px; }
+ [data-fk-more-cases] > .w-dyn-items { grid-template-columns:minmax(0,1fr); }
  .article-inline-cta { width:100%!important; min-width:0!important; height:auto!important; min-height:0!important; padding:32px 24px!important; gap:12px!important; }
  .article-inline-cta [data-fk-product-choice] { font-size:32px!important; line-height:1.2!important; letter-spacing:-1px!important; }
  .article-inline-cta .article-inline-cta-heading { width:100%!important; font-size:24px!important; line-height:1.35!important; }
