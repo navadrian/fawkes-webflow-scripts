@@ -25,7 +25,7 @@
 .article-layout .w-richtext table th { background:#e2e2ec; text-align:left; padding:12px; border-bottom:1px solid #f2971f; }
 .article-layout .w-richtext table td { padding:12px; border-bottom:1px solid #d1d1d6; vertical-align:top; }
 .article-layout .w-richtext blockquote { margin:24px 0; padding:16px 20px; background:#e2e2ec; border-left:3px solid #111217; border-radius:5px; font-size:22px; line-height:1.5; font-style:italic; }
-[data-fk-case-slug], [data-fk-product-choice] { display:none!important; }
+[data-fk-case-slug], [data-fk-product-choice]:not(.fk-article-product-choice-native) { display:none!important; }
 [data-fk-more-cases] { grid-column:1/-1; width:100%; }
 [data-fk-more-cases] > .w-dyn-items { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
 [data-fk-more-cases] .fk-case-study-card { width:100%!important; max-width:none!important; min-height:420px; }
