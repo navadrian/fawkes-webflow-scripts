@@ -17,18 +17,6 @@
 /* Native Home component classes and variants own this presentation. */
 
 @media (min-width: 992px) {
-  /* Webflow currently stores !important values on component variants but does
-     not emit them in the published CSS. The shared Feature Item base uses
-     important horizontal padding, so these two scoped declarations remain as
-     the smallest safe runtime bridge until that shared base is refactored. */
-  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row .fk-feature-item {
-    padding: 0 !important;
-  }
-
-  body:has(.home-hero-state-b) .fk-product-block:not(.is-industry-feature) > .feature-row .fk-feature-item-head {
-    gap: 12px !important;
-  }
-
   /* Figma 2024:1307: 30px Inter Medium, 45px leading, -1.5px tracking.
      Its 47px bottom margin plus the existing 24px grid gap reproduces the
      116px label-to-tag relationship in the Core reference. */
