@@ -5,13 +5,7 @@
  *    3. Mobile nav dropdown expand
  *    4. Home industries content and controls are native Webflow Tabs.
  *       Autoplay/progress is provided by the behavior-only native Tabs controller.
- *    5. Home hero KPI reveal — slow sequenced intro: dot scales up, connector
- *       line wipes toward the cards, the KPI plate wipes in from the top, then
- *       the three stat cards rise + fade in staggered (~3.8s total). Inline
- *       styles primed without a transition then revealed (real from-frame);
- *       4.4s failsafe force-shows. Plate uses clip-path, not opacity, because
- *       heropinv3.js owns .hero-stat-row's opacity.
- *    6. Home case-study cards — auto-scroll marquee: wrap children (+1 clone
+ *    5. Home case-study cards — auto-scroll marquee: wrap children (+1 clone
  *       set) in a flex track, animate translateX. Pause on hover/focus,
  *       respects prefers-reduced-motion.
  *  Pairs with fk-mobilenav.css: the .mobile-menu-open / .is-active /
@@ -91,98 +85,6 @@
     });
 
     // Home industries: native Tabs and native component props own all slide content.
-
-    // 5. Home hero KPI reveal — a slow, sequenced intro:
-    //    (a) the pulse dot scales up
-    //    (b) the connector line draws toward the cards (clip-path wipe L->R)
-    //    (c) the KPI plate/background wipes in from the top (clip-path)
-    //    (d) the three stat cards rise + fade in, staggered
-    // Each element is primed WITHOUT a transition, the hidden state is forced
-    // to lay out, THEN the transition is added and the target set — otherwise
-    // setting the prop and the transition together only animates the way OUT.
-    // The plate uses clip-path (NOT opacity) because heropinv3.js owns
-    // .hero-stat-row's opacity for its scroll-scrub fade. rAF + timeout
-    // trigger; failsafe force-shows if a throttled tab never runs it.
-    var kpiRow = document.querySelector('.hero-stat-row');
-    if (kpiRow && !document.querySelector('.home-hero-state-b') &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-        window.matchMedia('(min-width: 768px)').matches) {
-      var kpiTarget = document.querySelector('.fk-hero-target');
-      var dotLg = kpiTarget ? kpiTarget.querySelector('.fk-hero-dot-lg') : null;
-      var connector = kpiTarget ? kpiTarget.querySelector('.fk-hero-connector') : null;
-      var statCards = Array.prototype.slice.call(kpiRow.querySelectorAll('.fk-stat-card'));
-
-      // { el, prime:{prop:val}, reveal:{prop:val}, trans, delay(seconds) }
-      var kpiSteps = [];
-      if (dotLg) kpiSteps.push({
-        el: dotLg,
-        prime: { opacity: '0', transform: 'scale(.35)' },
-        reveal: { opacity: '1', transform: 'scale(1)' },
-        trans: 'opacity .8s ease, transform .9s cubic-bezier(.18,.7,.3,1)',
-        delay: 0.25
-      });
-      if (connector) kpiSteps.push({
-        el: connector,
-        prime: { opacity: '0', 'clip-path': 'inset(0 100% 0 0)', '-webkit-clip-path': 'inset(0 100% 0 0)' },
-        reveal: { opacity: '1', 'clip-path': 'inset(0 0 0 0)', '-webkit-clip-path': 'inset(0 0 0 0)' },
-        trans: 'opacity .35s ease, clip-path .85s ease, -webkit-clip-path .85s ease',
-        delay: 0.95
-      });
-      kpiSteps.push({ // the plate / backing card — clip-path, not opacity
-        el: kpiRow,
-        prime: { 'clip-path': 'inset(0 0 100% 0)', '-webkit-clip-path': 'inset(0 0 100% 0)' },
-        reveal: { 'clip-path': 'inset(0 0 0% 0)', '-webkit-clip-path': 'inset(0 0 0% 0)' },
-        trans: 'clip-path .9s ease, -webkit-clip-path .9s ease',
-        delay: 1.7
-      });
-      statCards.forEach(function (c, i) {
-        kpiSteps.push({
-          el: c,
-          prime: { opacity: '0', transform: 'translateY(18px)' },
-          reveal: { opacity: '1', transform: 'translateY(0)' },
-          trans: 'opacity .8s ease, transform .8s ease',
-          delay: 2.4 + i * 0.28
-        });
-      });
-
-      function kpiApply(step, map) {
-        for (var k in map) {
-          if (map.hasOwnProperty(k)) step.el.style.setProperty(k, map[k]);
-        }
-      }
-      // prime: no transition yet
-      kpiSteps.forEach(function (s) {
-        s.el.style.setProperty('transition', 'none');
-        kpiApply(s, s.prime);
-      });
-      void kpiRow.offsetWidth; // force the hidden state to lay out
-
-      function revealKPI() {
-        kpiSteps.forEach(function (s) {
-          s.el.style.setProperty('transition', s.trans);
-          s.el.style.setProperty('transition-delay', s.delay + 's');
-          kpiApply(s, s.reveal);
-        });
-      }
-      if (typeof window.requestAnimationFrame === 'function' && !document.hidden) {
-        window.requestAnimationFrame(function () { window.requestAnimationFrame(revealKPI); });
-      }
-      window.setTimeout(revealKPI, 90);
-      // failsafe: after the whole sequence would have finished, hard-clear
-      window.setTimeout(function () {
-        kpiSteps.forEach(function (s) {
-          s.el.style.setProperty('transition', 'none');
-          s.el.style.setProperty('transition-delay', '0s');
-          s.el.style.removeProperty('clip-path');
-          s.el.style.removeProperty('-webkit-clip-path');
-          if (s.el !== kpiRow) {
-            // leave .hero-stat-row's opacity to heropinv3's scroll-scrub
-            s.el.style.opacity = '1';
-            s.el.style.transform = 'none';
-          }
-        });
-      }, 4400);
-    }
 
     // Manual case-study navigation is initialized below; no autoplay or clones.
   }

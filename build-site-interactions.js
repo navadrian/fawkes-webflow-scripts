@@ -8,7 +8,6 @@ const sources = [
   'fk-reveal.js',
   'fk-site-interactions.js',
   'fk-home-hero-rotation.js',
-  'fk-home-card-link.js',
   'fk-review-20260908.js',
   'fk-responsive-nav.js',
   'fk-home-tabs-native.js',
