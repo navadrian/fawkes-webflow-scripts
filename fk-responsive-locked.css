@@ -33,8 +33,4 @@
 
 
  body:has(.home-hero-state-b) .fk-method-cta { white-space:normal!important; font-size:16px!important; line-height:1.4!important; padding:12px 16px!important; }
- body:has(.home-hero-state-b) .fk-product-block .fk-feature-item { width:100%!important; min-height:0!important; border:0!important; padding:0!important; }
- body:has(.home-hero-state-b) .fk-product-block .fk-feature-item-head { gap:10px!important; }
- body:has(.home-hero-state-b) .fk-product-block .wb-tags-24 { font-size:18px!important; line-height:1.35!important; width:auto!important; }
- body:has(.home-hero-state-b) .fk-product-block .fk-feature-description-dark { width:auto!important; max-width:none!important; font-size:16px!important; line-height:1.5!important; margin:8px 0 0!important; }
 }
