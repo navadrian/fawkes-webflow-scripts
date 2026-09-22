@@ -1,9 +1,6 @@
 /* CMS option presentation and dynamic current-item exclusion in existing bundle. */
 (function () {
  'use strict';
- var arcPattern = 'https://cdn.prod.website-files.com/6a8826652e72a7fcc7c3bf57/6a9b9973d005990379f0e585_fawkesarc-pattern-4k.webp';
- var linkPattern = 'https://cdn.prod.website-files.com/6a8826652e72a7fcc7c3bf57/6a9b99732ce0ff1e9454a8fc_fawkeslink-pattern-4k.webp';
- var reviewAssets = 'https://cdn.jsdelivr.net/gh/navadrian/fawkes-webflow-scripts@419078329bb4bbbc260dea3dff5b3342087a4c2b/';
  function text(tag, cls, value) { var e=document.createElement(tag); e.className=cls; e.textContent=value; return e; }
  function syncMoreCases() {
   document.querySelectorAll('[data-fk-more-cases] .w-dyn-item').forEach(function(item) {
@@ -22,10 +19,6 @@
   host.__fkMoreCasesObserver.observe(host,{subtree:true,childList:true,attributes:true,attributeFilter:['href']});
  }
  function run() {
-  // The source exports previously contained the wrong pre-crop. Preserve card geometry.
-  function source(img,url) { if(!img)return; img.removeAttribute('srcset'); img.src=url; }
-  document.querySelectorAll('.fk-xlink-card[href="/fawkesarc"] > img').forEach(function(img){source(img,arcPattern);});
-  document.querySelectorAll('.fk-xlink-card[href="/fawkeslink"] > img').forEach(function(img){source(img,linkPattern);});
   // Exact line endings from the main Figma product frames. Phone/tablet wrapping remains natural.
   var featureLines = [
    ['Continuous health tracking, degradation velocity and','remaining useful life across your assets.'],
