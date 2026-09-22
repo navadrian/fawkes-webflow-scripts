@@ -31,12 +31,9 @@
    section label, the tall dashboard image fills the space beside it) */
 .fk-product-block > .fk-product-block-content { row-gap: 12px; align-self: start; }
 
-/* type scale — Figma product section */
-.fk-product-block:where(:not(.is-industry-feature)) .fk-product-name-dark { font-size: 44px; line-height: 1.08; }
-.fk-product-block .wb-desc-heading-44   { font-size: 33px; line-height: 1.15; }
-.fk-product-block .wb-body-large-24-light { font-size: 16px; line-height: 1.5; }
-.fk-product-block .wb-tags-24 { font-size: 17px; line-height: 1.35; }
-.fk-product-block .fk-feature-description-dark { font-size: 13px; line-height: 1.45; margin-top: 6px; }
+/* Home product type scale is now owned by the Home Product Content and
+   Home Feature Item component variants in Webflow. The former descendant
+   rules overrode those native variants because they had higher specificity. */
 
 /* ---- Industries tab pills (cluster I): Figma has inactive = white / grey text,
    active = lavender #E2E2EC / black; shadow on both. Colour only — size (24px) and

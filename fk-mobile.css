@@ -45,13 +45,11 @@
 
   /* 44px desc heading — bare, product-block, and product-template hero tagline */
   .wb-desc-heading-44 { font-size: 26px; line-height: 1.2; }
-  .fk-product-block .wb-desc-heading-44 { font-size: 24px; line-height: 1.22; }
   .hero-wrapper .wb-desc-heading-44,
   .hero-content .wb-desc-heading-44 { font-size: 23px; line-height: 1.2; }
 
   /* product name (orange accent span inherits size) */
   .fk-product-name-dark { font-size: 32px; line-height: 1.1; }
-  .fk-product-block:where(:not(.is-industry-feature)) .fk-product-name-dark { font-size: 30px; line-height: 1.1; }
   .hero-wrapper .fk-product-name-dark,
   .hero-content .fk-product-name-dark { font-size: 34px; line-height: 1.12; letter-spacing: -0.4px; }
 
@@ -102,11 +100,9 @@
   .approach-subtext,
   .wb-body-large-42-bold { font-size: 21px; }
   .wb-desc-heading-44 { font-size: 22px; line-height: 1.22; }
-  .fk-product-block .wb-desc-heading-44 { font-size: 21px; line-height: 1.22; }
   .hero-wrapper .wb-desc-heading-44,
   .hero-content .wb-desc-heading-44 { font-size: 20px; line-height: 1.25; }
   .fk-product-name-dark { font-size: 27px; }
-  .fk-product-block:where(:not(.is-industry-feature)) .fk-product-name-dark { font-size: 25px; }
   .hero-wrapper .fk-product-name-dark,
   .hero-content .fk-product-name-dark { font-size: 29px; }
   .wb-tags-24 { font-size: 17px; }
