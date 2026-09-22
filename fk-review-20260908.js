@@ -51,10 +51,19 @@
    if(!lines)return;
    e.replaceChildren(document.createTextNode(lines[0]+' '),text('span','fk-figma-feature-line',lines[1]));
   });
+  // The article CTA is native Webflow markup with CMS-bound image, copy, link,
+  // and product choice. Runtime only formats the product label and button copy;
+  // it no longer replaces the card or stores product associations in code.
   document.querySelectorAll('.article-inline-cta').forEach(function(host) {
-   var marker=host.querySelector('[data-fk-product-choice]'); var name=marker&&marker.textContent.trim();
-   var ids={'4c926dae7af13ed39304f2a159119fe5':'FawkesCore','9ff66d4b1e83a3bb7d96575da15fb96e':'FawkesLink','fbefedfc11d63b45e77bb2fe75ab5860':'FawkesArc'};
-   productCard(host,ids[name]||name);
+   var marker=host.querySelector('[data-fk-product-choice]');
+   var link=host.querySelector('.article-inline-cta-link');
+   var name=marker&&marker.textContent.trim();
+   if(!name) return;
+   var prefix='Fawkes';
+   if(name.indexOf(prefix)===0) {
+    marker.replaceChildren(document.createTextNode(prefix),text('span','fk-product-name-accent',name.slice(prefix.length)));
+   }
+   if(link) link.textContent='Explore '+name;
   });
   document.querySelectorAll('[data-fk-more-cases] .w-dyn-item').forEach(function(item) {
    var marker=item.querySelector('[data-fk-case-slug]'); var slug=marker&&marker.textContent.trim(); if(!slug) return;
