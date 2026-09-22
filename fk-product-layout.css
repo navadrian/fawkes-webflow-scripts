@@ -409,23 +409,7 @@
 
 
 
-/* ---- About / Backed By and Team: match the reference hierarchy. ---- */
-.is-about-backed-by .fk-backed-by-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: left;
-  min-height: 400px;
-  padding: 40px;
-}
-.is-about-backed-by .fk-logo-contain {
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  margin-left: auto;
-  margin-right: auto;
-}
+/* ---- About / Backed By: source-specific logo crops remain runtime-owned. ---- */
 .is-about-backed-by .fk-backed-by-card:nth-child(1) .fk-logo-contain {
   width: 329px;
   height: 90px;
@@ -438,17 +422,6 @@
   margin-top: 41px;
   margin-bottom: 65px;
 }
-.is-about-backed-by .fk-backed-by-name,
-.is-about-backed-by .fk-backed-by-desc { width: 100%; }
-.is-about-backed-by .fk-backed-by-name { font-size: 24px; line-height: 1.5; font-weight: 500; }
-.is-about-backed-by .fk-backed-by-desc { font-size: 18px; line-height: 1.5; font-weight: 300; }
-
-/* ---- About / Team and careers: exact desktop type and grid rhythm. ---- */
-.about-team-wrap .fk-team-role { font-style: italic; font-weight: 300; }
-.about-careers-title { font-size: 36px; line-height: 1.5; font-weight: 500; letter-spacing: -0.05em; }
-.about-careers-copy { font-size: 24px; line-height: 1.5; font-weight: 300; }
-.about-careers-button { min-width: 94px; min-height: 56px; font-size: 24px; font-weight: 300; }
-
 /* ---- About / CTA + footer: About and Blogs use the quieter Figma variant.
    Scope through the page's unique hero so the shared industry/product CTA and
    footer retain their stronger type and orange product-link accents. ---- */
@@ -526,16 +499,12 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
 
 
 
-  .is-about-backed-by .fk-backed-by-card { min-height: 0; padding: 28px; }
   .is-about-backed-by .fk-backed-by-card:nth-child(1) .fk-logo-contain,
   .is-about-backed-by .fk-backed-by-card:nth-child(2) .fk-logo-contain {
     width: auto;
     height: 62px;
     margin: 0 auto 24px;
   }
-  .about-careers-title { font-size: 28px; }
-  .about-careers-copy { font-size: 17px; }
-  .about-careers-button { min-width: 0; min-height: 44px; font-size: 16px; }
   body:has(.about-hero) .fk-cta-banner .fk-cta-banner-heading {
     max-width: none;
     font-size: 26px;
@@ -646,18 +615,6 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
    M: Industry / Product static pages — parity with Home (2026-09-04)
    ================================================================== */
 
-/* Figma process cards have unequal horizontal and vertical gutters. */
-.is-product-hero-content .fk-product-hero-copy { row-gap: 20px; }
-@media (min-width: 992px) {
-  .hero-wrapper:has(> .is-product-hero-content) > .is-product-hero-content {
-    position: absolute;
-    top: 55%;
-    bottom: auto;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0;
-  }
-}
 @media (min-width: 768px) {
 
 }
@@ -666,18 +623,4 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
    the Designer class; `.wb-hero-title { line-height: 1.14 }` → the Designer
    class. Nothing needed in the bundle. ---- */
 
-/* ---- M2: the Industry / Product feature sections are a `.fk-product-block`
-   nested inside a capped `.section-wrapper`, so the coloured band was an
-   inset "card". Break it out to full-bleed like Home's product sections —
-   the inner grid re-centres to `content-max` via the L2 padding rule. ---- */
-.section-wrapper > .fk-product-block {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-}
-/* the section-wrapper only existed to host the block — kill its own padding
-   and row-gap so the full-bleed band sits flush against its neighbours */
-.section-wrapper:has(> .fk-product-block:only-child) {
-  padding-top: 0;
-  padding-bottom: 0;
-}
+/* Product and Industry hero/feature layout is owned by native Webflow classes. */

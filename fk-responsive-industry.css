@@ -1,8 +1,5 @@
 /* Industry batch: phone overrides only; protected widths start at 768px. */
 @media (max-width:767px) {
- body:has(.fk-industry-hero-exact) .hero-wrapper { padding:112px 24px 48px!important; min-height:640px!important; height:auto!important; }
- body:has(.fk-industry-hero-exact) .hero-content { width:100%!important; max-width:none!important; left:auto!important; right:auto!important; }
- .hero-content .wb-hero-title.fk-industry-hero-exact { font-size:32px!important; line-height:1.25!important; letter-spacing:-1px!important; }
  .fk-industry-hero-exact br { display:none; }
 
 

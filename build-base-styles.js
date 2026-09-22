@@ -29,7 +29,7 @@ const css =
   "\n\n/* ===== Phone content sections ===== */\n" + fs.readFileSync("fk-responsive-content.css", "utf8") +
   "\n\n/* ===== Product feature behavior-dependent presentation ===== */\n" + fs.readFileSync("fk-product-feature-runtime.css", "utf8");
 
-const out = `/*! fk-base-styles — Fawkes site-header registered script — v1.26.0
+const out = `/*! fk-base-styles — Fawkes site-header registered script — v1.27.0
  *  Webflow injects registered "scripts" as <script src>, so a raw .css file
  *  never applies. This wrapper injects the base stylesheet (contrast fixes +
  *  fixed-nav anchor offset + mobile-nav menu) as a real <style> at the end of
