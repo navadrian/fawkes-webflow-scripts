@@ -24,6 +24,7 @@
     '.fk-nav-pill .fk-nav-dropdown-wrapper.is-open>.fk-nav-link:after,.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link.is-current-section:after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:rgba(255,255,255,.58)}',
     '.fk-nav-pill .fk-nav-dropdown-item{color:#fff;font-weight:300;white-space:nowrap!important;transition:opacity .15s ease}',
     '.fk-nav-pill .fk-nav-dropdown-item:hover,.fk-nav-pill .fk-nav-dropdown-item:focus-visible{opacity:.72}',
+    '.fk-nav-pill .fk-nav-dropdown-item.is-coming-soon:hover,.fk-nav-pill .fk-nav-dropdown-item.is-coming-soon:focus-visible{opacity:1!important;cursor:default}',
     '.fk-nav-pill .fk-nav-links>.fk-nav-link{position:relative}',
     '.fk-nav-pill .fk-nav-links>.fk-nav-link:hover:after,.fk-nav-pill .fk-nav-links>.fk-nav-link:focus-visible:after,.fk-nav-pill .fk-nav-links>.fk-nav-link.w--current:after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:rgba(255,255,255,.58)}',
     '.fk-nav-pill .fk-nav-dropdown-wrapper>.fk-nav-link:focus-visible,.fk-nav-pill .fk-nav-dropdown-item:focus-visible{outline:2px solid rgba(242,151,31,.85);outline-offset:4px}',
