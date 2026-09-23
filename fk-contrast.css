@@ -40,27 +40,5 @@ html {
       scroll-padding-top when both apply, and covers scrollIntoView. */
 [id] { scroll-margin-top: calc(var(--nav-h) + var(--nav-gap)); }
 
-/* 3. Belt-and-braces for scripted scrollers that honour neither property
-      (Webflow's own anchor JS is one). Put an empty
-      <div class="anchor-offset" id="team"></div> immediately before the
-      section instead of putting the id on the section itself. */
-.anchor-offset,
-[data-anchor] {
-  display: block;
-  position: relative;
-  top: calc(-1 * (var(--nav-h) + var(--nav-gap)));
-  height: 0;
-  width: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-/* 4. Stop headings sitting under the bar when a section starts flush at
-      the top of the viewport (sticky sub-headers, pinned sections). */
-.section-heading,
-[data-sticky-heading] {
-  top: calc(var(--nav-h) + 8px);
-}
-
 /* Nav stacking order is owned by hero-sticky.css and deliberately not
    duplicated here. */

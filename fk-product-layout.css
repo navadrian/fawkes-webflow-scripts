@@ -155,31 +155,9 @@
   }
 }
 
-/* Legacy feature-group fallback. Current Product pages carry explicit native
-   markers; F43 keeps this fallback away from their authored layout and type.
-   Label/line font families and label case are native for every consumer. */
-.fk-feature-groups:not(.fk-product-native-groups) {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 18px 36px;
-  margin-top: 4px;
-}
-.fk-feature-group:not(.fk-product-native-group) {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1 1 190px;
-  min-width: 0;
-}
+/* Feature-group layout and type are native on every consumer; the desktop
+   legacy fallbacks were retired in B0b (zero matches on all 20 live routes). */
 .fk-feature-group + .fk-feature-group { position: relative; }
-.fk-feature-group-label:not(.fk-product-native-label) {
-  font-size: 13px; font-weight: 600;
-  letter-spacing: 1px;
-  /* colour handled by the Product Feature Section component's Dark/Light variants */
-}
-.fk-feature-group-rows:not(.fk-product-native-rows) { display: flex; flex-direction: column; gap: 7px; }
-.fk-feature-line:not(.fk-product-native-line) { font-size: 16px; font-weight: 300; line-height: 1.45; }
 /* Product Feature Section positioning now uses explicit native
    has-feature-groups / is-product-dashboard combo classes. */
 @media (max-width: 767px) {
@@ -228,7 +206,6 @@
 }
 
 /* ---- Comparison Table (product pages) ---- */
-.fk-comparison-scroll { -webkit-overflow-scrolling: touch; }
 /* Keep the real table formatting context at tablet/mobile widths. The wrapper
    owns horizontal scrolling; changing the table itself to display:block made
    WebKit recalculate the four columns independently and broke Figma parity. */
@@ -333,38 +310,7 @@
 }
 
 /* ---- Field Intelligence / Industry Application cross-link card ---- */
-.fk-xlink-card:where(:not(.fk-xlink-native)) {
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  min-height: 360px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 40px;
-  isolation: isolate;
-}
-.fk-xlink-card:where(:not(.fk-xlink-native)) > .image-fill { z-index: -1; }
-.fk-xlink-card:where(:not(.fk-xlink-native))::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%);
-}
-.fk-xlink-eyebrow:where(:not(.fk-xlink-native-eyebrow)) {
-  font-family: Inter, sans-serif; font-size: 15px; font-weight: 500;
-  letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 10px;
-}
 .fk-xlink-title:where(:not(.fk-xlink-native-title)) { font-family: Inter, sans-serif; font-size: 34px; font-weight: 500; color: #fff; line-height: 1.15; margin-bottom: 20px; }
-.fk-xlink-btn:where(:not(.fk-xlink-native-button)) {
-  align-self: flex-start;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-family: Inter, sans-serif; font-size: 16px; font-weight: 500;
-  color: #fff; text-decoration: none;
-  transition: background-color .16s;
-}
-.fk-xlink-btn:where(:not(.fk-xlink-native-button)):hover { background-color: rgba(255, 255, 255, 0.14); }
 @media (max-width: 767px) {
   .fk-xlink-card:where(:not(.fk-xlink-native)) { padding: 24px; min-height: 300px; }
   .fk-xlink-title:where(:not(.fk-xlink-native-title)) { font-size: 24px; }
