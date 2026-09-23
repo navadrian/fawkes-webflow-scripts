@@ -19,12 +19,4 @@
   grid-column: 1 / -1 !important;
 }
 
-.fk-product-block-visual.is-product-dashboard > img {
-  transform: scale(1.006);
-  transform-origin: 50% 50%;
-}
-
-.fk-product-block-visual.is-product-dashboard > img[src*="fawkes-product-link-"] {
-  transform: scale(1.025);
-}
-
+/* Dashboard image trim is explicit per Product Feature Section variant. */

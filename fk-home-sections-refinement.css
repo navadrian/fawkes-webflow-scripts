@@ -3,11 +3,7 @@
 /* HM-07 — give the carousel benefit plate a little more breathing room. */
 
 
-/* HM-09 — preserve each logo's aspect ratio while reducing displayed scale. */
-.fk-trusted-band .trusted-by-logo-img {
-  transform: scale(.8);
-  transform-origin: center;
-}
+/* HM-09 — Trusted By logo sizing and scale are native Webflow styles. */
 
 /* HM-10/11 — methodology reference treatment (Home only). */
 

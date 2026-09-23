@@ -174,13 +174,7 @@
 @media (max-width: 1023px) { .hero-stat-row { right: 40px; } }
 @media (max-width: 767px)  { .hero-stat-row { display: none; } }
 
-.fk-hero-target { position: absolute; top: 430px; right: 486px; width: 60px; height: 60px; z-index: 2; pointer-events: none; }
-.fk-hero-dot-lg, .fk-hero-dot-md, .fk-hero-dot-sm { display: flex; align-items: center; justify-content: center; border-radius: 50%; }
-.fk-hero-dot-lg { width: 60px; height: 60px; border: 1px solid rgba(255,255,255,0.25); }
-.fk-hero-dot-md { width: 30px; height: 30px; border: 1px solid rgba(255,255,255,0.5); }
-.fk-hero-dot-sm { width: 10px; height: 10px; background: #fff; box-shadow: 0 0 10px 3px rgba(255,255,255,0.7); }
-.fk-hero-connector { position: absolute; left: 30px; top: 30px; width: 124px; height: 47px; border-left: 1px solid rgba(255,255,255,0.55); border-bottom: 1px solid rgba(255,255,255,0.55); }
-@media (max-width: 1279px) { .fk-hero-target { display: none; } }
+/* Hero target geometry and breakpoint visibility are native Webflow styles. */
 
 /* ---- H: Footer - logo as the left column (vertically centred against the link
    columns, per Figma), centered 2-line copyright below ---- */
@@ -188,16 +182,7 @@
 
 
 
-/* ---- J: Trusted By band - match Figma logo scale + band height ---- */
-.fk-trusted-band { min-height: 200px; padding-top: 20px; padding-bottom: 20px; }
-.fk-trusted-divider { height: 160px; }
-.trusted-by-logo { display: flex; align-items: center; }
-.trusted-by-logo-img { height: 80px; }
-@media (max-width: 767px) {
-  .fk-trusted-band { min-height: auto; padding-top: 28px; padding-bottom: 28px; }
-  .fk-trusted-divider { height: 120px; }
-  .trusted-by-logo-img { height: 52px; }
-}
+/* Trusted By band sizing is native Webflow styling. */
 
 /* ==================================================================
    K: Static Product + Industry pages (wave3)
@@ -409,19 +394,7 @@
 
 
 
-/* ---- About / Backed By: source-specific logo crops remain runtime-owned. ---- */
-.is-about-backed-by .fk-backed-by-card:nth-child(1) .fk-logo-contain {
-  width: 329px;
-  height: 90px;
-  margin-top: 36px;
-  margin-bottom: 42px;
-}
-.is-about-backed-by .fk-backed-by-card:nth-child(2) .fk-logo-contain {
-  width: 227px;
-  height: 70px;
-  margin-top: 41px;
-  margin-bottom: 65px;
-}
+/* About Backed By logo crops are explicit component variants in Webflow. */
 /* ---- About / CTA + footer: About and Blogs use the quieter Figma variant.
    Scope through the page's unique hero so the shared industry/product CTA and
    footer retain their stronger type and orange product-link accents. ---- */
@@ -444,7 +417,7 @@ body:has(.about-hero) .fk-cta-banner .btn-ghost {
   font-size: 24px;
   font-weight: 300;
 }
-body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inherit; }
+/* The About footer accent is owned by the About footer component variant. */
 
 @media (min-width: 1200px) {
   .about-team-wrap .team-grid {
@@ -499,12 +472,7 @@ body:has(.about-hero) .fk-footer-wrapper .fk-footer-brand-accent { color: inheri
 
 
 
-  .is-about-backed-by .fk-backed-by-card:nth-child(1) .fk-logo-contain,
-  .is-about-backed-by .fk-backed-by-card:nth-child(2) .fk-logo-contain {
-    width: auto;
-    height: 62px;
-    margin: 0 auto 24px;
-  }
+  /* About logo mobile sizing is owned by the Backed By Card variants. */
   body:has(.about-hero) .fk-cta-banner .fk-cta-banner-heading {
     max-width: none;
     font-size: 26px;
