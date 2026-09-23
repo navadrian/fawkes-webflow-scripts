@@ -117,14 +117,9 @@
    lead/accent split heading bound to props. Accent colour + leading margin live
    on the .fk-cta-accent Designer style; is-left layout lives on the Left variant. ---- */
 
-/* ---- G: hero KPI vertical stack + backing plate + target dots/connector.
-   .hero-stat-row base box props (flex-direction, padding, bg, border, radius, pos)
-   are set on the Webflow class via the API in batch 2; these are the parts the
-   style API can't do reliably. ---- */
+/* ---- G: hero KPI backing-plate blur and responsive placement/visibility.
+   Static card alignment, label/value order, and value line-height are native. ---- */
 .hero-stat-row { -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.hero-stat-row .fk-stat-card { align-items: center; text-align: center; row-gap: 2px; }
-.hero-stat-row .fk-stat-card-label { order: 1; width: 100%; }
-.hero-stat-row .fk-stat-card-value { order: 2; width: 100%; line-height: 1.1; }
 @media (max-width: 1279px) { .hero-stat-row { right: 120px; top: 300px; } }
 @media (max-width: 1023px) { .hero-stat-row { right: 40px; } }
 @media (max-width: 767px)  { .hero-stat-row { display: none; } }
@@ -234,10 +229,6 @@
 
 /* ---- Comparison Table (product pages) ---- */
 .fk-comparison-scroll { -webkit-overflow-scrolling: touch; }
-.fk-comparison-band .section-wrapper > .wb-h2-section-title {
-  margin-left: 5vw;
-  margin-right: 5vw;
-}
 /* Keep the real table formatting context at tablet/mobile widths. The wrapper
    owns horizontal scrolling; changing the table itself to display:block made
    WebKit recalculate the four columns independently and broke Figma parity. */

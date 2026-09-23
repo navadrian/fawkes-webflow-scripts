@@ -13,15 +13,6 @@
    ------------------------------------------------------------------ */
 
 /* ==================================================================
-   GROUP 1d — hero clearance (token-tracked, replaces the ~110px hardcode)
-   ================================================================== */
-@media screen and (max-width: 767px) {
-  /* hero fills the first fold; content is justify-content:flex-end so it sits
-     at the bottom over the photo. svh = the collapsed-chrome viewport. */
-  .hero-wrapper:where(:not(.fk-home-hero-bottom-87)) { min-height: 100vh; min-height: 100svh; padding-top: calc(var(--nav-h) + 40px); }
-}
-
-/* ==================================================================
    GROUP 2 — mobile type scale
    The only @767/@479 type rule Webflow ships is .wb-hero-title font-size;
    every other display class stays at desktop size w/ line-height:1.5.
@@ -121,8 +112,6 @@
 }
 
 @media (max-width: 479px) {
-
-  .hero-wrapper:where(:not(.fk-home-hero-bottom-87)) { padding-bottom: 28px; }   /* min-height:100svh + padding-top stay from the @767 rule */
 
   .fk-process-tile:where(:not(.fk-f6-tile-native)) .methodology-icon:where(:not(.fk-f6-icon-native)) { height: 52px; }
   .fk-process-tile-list:where(:not(.fk-f6-home-grid-native):not(.fk-f6-product-grid-native):not(.fk-process-grid-native)) { gap: 8px; }
