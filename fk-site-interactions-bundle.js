@@ -240,8 +240,9 @@
             scrollTrigger: Object.assign({}, range) });
       });
 
-      // Gentle darken as the hero leaves — nowhere near a full black-out.
-      if (scrim) gsap.fromTo(scrim,
+      // Home's authored A/B vignette stays constant through its crossfade.
+      // Other heroes retain their gentle scroll-linked darkening.
+      if (scrim && !hero.querySelector('.home-hero-state-b')) gsap.fromTo(scrim,
         { backgroundColor: "rgba(17,18,23,0.45)" },
         { backgroundColor: "rgba(17,18,23,0.72)", ease: "none", immediateRender: false,
           scrollTrigger: Object.assign({}, range) });
