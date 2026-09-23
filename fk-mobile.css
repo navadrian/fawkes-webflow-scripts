@@ -37,7 +37,6 @@
   /* 42px "Our Approach" statement (real classes: approach-headline/-subtext;
      .wb-body-large-42-bold kept as a harmless future-proof — 0 instances today) */
   .wb-body-large-42-bold { font-size: 24px; line-height: 1.3; letter-spacing: -0.4px; }
-  .approach-headline { margin-bottom: 6px; }
 
   /* 44px desc heading — bare, product-block, and product-template hero tagline */
   .hero-wrapper .wb-desc-heading-44,
@@ -119,7 +118,6 @@
 
   /* product blocks — pull the whole section toward one fold: smaller mockup,
      tighter feature stack, less padding. */
-  .fk-product-block { row-gap: 16px; padding: 28px 18px; }
 
   /* title->description gap in stacked feature items */
   .fk-product-block > .feature-row .fk-feature-description-dark,
@@ -127,11 +125,10 @@
   .feature-row .fk-feature-item .fk-feature-description-dark,
   .feature-row .fk-feature-item .fk-feature-description-light { margin-top: 4px; font-size: 12.5px; line-height: 1.4; }
 
-  .fk-feature-icon { width: 20px; height: 20px; margin-bottom: 6px; }
+  .fk-feature-icon { width: 20px; height: 20px; }
 
   /* Industries visual card: unclamp headline plate, stack the bottom row,
      kill the min-height:420 + space-between void that reads as an empty card */
-  .fk-visual-card-title { max-width: 100%; padding: 10px 14px; }
 
 
 
@@ -185,7 +182,6 @@
   .vision-wrapper .wb-h2-section-title,
   .vision-wrapper .vision-heading { font-size: 24px; }
   .hero-wrapper { padding-bottom: 28px; }   /* min-height:100svh + padding-top stay from the @767 rule */
-  .fk-product-block { row-gap: 14px; padding: 24px 16px; }
   .fk-trusted-band .trusted-by-logo-img { height: 34px; }
 
   .fk-process-tile .methodology-icon { height: 52px; }
@@ -204,8 +200,6 @@ html, body { overflow-x: clip; }
 
 /* Shrink the title flex child rather than silently clipping long benefit text. */
 @media (max-width: 767px) {
-  .fk-feature-item,
-  .fk-feature-item-head { min-width: 0; }
   .fk-feature-item-head .is-industry-feature-title {
     min-width: 0;
     flex: 1 1 0;
