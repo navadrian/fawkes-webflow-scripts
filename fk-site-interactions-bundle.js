@@ -1015,26 +1015,10 @@
   else init();
 })();
 ;
-/* CMS option presentation and dynamic current-item exclusion in existing bundle. */
+/* CMS option presentation. Related case exclusion and card links are Webflow-native. */
 (function () {
  'use strict';
  function text(tag, cls, value) { var e=document.createElement(tag); e.className=cls; e.textContent=value; return e; }
- function syncMoreCases() {
-  document.querySelectorAll('[data-fk-more-cases] .w-dyn-item').forEach(function(item) {
-   var marker=item.querySelector('[data-fk-case-slug]'); var slug=marker&&marker.textContent.trim(); if(!slug) return;
-   var path='/case-studies/'+slug;
-   item.hidden=location.pathname.replace(/\/$/,'')===path;
-   item.querySelectorAll('a.fk-cs-card-link').forEach(function(a){if(a.getAttribute('href')!==path)a.href=path;});
-  });
- }
- function watchMoreCases() {
-  var host=document.querySelector('[data-fk-more-cases]'); if(!host) return;
-  syncMoreCases();
-  if(host.__fkMoreCasesObserver) return;
-  host.setAttribute('data-fk-more-cases-ready','true');
-  host.__fkMoreCasesObserver=new MutationObserver(syncMoreCases);
-  host.__fkMoreCasesObserver.observe(host,{subtree:true,childList:true,attributes:true,attributeFilter:['href']});
- }
  function run() {
   // Exact line endings from the main Figma product frames. Phone/tablet wrapping remains natural.
   var featureLines = [
@@ -1067,12 +1051,8 @@
    }
    if(link) link.textContent='Explore '+name;
   });
-  watchMoreCases();
  }
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
- window.Webflow=window.Webflow||[];
- window.Webflow.push(watchMoreCases);
- window.setTimeout(watchMoreCases,0);
 })();
 ;
 /* Mobile-only enhancement. Restores original attributes/state on leaving <=767px. */
