@@ -1,7 +1,6 @@
 /* Direct browser review fixes. Native CMS bindings remain the source of content. */
 .hero-wrapper .fk-tag-chip:not(.w-variant-0b41d7bb-d471-afd6-3d8d-978040a2fd14):not(.w-variant-35ed0efa-cb7e-58a0-a364-7cf2224730ca):not(.w-variant-64ab2ea3-7970-b0e5-ccda-045b4fc776c2), .fk-link-hero-frame .fk-tag-chip:not(.w-variant-0b41d7bb-d471-afd6-3d8d-978040a2fd14):not(.w-variant-35ed0efa-cb7e-58a0-a364-7cf2224730ca):not(.w-variant-64ab2ea3-7970-b0e5-ccda-045b4fc776c2) { font-size:20px!important; line-height:30px!important; padding:6px 14px!important; border-radius:8px!important; background:rgba(17,18,23,.8)!important; }
-[data-fk-bess-heading] { white-space:pre-line; }
-.fk-case-study-card, .fk-case-study-card .fk-cs-card-link { box-shadow:none!important; }
+
 /* Match the existing -2px image inset: native 100% sizing exposed a dark 2px edge. */
 
 /* Full-bleed track; inset only the snap origin, not the visible viewport. */
@@ -38,7 +37,7 @@
  .fk-manual-cases .fk-case-study-stat-block > .wb-card-text-36:where(:not(.w-variant-f7d76984-d467-8492-011e-5b8d8983ac8f):not(.w-variant-0b0e358d-bd9e-6e57-5b45-b4e1096476ed)) { position:static!important; inset:auto!important; width:auto!important; height:auto!important; max-width:100%!important; }
  .fk-manual-cases .fk-case-study-stat-block > .fk-tag-chip:where(:not(.w-variant-f7d76984-d467-8492-011e-5b8d8983ac8f):not(.w-variant-0b0e358d-bd9e-6e57-5b45-b4e1096476ed)) { align-self:flex-start; }
  .hero-wrapper .fk-tag-chip:not(.w-variant-0b41d7bb-d471-afd6-3d8d-978040a2fd14):not(.w-variant-35ed0efa-cb7e-58a0-a364-7cf2224730ca):not(.w-variant-64ab2ea3-7970-b0e5-ccda-045b4fc776c2), .fk-link-hero-frame .fk-tag-chip:not(.w-variant-0b41d7bb-d471-afd6-3d8d-978040a2fd14):not(.w-variant-35ed0efa-cb7e-58a0-a364-7cf2224730ca):not(.w-variant-64ab2ea3-7970-b0e5-ccda-045b4fc776c2) { font-size:14px!important; line-height:21px!important; padding:6px 10px!important; }
- [data-fk-bess-heading] { white-space:normal; }
+
  .article-layout .w-richtext table { display:block; overflow-x:auto; }
  [data-fk-more-cases] > .w-dyn-items:where(:not(.fk-related-cases-grid-native)) { grid-template-columns:minmax(0,1fr); }
  [data-fk-more-cases] .fk-case-study-card:where(:not(.w-variant-07ab99f7-65e7-855d-83c0-9806f5087d3c)) { min-height:360px; }
