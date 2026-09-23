@@ -33,7 +33,7 @@
   function initPill(pill, pillIndex) {
     var wrappers = Array.prototype.slice.call(pill.querySelectorAll('.fk-nav-dropdown-wrapper'));
     var closeTimer = 0;
-    var restoringFocus = false;
+    var restoredTrigger = null;
 
     function isDesktop() {
       return window.matchMedia('(min-width:768px)').matches;
@@ -41,6 +41,7 @@
 
     function closeDesktop(restoreFocus) {
       window.clearTimeout(closeTimer);
+      restoredTrigger = restoreFocus || null;
       wrappers.forEach(function (wrapper) {
         var trigger = wrapper.querySelector(':scope > .fk-nav-link');
         wrapper.classList.remove('is-open');
@@ -49,13 +50,13 @@
       pill.removeAttribute('data-nav-open');
       pill.style.removeProperty('--fk-nav-open-height');
       if (restoreFocus && restoreFocus.focus) {
-        restoringFocus = true;
-        try { restoreFocus.focus(); } finally { restoringFocus = false; }
+        restoreFocus.focus();
       }
     }
 
     function openDesktop(wrapper) {
       if (!isDesktop()) return;
+      restoredTrigger = null;
       window.clearTimeout(closeTimer);
       wrappers.forEach(function (candidate) {
         var candidateTrigger = candidate.querySelector(':scope > .fk-nav-link');
@@ -95,8 +96,9 @@
       wrapper.addEventListener('pointerenter', function () {
         if (window.matchMedia('(min-width:768px) and (hover:hover) and (pointer:fine)').matches) openDesktop(wrapper);
       });
-      wrapper.addEventListener('focusin', function () {
-        if (!restoringFocus) openDesktop(wrapper);
+      wrapper.addEventListener('focusin', function (event) {
+        // Focus restoration can be redispatched after the Escape handler returns.
+        if (event.target !== restoredTrigger) openDesktop(wrapper);
       });
 
       trigger.addEventListener('click', function (event) {
