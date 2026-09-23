@@ -10,21 +10,7 @@
 
 
 
-/* HM-12 — methodology CTA keeps the quiet default and gets a restrained
-   brand-orange interaction state (Home only). */
-body:has(.home-product-link) .fk-method-cta {
-  box-shadow: none;
-}
-
-body:has(.home-product-link) .fk-method-cta:hover {
-  background-color: #f2971f;
-  color: #111217;
-}
-
-body:has(.home-product-link) .fk-method-cta:focus-visible {
-  outline: 2px solid #f2971f;
-  outline-offset: 3px;
-}
+/* HM-12 — methodology CTA default, hover and focus are native (F44). */
 
 /* HM-08 — the existing native arrow anchor becomes the full-card link. */
 .fk-visual-card.is-full-card-link {
