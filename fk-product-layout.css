@@ -334,67 +334,7 @@
 
 
 /* About Backed By logo crops are explicit component variants in Webflow. */
-/* ---- About / CTA + footer: About and Blogs use the quieter Figma variant.
-   Scope through the page's unique hero so the shared industry/product CTA and
-   footer retain their stronger type and orange product-link accents. ---- */
-body:has(.about-hero) .fk-cta-banner .fk-cta-banner-content {
-  width: min(100%, 1262px);
-  margin-left: auto;
-  margin-right: auto;
-}
-body:has(.about-hero) .fk-cta-banner .fk-cta-banner-heading {
-  max-width: 940px;
-  font-size: 44px;
-  line-height: 1.25;
-  font-weight: 300;
-  letter-spacing: -0.04em;
-}
-body:has(.about-hero) .fk-cta-banner .fk-cta-accent { font-weight: 500; }
-body:has(.about-hero) .fk-cta-banner .btn-ghost {
-  min-width: 126px;
-  min-height: 56px;
-  font-size: 24px;
-  font-weight: 300;
-}
-/* The About footer accent is owned by the About footer component variant. */
-
-@media (min-width: 1200px) {
-  .about-team-wrap .team-grid {
-    grid-template-columns: repeat(5, minmax(0, 250px));
-    column-gap: 13px;
-    row-gap: 48px;
-    max-width: 1302px;
-  }
-  .about-team-wrap .fk-team-image { width: 250px; height: 250px; }
-  .about-team-wrap .fk-team-name { font-size: 20px; line-height: 1.25; font-weight: 700; }
-  .about-team-wrap .fk-team-role { font-size: 18px; line-height: 1.25; }
-}
-
-/* ---- About / Hero content: retain the existing art direction while matching
-   the Figma content inset and typography at the 1512px reference width. ---- */
-@media (min-width: 992px) {
-  .about-hero {
-    padding-left: max(78px, calc((100vw - 1356px) / 2));
-    padding-right: max(78px, calc((100vw - 1356px) / 2));
-  }
-  .about-hero-title { font-size: 54px; line-height: 1.5; letter-spacing: -0.05em; }
-}
-
-/* Hero tags hug their label rather than stretching as flex/grid children. */
-.about-hero > .section-eyebrow {
-  display: inline-flex;
-  align-self: flex-start;
-  justify-self: start;
-  width: fit-content;
-  max-width: 100%;
-  padding: 6px 14px;
-  border-radius: 6px;
-  background-color: #111217;
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 500;
-  letter-spacing: .5px;
-}
+/* About hero and team presentation are owned by native Webflow classes. */
 
 @media (max-width: 991px) {
 
@@ -411,21 +351,7 @@ body:has(.about-hero) .fk-cta-banner .btn-ghost {
 
 
 
-  /* About logo mobile sizing is owned by the Backed By Card variants. */
-  body:has(.about-hero) .fk-cta-banner .fk-cta-banner-heading {
-    max-width: none;
-    font-size: 26px;
-    line-height: 1.3;
-  }
-  body:has(.about-hero) .fk-cta-banner .btn-ghost {
-    min-width: 0;
-    min-height: 44px;
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 479px) {
-  body:has(.about-hero) .fk-cta-banner .fk-cta-banner-heading { font-size: 22px; }
+  /* About logo and CTA mobile sizing are owned by native component variants. */
 }
 
 /* ---- Field Intelligence / Industry Application cross-link card ---- */
