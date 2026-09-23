@@ -13,8 +13,6 @@
    Home product tagline colours are native component variants (F39).
    Other former selectors had no consumers on the audited published routes.
    ================================================================== */
-.button-text { color: inherit; }
-
 /* ==================================================================
    B. FIXED-NAV ANCHOR + HEADING OFFSET
    Nothing measures --nav-h at runtime any more, so these values are

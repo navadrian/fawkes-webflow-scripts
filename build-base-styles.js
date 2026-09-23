@@ -9,14 +9,12 @@ const contrast = fs.readFileSync("fk-contrast.css", "utf8");
 const mobile = fs.readFileSync("fk-mobilenav.css", "utf8");
 const productLayout = fs.readFileSync("fk-product-layout.css", "utf8");
 const mobileFixes = fs.readFileSync("fk-mobile.css", "utf8");
-const homeSections = fs.readFileSync("fk-home-sections-refinement.css", "utf8");
 const homeProducts = fs.readFileSync("fk-home-products-refinement.css", "utf8");
 const css =
   contrast +
   "\n\n/* ===== fk-mobilenav ===== */\n" + mobile +
   "\n\n/* ===== fk-product-layout ===== */\n" + productLayout +
   "\n\n/* ===== fk-mobile (mobile remediation) ===== */\n" + mobileFixes +
-  "\n\n/* ===== Home sections refinements ===== */\n" + homeSections +
   "\n\n/* ===== Home product Figma refinement ===== */\n" + homeProducts +
   "\n\n/* ===== September review corrections ===== */\n" + fs.readFileSync("fk-review-20260908.css", "utf8") +
   "\n\n/* ===== Phone industry sections ===== */\n" + fs.readFileSync("fk-responsive-industry.css", "utf8") +

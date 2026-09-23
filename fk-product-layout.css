@@ -80,13 +80,6 @@
    radius reads as one continuous curve instead of a pale arc. */
 
 
-/* D6 - 3rd card (BESS) chip/stat are <h3>/<h2> (headless builder can only set text on
-   headings); neutralise heading defaults so they render like the other cards' divs. */
-.fk-case-study-stat-block h2.wb-card-text-36,
-.fk-case-study-stat-block h3.fk-tag-chip {
-  margin: 0;
-}
-
 /* F51: Process Tile titles use native fk-process-tile-title/fk-f6-title-native.
    The obsolete wb-tags-24 descendant override has no current consumer. */
 
