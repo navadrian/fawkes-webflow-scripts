@@ -36,10 +36,6 @@
 
   /* 24px tag/label text (template feature titles, hero tag row) */
 
-  /* 24px body-large-light (hero sub-descriptors) */
-  .hero-wrapper .wb-body-large-24-light,
-  .hero-content .wb-body-large-24-light { font-size: 16px; line-height: 1.5; }
-
   /* eyebrows */
   .section-wrapper > .section-eyebrow:where(:not(.fk-home-section-title-exact):not(.fk-process-heading-native)) {   /* retain fallback; native owns Home title + industry process heading */
     font-size: 18px; font-weight: 700; letter-spacing: 0.01em;
@@ -89,12 +85,6 @@
 
   /* product blocks — pull the whole section toward one fold: smaller mockup,
      tighter feature stack, less padding. */
-
-  /* title->description gap in stacked feature items */
-  .fk-product-block > .feature-row .fk-feature-description-dark,
-  .fk-product-block > .feature-row .fk-feature-description-light,
-  .feature-row .fk-feature-item .fk-feature-description-dark,
-  .feature-row .fk-feature-item .fk-feature-description-light { margin-top: 4px; font-size: 12.5px; line-height: 1.4; }
 
   /* Industries visual card: unclamp headline plate, stack the bottom row,
      kill the min-height:420 + space-between void that reads as an empty card */
