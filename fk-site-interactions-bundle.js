@@ -41,7 +41,8 @@
 
     function closeDesktop(restoreFocus) {
       window.clearTimeout(closeTimer);
-      restoredTrigger = restoreFocus || null;
+      // Preserve an Escape closure through window blur/refocus as well.
+      if (restoreFocus) restoredTrigger = restoreFocus;
       wrappers.forEach(function (wrapper) {
         var trigger = wrapper.querySelector(':scope > .fk-nav-link');
         wrapper.classList.remove('is-open');
