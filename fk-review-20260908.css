@@ -30,8 +30,6 @@
 [data-fk-more-cases] > .w-dyn-items { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
 [data-fk-more-cases] .fk-case-study-card { width:100%!important; max-width:none!important; min-height:420px; }
 [data-fk-more-cases] .w-dyn-item[hidden] { display:none!important; }
-.contact-form-panel textarea.form-input { height:86px; }
-.contact-form-panel .form-input { border-color:rgba(0,0,0,.3); }
 /* Figma line endings only on full desktop; no fixed widths or mobile breaks. */
 @media(min-width:1200px) { .fk-product-feature-right .fk-figma-feature-line { display:block; } }
 /* Official Lucide paperclip, replacing only Webflow's decorative upload glyph. */

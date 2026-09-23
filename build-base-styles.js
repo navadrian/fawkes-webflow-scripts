@@ -9,7 +9,6 @@ const contrast = fs.readFileSync("fk-contrast.css", "utf8");
 const mobile = fs.readFileSync("fk-mobilenav.css", "utf8");
 const productLayout = fs.readFileSync("fk-product-layout.css", "utf8");
 const mobileFixes = fs.readFileSync("fk-mobile.css", "utf8");
-const aboutTimeline = fs.readFileSync("fk-about-timeline.css", "utf8");
 const heroReadability = fs.readFileSync("fk-hero-readability.css", "utf8");
 const homeSections = fs.readFileSync("fk-home-sections-refinement.css", "utf8");
 const homeProducts = fs.readFileSync("fk-home-products-refinement.css", "utf8");
@@ -18,14 +17,12 @@ const css =
   "\n\n/* ===== fk-mobilenav ===== */\n" + mobile +
   "\n\n/* ===== fk-product-layout ===== */\n" + productLayout +
   "\n\n/* ===== fk-mobile (mobile remediation) ===== */\n" + mobileFixes +
-  "\n\n/* ===== About timeline scoped corrections ===== */\n" + aboutTimeline +
   "\n\n/* ===== Shared hero readability ===== */\n" + heroReadability +
   "\n\n/* ===== Home sections refinements ===== */\n" + homeSections +
   "\n\n/* ===== Home product Figma refinement ===== */\n" + homeProducts +
   "\n\n/* ===== September review corrections ===== */\n" + fs.readFileSync("fk-review-20260908.css", "utf8") +
   "\n\n/* ===== Desktop-locked responsive rollout ===== */\n" + fs.readFileSync("fk-responsive-locked.css", "utf8") +
   "\n\n/* ===== Phone industry sections ===== */\n" + fs.readFileSync("fk-responsive-industry.css", "utf8") +
-  "\n\n/* ===== Phone product sections ===== */\n" + fs.readFileSync("fk-responsive-products.css", "utf8") +
   "\n\n/* ===== Phone content sections ===== */\n" + fs.readFileSync("fk-responsive-content.css", "utf8") +
   "\n\n/* ===== Product feature behavior-dependent presentation ===== */\n" + fs.readFileSync("fk-product-feature-runtime.css", "utf8");
 
