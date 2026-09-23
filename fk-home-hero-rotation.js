@@ -22,28 +22,12 @@
     var style = document.createElement("style");
     style.id = "fk-home-hero-rotation-css";
     style.textContent =
-      "." + ROOT_CLASS + "{position:relative;isolation:isolate;}" +
-      "." + ROOT_CLASS + " .home-hero-state-b{position:absolute;inset:0;z-index:2;overflow:hidden;opacity:0;visibility:hidden;pointer-events:none;}" +
+      "." + ROOT_CLASS + " .home-hero-state-b{opacity:0;visibility:hidden;pointer-events:none;}" +
       "." + ROOT_CLASS + " .home-hero-state-b.is-fk-visible{visibility:visible;}" +
-      // Transform/overscan are intentionally not set here: heropinv3 owns both
-      // state images' parallax transforms and their 132vw responsive footprint.
-      "." + ROOT_CLASS + " .home-hero-media-b{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 61.6%;}" +
-      "." + ROOT_CLASS + " .home-hero-scrim-b{position:absolute;inset:0;background:linear-gradient(90deg,rgba(17,18,23,.72) 0%,rgba(17,18,23,.44) 46%,rgba(17,18,23,.12) 100%);}" +
-      "." + ROOT_CLASS + " .home-hero-kpi-b{position:absolute;left:45.7%;top:35.9%;width:clamp(280px,24.16vw,430px);z-index:2;display:flex;gap:9px;padding:10px;background:rgba(0,0,0,.1);border:1px solid rgba(255,255,255,.3);border-radius:5px;box-sizing:border-box;}" +
-      "." + ROOT_CLASS + " .home-hero-stat-card{flex:1 1 0;min-width:0;min-height:98px;aspect-ratio:110/98;display:grid;grid-template-rows:26px 36px 14px;align-content:center;justify-items:center;align-items:center;text-align:center;gap:2px;padding:7px;color:#fff;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.18);border-radius:5px;box-sizing:border-box;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}" +
-      "." + ROOT_CLASS + " .home-hero-stat-card .home-hero-stat-label{order:0;text-transform:uppercase;font-size:10px;line-height:1.5;letter-spacing:-.5px;max-width:102px;text-align:center;}" +
-      "." + ROOT_CLASS + " .home-hero-stat-card .home-hero-stat-value{order:1;font-size:32px;line-height:1;font-weight:700;}" +
-      "." + ROOT_CLASS + " .home-hero-stat-card .home-hero-stat-unit{order:2;font-size:10px;line-height:1.15;}" +
-      "." + ROOT_CLASS + " .home-hero-stat-card{font-family:Inter,sans-serif;}" +
-      "." + ROOT_CLASS + " .home-hero-target-b{position:absolute;inset:0;z-index:2;pointer-events:none;}" +
-      "." + ROOT_CLASS + " .hero-content{z-index:4;}" +
+      // Native card styles own the blur; preserve the older WebKit fallback.
+      "." + ROOT_CLASS + " .home-hero-stat-card{-webkit-backdrop-filter:blur(10px);}" +
       "." + ROOT_CLASS + " .fk-home-hero-delay{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}" +
-      "." + ROOT_CLASS + " [data-fk-home-hero-pause]{bottom:64px;}" +
-      "@media (max-width:767px){." + ROOT_CLASS + " .home-hero-kpi-b{left:50%;top:auto;bottom:var(--fk-home-copy-clearance,238px);width:min(82vw,320px);transform:translateX(-50%);}" +
-      "." + ROOT_CLASS + " .home-hero-stat-card{min-height:76px;aspect-ratio:auto;grid-template-rows:23px 24px 11px;padding:7px;}" +
-      "." + ROOT_CLASS + " .home-hero-stat-value{font-size:22px!important;}" +
-      "." + ROOT_CLASS + " .home-hero-target-b{display:none;}" +
-      "." + ROOT_CLASS + " [data-fk-home-hero-pause]{top:84px;bottom:auto;right:20px;}}";
+      "@media (max-width:767px){." + ROOT_CLASS + " .home-hero-kpi-b{left:50%;top:auto;bottom:var(--fk-home-copy-clearance,238px);width:min(82vw,320px);transform:translateX(-50%);}}";
     document.head.appendChild(style);
   }
 

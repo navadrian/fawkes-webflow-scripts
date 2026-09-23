@@ -95,41 +95,15 @@
       var heading = row.parentElement.querySelector('.home-case-label-exact');
       var head = row.parentElement.querySelector('.fk-case-heading-row');
       var controls = head && head.querySelector('.fk-case-controls');
-      if (!head) {
-        head = document.createElement('div');
-        head.className = 'fk-case-heading-row';
-        row.parentElement.insertBefore(head, heading || row);
-        if (heading) head.appendChild(heading);
-      }
-      if (!controls) {
-        controls = document.createElement('div');
-        controls.className = 'fk-case-controls';
-        head.appendChild(controls);
-      }
-      var previous = controls.querySelector('[data-fk-case-control="previous"]');
-      var next = controls.querySelector('[data-fk-case-control="next"]');
+      // Webflow owns the controls and their editable labels; bind behavior only.
+      var previous = controls && controls.querySelector('[data-fk-case-control="previous"]');
+      var next = controls && controls.querySelector('[data-fk-case-control="next"]');
       var index = 0;
       var cards = Array.prototype.slice.call(row.children);
-      function button(label, glyph, delta) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'fk-case-control';
-        b.setAttribute('aria-label', label);
-        b.setAttribute('data-fk-case-control', delta < 0 ? 'previous' : 'next');
-        b.textContent = glyph;
-        controls.appendChild(b);
-        return b;
-      }
-      if (!previous) previous = button('Previous case study', '\u2190', -1);
-      if (!next) next = button('Next case study', '\u2192', 1);
       if (!previous || !next || previous.tagName !== 'BUTTON' || next.tagName !== 'BUTTON') return;
       row.dataset.fkManualCases = 'true';
       row.classList.add('fk-manual-cases');
       row.setAttribute('aria-label', 'Case studies');
-      previous.type = 'button';
-      next.type = 'button';
-      previous.setAttribute('aria-label', 'Previous case study');
-      next.setAttribute('aria-label', 'Next case study');
       previous.addEventListener('click', function () {
         index = Math.max(0, Math.min(cards.length - 1, index - 1));
         show(true);

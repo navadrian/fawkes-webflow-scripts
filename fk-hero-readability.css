@@ -3,14 +3,3 @@
 .wb-hero-title, .casestudies-hero_content .heading-hero{
   line-height: var(--fk-hero-title-leading) !important;
 }
-
-/* Both homepage photographs keep the same vignette throughout the crossfade.
-   Existing scrims sit below the KPI graphics and shared foreground copy. */
-.fk-home-hero-rotation > .hero-scrim,
-.fk-home-hero-rotation .home-hero-scrim-b {
-  background-color: transparent !important;
-  background-image:
-    radial-gradient(ellipse at 63% 36%, transparent 22%, rgba(0,0,0,.48) 100%),
-    linear-gradient(0deg, rgba(0,0,0,.65) 0%, transparent 62%),
-    linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.12) 68%) !important;
-}

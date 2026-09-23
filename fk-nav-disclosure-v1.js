@@ -33,6 +33,7 @@
   function initPill(pill, pillIndex) {
     var wrappers = Array.prototype.slice.call(pill.querySelectorAll('.fk-nav-dropdown-wrapper'));
     var closeTimer = 0;
+    var restoringFocus = false;
 
     function isDesktop() {
       return window.matchMedia('(min-width:768px)').matches;
@@ -47,7 +48,10 @@
       });
       pill.removeAttribute('data-nav-open');
       pill.style.removeProperty('--fk-nav-open-height');
-      if (restoreFocus && restoreFocus.focus) restoreFocus.focus();
+      if (restoreFocus && restoreFocus.focus) {
+        restoringFocus = true;
+        try { restoreFocus.focus(); } finally { restoringFocus = false; }
+      }
     }
 
     function openDesktop(wrapper) {
@@ -91,7 +95,9 @@
       wrapper.addEventListener('pointerenter', function () {
         if (window.matchMedia('(min-width:768px) and (hover:hover) and (pointer:fine)').matches) openDesktop(wrapper);
       });
-      wrapper.addEventListener('focusin', function () { openDesktop(wrapper); });
+      wrapper.addEventListener('focusin', function () {
+        if (!restoringFocus) openDesktop(wrapper);
+      });
 
       trigger.addEventListener('click', function (event) {
         if (!isDesktop()) return;
