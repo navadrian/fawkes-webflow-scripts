@@ -13,8 +13,6 @@
 .fk-home-case-section-exact .case-study-row.fk-manual-cases {
  scroll-padding-left:var(--fk-case-inset,48px); scroll-padding-right:0;
 }
-.fk-xlink-card .fk-xlink-product-title { margin-bottom:12px!important; }
-.fk-xlink-card .fk-xlink-description { margin-top:0!important; }
 .article-toc-rt::-webkit-scrollbar { width:4px; }
 .article-toc-rt::-webkit-scrollbar-button { display:none; width:0; height:0; }
 .article-toc-rt::-webkit-scrollbar-button:single-button { display:none; }
