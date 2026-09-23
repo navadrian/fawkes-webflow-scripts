@@ -1,5 +1,5 @@
 /* Direct browser review fixes. Native CMS bindings remain the source of content. */
-.hero-wrapper .fk-tag-chip, .fk-link-hero-frame .fk-tag-chip { font-size:20px!important; line-height:30px!important; padding:6px 14px!important; border-radius:8px!important; background:rgba(17,18,23,.8)!important; }
+.hero-wrapper .fk-tag-chip:not(.w-variant-0b41d7bb-d471-afd6-3d8d-978040a2fd14):not(.w-variant-35ed0efa-cb7e-58a0-a364-7cf2224730ca):not(.w-variant-64ab2ea3-7970-b0e5-ccda-045b4fc776c2), .fk-link-hero-frame .fk-tag-chip:not(.w-variant-0b41d7bb-d471-afd6-3d8d-978040a2fd14):not(.w-variant-35ed0efa-cb7e-58a0-a364-7cf2224730ca):not(.w-variant-64ab2ea3-7970-b0e5-ccda-045b4fc776c2) { font-size:20px!important; line-height:30px!important; padding:6px 14px!important; border-radius:8px!important; background:rgba(17,18,23,.8)!important; }
 [data-fk-bess-heading] { white-space:pre-line; }
 .fk-case-study-card, .fk-case-study-card .fk-cs-card-link { box-shadow:none!important; }
 /* Match the existing -2px image inset: native 100% sizing exposed a dark 2px edge. */
@@ -38,7 +38,7 @@
  .fk-manual-cases .fk-case-study-stat-block { inset:auto 16px 16px!important; width:auto!important; height:auto!important; min-height:0!important; padding:16px!important; display:flex!important; flex-direction:column; gap:10px!important; }
  .fk-manual-cases .fk-case-study-stat-block > .fk-tag-chip, .fk-manual-cases .fk-case-study-stat-block > .wb-card-text-36 { position:static!important; inset:auto!important; width:auto!important; height:auto!important; max-width:100%!important; }
  .fk-manual-cases .fk-case-study-stat-block > .fk-tag-chip { align-self:flex-start; }
- .hero-wrapper .fk-tag-chip, .fk-link-hero-frame .fk-tag-chip { font-size:14px!important; line-height:21px!important; padding:6px 10px!important; }
+ .hero-wrapper .fk-tag-chip:not(.w-variant-0b41d7bb-d471-afd6-3d8d-978040a2fd14):not(.w-variant-35ed0efa-cb7e-58a0-a364-7cf2224730ca):not(.w-variant-64ab2ea3-7970-b0e5-ccda-045b4fc776c2), .fk-link-hero-frame .fk-tag-chip:not(.w-variant-0b41d7bb-d471-afd6-3d8d-978040a2fd14):not(.w-variant-35ed0efa-cb7e-58a0-a364-7cf2224730ca):not(.w-variant-64ab2ea3-7970-b0e5-ccda-045b4fc776c2) { font-size:14px!important; line-height:21px!important; padding:6px 10px!important; }
  [data-fk-bess-heading] { white-space:normal; }
  .article-layout .w-richtext table { display:block; overflow-x:auto; }
  [data-fk-more-cases] > .w-dyn-items { grid-template-columns:minmax(0,1fr); }

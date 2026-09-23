@@ -87,14 +87,8 @@
   margin: 0;
 }
 
-/* ---- E: Our Approach pillar label type (Figma 7:872: 18px Inter Medium, -0.9px, #000).
-   .wb-tags-24 is shared (15 uses) - scope to the tile. ---- */
-.fk-process-tile .wb-tags-24 {
-  font-size: 18px;
-  line-height: 1.5;
-  letter-spacing: -0.9px;
-  color: #000;
-}
+/* F51: Process Tile titles use native fk-process-tile-title/fk-f6-title-native.
+   The obsolete wb-tags-24 descendant override has no current consumer. */
 
 /* ---- Product tech-stack cards (Figma 2053:714) ----
    Core, Link and Arc share the Process Tile component with industry pages, so
