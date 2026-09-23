@@ -9,7 +9,6 @@ const contrast = fs.readFileSync("fk-contrast.css", "utf8");
 const mobile = fs.readFileSync("fk-mobilenav.css", "utf8");
 const productLayout = fs.readFileSync("fk-product-layout.css", "utf8");
 const mobileFixes = fs.readFileSync("fk-mobile.css", "utf8");
-const heroReadability = fs.readFileSync("fk-hero-readability.css", "utf8");
 const homeSections = fs.readFileSync("fk-home-sections-refinement.css", "utf8");
 const homeProducts = fs.readFileSync("fk-home-products-refinement.css", "utf8");
 const css =
@@ -17,7 +16,6 @@ const css =
   "\n\n/* ===== fk-mobilenav ===== */\n" + mobile +
   "\n\n/* ===== fk-product-layout ===== */\n" + productLayout +
   "\n\n/* ===== fk-mobile (mobile remediation) ===== */\n" + mobileFixes +
-  "\n\n/* ===== Shared hero readability ===== */\n" + heroReadability +
   "\n\n/* ===== Home sections refinements ===== */\n" + homeSections +
   "\n\n/* ===== Home product Figma refinement ===== */\n" + homeProducts +
   "\n\n/* ===== September review corrections ===== */\n" + fs.readFileSync("fk-review-20260908.css", "utf8") +
@@ -26,11 +24,11 @@ const css =
   "\n\n/* ===== Phone content sections ===== */\n" + fs.readFileSync("fk-responsive-content.css", "utf8") +
   "\n\n/* ===== Product feature behavior-dependent presentation ===== */\n" + fs.readFileSync("fk-product-feature-runtime.css", "utf8");
 
-const out = `/*! fk-base-styles — Fawkes site-header registered script — v1.28.0
+const out = `/*! fk-base-styles — Fawkes site-header registered script
  *  Webflow injects registered "scripts" as <script src>, so a raw .css file
  *  never applies. This wrapper injects the base stylesheet (contrast fixes +
  *  fixed-nav anchor offset + mobile-nav menu) as a real <style> at the end of
- *  <head>. Generated from fk-contrast.css + fk-mobilenav.css — edit those, then
+ *  <head>. Generated from the source list in build-base-styles.js; edit sources, then
  *  rebuild:  node build-base-styles.js
  */
 (function () {

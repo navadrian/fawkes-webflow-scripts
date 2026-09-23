@@ -1,5 +1,2 @@
-/* Shared hero title rhythm; scoped away from section headings and card text. */
-:root { --fk-hero-title-leading: 1.3; }
-.wb-hero-title, .casestudies-hero_content .heading-hero{
-  line-height: var(--fk-hero-title-leading) !important;
-}
+/* Retired from the bundle: hero title rhythm is native (F45),
+   and Home media/scrims are native (F40–F42). */

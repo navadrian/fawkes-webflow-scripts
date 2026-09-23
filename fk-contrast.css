@@ -8,20 +8,11 @@
    ------------------------------------------------------------------ */
 
 /* ==================================================================
-   A. TEXT-CONTRAST FIXES  (Phase 1: most retired)
-   Type classes now carry their own token-backed colour + .on-dark/.on-light
-   modifiers (Webflow Designer). What remains here are the dark-SECTION context
-   overrides that Webflow can't express (descendant combinators) — these come
-   out in Phase 2 when the product/visual-card markup becomes components.
+   A. TEXT CONTRAST
+   Section-context overrides retired after the current route inventory.
+   Home product tagline colours are native component variants (F39).
+   Other former selectors had no consumers on the audited published routes.
    ================================================================== */
-.vision-wrapper .wb-h2-section-title { color: white; }
-.fk-product-block .wb-desc-heading-44 { color: white; }
-.fk-product-block.light .wb-desc-heading-44 { color: #111217; }
-.fk-visual-card .wb-desc-heading-44 { color: white; }
-.fk-visual-card .wb-tags-24 { color: white; }
-.fk-product-block .wb-body-medium-16-light { color: rgba(255,255,255,0.80); }
-.fk-product-block.light .wb-body-medium-16-light { color: #31312f; }
-.fk-visual-card .wb-body-medium-16-light { color: rgba(255,255,255,0.80); }
 .button-text { color: inherit; }
 
 /* ==================================================================
