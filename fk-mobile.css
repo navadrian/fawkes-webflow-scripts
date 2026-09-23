@@ -106,12 +106,12 @@
 
   /* "Our Approach" process tiles: 2-up grid so they don't run one-after-another
      down the page; shrink the oversized methodology icon. */
-  .fk-process-tile-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 24px; }
-  .fk-process-tile {
+  .fk-process-tile-list:where(:not(.fk-f6-home-grid-native):not(.fk-f6-product-grid-native):not(.fk-process-grid-native)) { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 24px; }
+  .fk-process-tile:where(:not(.fk-f6-tile-native)) {
     width: auto; min-height: 0; justify-content: flex-start; gap: 8px; padding: 14px 12px 16px;
   }
-  .fk-process-tile .methodology-icon { height: 58px; margin-bottom: 4px; justify-content: center; }
-  .fk-process-tile .methodology-icon img { height: 100%; width: auto; max-width: 100%; }
+  .fk-process-tile:where(:not(.fk-f6-tile-native)) .methodology-icon:where(:not(.fk-f6-icon-native)) { height: 58px; margin-bottom: 4px; justify-content: center; }
+  .fk-process-tile:where(:not(.fk-f6-tile-native)) .methodology-icon img:where(:not(.fk-f6-icon-image-native)) { height: 100%; width: auto; max-width: 100%; }
 
   /* product blocks — pull the whole section toward one fold: smaller mockup,
      tighter feature stack, less padding. */
@@ -166,8 +166,8 @@
   .vision-wrapper .vision-heading { font-size: 24px; }
   .hero-wrapper { padding-bottom: 28px; }   /* min-height:100svh + padding-top stay from the @767 rule */
 
-  .fk-process-tile .methodology-icon { height: 52px; }
-  .fk-process-tile-list { gap: 8px; }
+  .fk-process-tile:where(:not(.fk-f6-tile-native)) .methodology-icon:where(:not(.fk-f6-icon-native)) { height: 52px; }
+  .fk-process-tile-list:where(:not(.fk-f6-home-grid-native):not(.fk-f6-product-grid-native):not(.fk-process-grid-native)) { gap: 8px; }
 
 }
 
