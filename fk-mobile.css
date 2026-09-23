@@ -122,8 +122,6 @@
   .feature-row .fk-feature-item .fk-feature-description-dark,
   .feature-row .fk-feature-item .fk-feature-description-light { margin-top: 4px; font-size: 12.5px; line-height: 1.4; }
 
-  .fk-feature-icon { width: 20px; height: 20px; }
-
   /* Industries visual card: unclamp headline plate, stack the bottom row,
      kill the min-height:420 + space-between void that reads as an empty card */
 

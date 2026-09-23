@@ -4,8 +4,6 @@
 .fk-case-study-card, .fk-case-study-card .fk-cs-card-link { box-shadow:none!important; }
 /* Match the existing -2px image inset: native 100% sizing exposed a dark 2px edge. */
 
-.fk-home-case-section-exact { row-gap:18px!important; }
-.fk-home-case-section-exact .fk-case-heading-row { margin-bottom:0!important; }
 /* Full-bleed track; inset only the snap origin, not the visible viewport. */
 .fk-home-case-section-exact .case-study-row.fk-manual-cases:where(:not(.fk-home-case-rail-native)) {
  box-sizing:border-box; width:var(--fk-case-viewport,100vw)!important; max-width:none!important;
