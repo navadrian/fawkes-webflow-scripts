@@ -131,7 +131,6 @@
 
   /* Industries visual card: unclamp headline plate, stack the bottom row,
      kill the min-height:420 + space-between void that reads as an empty card */
-  .fk-visual-card { min-height: 0; padding: 16px; justify-content: flex-start; row-gap: 16px; }
   .fk-visual-card-title { max-width: 100%; padding: 10px 14px; }
 
 
