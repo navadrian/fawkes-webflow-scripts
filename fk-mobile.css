@@ -18,7 +18,7 @@
 @media screen and (max-width: 767px) {
   /* hero fills the first fold; content is justify-content:flex-end so it sits
      at the bottom over the photo. svh = the collapsed-chrome viewport. */
-  .hero-wrapper { min-height: 100vh; min-height: 100svh; padding-top: calc(var(--nav-h) + 40px); }
+  .hero-wrapper:where(:not(.fk-home-hero-bottom-87)) { min-height: 100vh; min-height: 100svh; padding-top: calc(var(--nav-h) + 40px); }
 }
 
 /* ==================================================================
@@ -161,7 +161,7 @@
   .vision-wrapper  { padding: 32px 16px; }
   .vision-wrapper .wb-h2-section-title,
   .vision-wrapper .vision-heading { font-size: 24px; }
-  .hero-wrapper { padding-bottom: 28px; }   /* min-height:100svh + padding-top stay from the @767 rule */
+  .hero-wrapper:where(:not(.fk-home-hero-bottom-87)) { padding-bottom: 28px; }   /* min-height:100svh + padding-top stay from the @767 rule */
 
   .fk-process-tile:where(:not(.fk-f6-tile-native)) .methodology-icon:where(:not(.fk-f6-icon-native)) { height: 52px; }
   .fk-process-tile-list:where(:not(.fk-f6-home-grid-native):not(.fk-f6-product-grid-native):not(.fk-process-grid-native)) { gap: 8px; }
