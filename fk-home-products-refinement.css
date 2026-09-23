@@ -76,7 +76,7 @@
 .fk-home-case-section-exact .case-study-row .fk-case-study-card::after { content:none !important; display:none !important; }
 .case-study-row.fk-manual-cases { display:flex !important; overflow-x:auto !important; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:none; }
 .case-study-row.fk-manual-cases::-webkit-scrollbar { display:none; }
-.fk-manual-cases > * { flex:0 0 min(700px,100%) !important; scroll-snap-align:start; }
+.fk-manual-cases > *:where(:not(.w-variant-f7d76984-d467-8492-011e-5b8d8983ac8f):not(.w-variant-0b0e358d-bd9e-6e57-5b45-b4e1096476ed)) { flex:0 0 min(700px,100%) !important; scroll-snap-align:start; }
 .fk-manual-cases::after { content:''; flex:0 0 max(0px,calc(100% - 700px - 34px)); }
 .article-toc-rt ul { list-style-type:decimal; padding-left:24px; margin:0; }
 .article-toc-rt li { font:300 16px/24px Inter,sans-serif; color:rgba(0,0,0,.7); margin-bottom:12px; padding-left:0; }
