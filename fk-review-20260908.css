@@ -15,9 +15,6 @@
 }
 .fk-xlink-card .fk-xlink-product-title { margin-bottom:12px!important; }
 .fk-xlink-card .fk-xlink-description { margin-top:0!important; }
-.fk-comparison-table tbody td:not(:last-child), .fk-comparison-table tbody th { color:#c4c4ca!important; }
-.fk-comparison-table thead th:not(:last-child), .fk-comparison-table thead td:not(:last-child) { color:#a5a5ad!important; }
-
 .article-toc-rt::-webkit-scrollbar { width:4px; }
 .article-toc-rt::-webkit-scrollbar-button { display:none; width:0; height:0; }
 .article-toc-rt::-webkit-scrollbar-button:single-button { display:none; }
