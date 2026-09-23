@@ -14,12 +14,8 @@
 
 
 
- /* Home only: reset fixed desktop geometry within the phone breakpoint. */
- body:has(.home-hero-state-b) .hero-wrapper { padding:112px 24px 64px!important; }
- body:has(.home-hero-state-b) .hero-content { left:auto!important; right:auto!important; width:100%!important; max-width:none!important; }
- body:has(.home-hero-state-b) .hero-content .wb-hero-title { font-size:32px!important; line-height:1.2!important; letter-spacing:-1px!important; }
- body:has(.home-hero-state-b) .hero-content .fk-tag-chip { align-self:flex-start; max-width:100%; }
- body:has(.home-hero-state-b) .section-wrapper { padding-top:48px!important; padding-bottom:48px!important; }
+ /* F47: Home phone hero geometry, title, section spacing, CTA and hero
+    Tag Chip width are native. This file is retired from the bundle. */
 
 
 
@@ -32,5 +28,4 @@
 
 
 
- body:has(.home-hero-state-b) .fk-method-cta { white-space:normal!important; font-size:16px!important; line-height:1.4!important; padding:12px 16px!important; }
 }

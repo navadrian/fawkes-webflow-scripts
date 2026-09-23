@@ -19,7 +19,6 @@ const css =
   "\n\n/* ===== Home sections refinements ===== */\n" + homeSections +
   "\n\n/* ===== Home product Figma refinement ===== */\n" + homeProducts +
   "\n\n/* ===== September review corrections ===== */\n" + fs.readFileSync("fk-review-20260908.css", "utf8") +
-  "\n\n/* ===== Desktop-locked responsive rollout ===== */\n" + fs.readFileSync("fk-responsive-locked.css", "utf8") +
   "\n\n/* ===== Phone industry sections ===== */\n" + fs.readFileSync("fk-responsive-industry.css", "utf8") +
   "\n\n/* ===== Phone content sections ===== */\n" + fs.readFileSync("fk-responsive-content.css", "utf8") +
   "\n\n/* ===== Product feature behavior-dependent presentation ===== */\n" + fs.readFileSync("fk-product-feature-runtime.css", "utf8");

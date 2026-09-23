@@ -22,13 +22,8 @@
 
 
 
- .contact-wrapper .contact-form-panel { padding:40px 24px 48px!important; }
- .contact-form-panel .contact-heading { font-size:36px!important; line-height:1.2!important; margin-bottom:20px!important; }
- .contact-form-panel .form-row.fk-application-row { grid-template-columns:minmax(0,1fr)!important; gap:24px!important; }
- .contact-form-panel .form-field { width:100%!important; min-width:0!important; }
- .contact-form-panel .form-input { font-size:16px!important; min-height:48px!important; }
- .contact-form-panel .form-checkbox-group { flex-wrap:wrap!important; gap:16px!important; }
- .contact-form-panel .form-checkbox-item { min-height:44px; }
+ /* F48: authored Contact/Application phone layout and fields are native.
+    Webflow-generated upload states retain their compatibility rules. */
  .contact-form-panel .w-file-upload-default { display:flex!important; flex-wrap:wrap!important; align-items:center; gap:12px; }
  .contact-form-panel .w-file-upload-info { padding:0!important; }
 }
