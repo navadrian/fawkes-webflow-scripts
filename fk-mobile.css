@@ -36,42 +36,33 @@
 
   /* 42px "Our Approach" statement (real classes: approach-headline/-subtext;
      .wb-body-large-42-bold kept as a harmless future-proof — 0 instances today) */
-  .approach-headline,
-  .approach-subtext,
   .wb-body-large-42-bold { font-size: 24px; line-height: 1.3; letter-spacing: -0.4px; }
   .approach-headline { margin-bottom: 6px; }
 
   /* 44px desc heading — bare, product-block, and product-template hero tagline */
-  .wb-desc-heading-44 { font-size: 26px; line-height: 1.2; }
   .hero-wrapper .wb-desc-heading-44,
   .hero-content .wb-desc-heading-44 { font-size: 23px; line-height: 1.2; }
 
   /* product name (orange accent span inherits size) */
-  .fk-product-name-dark { font-size: 32px; line-height: 1.1; }
   .hero-wrapper .fk-product-name-dark,
   .hero-content .fk-product-name-dark { font-size: 34px; line-height: 1.12; letter-spacing: -0.4px; }
 
   /* 24px tag/label text (template feature titles, hero tag row) */
 
   /* 24px body-large-light (hero sub-descriptors) */
-  .wb-body-large-24-light { font-size: 17px; line-height: 1.5; }
   .hero-wrapper .wb-body-large-24-light,
   .hero-content .wb-body-large-24-light { font-size: 16px; line-height: 1.5; }
 
   /* eyebrows */
-  .section-eyebrow  { font-size: 14px; letter-spacing: 0.06em; }
   .section-wrapper > .section-eyebrow {   /* Home "Industries"/"Case Studies" ARE the section title */
     font-size: 18px; font-weight: 700; letter-spacing: 0.01em;
   }
 
   /* feature descriptions (template band) */
-  .fk-feature-description-dark,
-  .fk-feature-description-light { font-size: 14px; line-height: 1.45; }
 
   /* 18px pointer lists */
 
   /* Industries / Products-template visual card */
-  .fk-visual-card-title { font-size: 20px; }
 
 
 
@@ -89,20 +80,11 @@
 }
 
 @media (max-width: 479px) {
-  .approach-headline,
-  .approach-subtext,
   .wb-body-large-42-bold { font-size: 21px; }
-  .wb-desc-heading-44 { font-size: 22px; line-height: 1.22; }
   .hero-wrapper .wb-desc-heading-44,
   .hero-content .wb-desc-heading-44 { font-size: 20px; line-height: 1.25; }
-  .fk-product-name-dark { font-size: 27px; }
   .hero-wrapper .fk-product-name-dark,
   .hero-content .fk-product-name-dark { font-size: 29px; }
-  .wb-body-large-24-light { font-size: 16px; }
-  .section-eyebrow  { font-size: 13px; }
-  .fk-feature-description-dark,
-  .fk-feature-description-light { font-size: 13px; }
-  .fk-visual-card-title { font-size: 18px; }
 
 
 
