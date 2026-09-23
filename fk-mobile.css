@@ -127,7 +127,6 @@
    ================================================================== */
 @media (max-width: 767px) {
   /* section / banner / vision padding + gaps */
-  .section-wrapper { padding: 40px 20px; }
 
 
 
@@ -210,7 +209,6 @@
 }
 
 @media (max-width: 479px) {
-  .section-wrapper { padding: 32px 16px; }
 
   .vision-wrapper  { padding: 32px 16px; }
   .vision-wrapper .wb-h2-section-title,
