@@ -92,36 +92,52 @@
   function initReviewInteractions() {
     var row = document.querySelector('.fk-home-case-section-exact .case-study-row');
     if (row && !row.dataset.fkManualCases) {
-      row.dataset.fkManualCases = 'true';
-      row.classList.add('fk-manual-cases');
-      row.setAttribute('aria-label', 'Case studies');
-      var cards = Array.prototype.slice.call(row.children);
       var heading = row.parentElement.querySelector('.home-case-label-exact');
-      var controls = document.createElement('div');
-      controls.className = 'fk-case-controls';
+      var head = row.parentElement.querySelector('.fk-case-heading-row');
+      var controls = head && head.querySelector('.fk-case-controls');
+      if (!head) {
+        head = document.createElement('div');
+        head.className = 'fk-case-heading-row';
+        row.parentElement.insertBefore(head, heading || row);
+        if (heading) head.appendChild(heading);
+      }
+      if (!controls) {
+        controls = document.createElement('div');
+        controls.className = 'fk-case-controls';
+        head.appendChild(controls);
+      }
+      var previous = controls.querySelector('[data-fk-case-control="previous"]');
+      var next = controls.querySelector('[data-fk-case-control="next"]');
       var index = 0;
+      var cards = Array.prototype.slice.call(row.children);
       function button(label, glyph, delta) {
         var b = document.createElement('button');
         b.type = 'button';
         b.className = 'fk-case-control';
         b.setAttribute('aria-label', label);
+        b.setAttribute('data-fk-case-control', delta < 0 ? 'previous' : 'next');
         b.textContent = glyph;
-        b.addEventListener('click', function () {
-          index = Math.max(0, Math.min(cards.length - 1, index + delta));
-          show(true);
-        });
         controls.appendChild(b);
         return b;
       }
-      var previous = button('Previous case study', '\u2190', -1);
-      var next = button('Next case study', '\u2192', 1);
-      if (heading) {
-        var head = document.createElement('div');
-        head.className = 'fk-case-heading-row';
-        heading.parentElement.insertBefore(head, heading);
-        head.appendChild(heading);
-        head.appendChild(controls);
-      } else row.parentElement.insertBefore(controls, row);
+      if (!previous) previous = button('Previous case study', '\u2190', -1);
+      if (!next) next = button('Next case study', '\u2192', 1);
+      if (!previous || !next || previous.tagName !== 'BUTTON' || next.tagName !== 'BUTTON') return;
+      row.dataset.fkManualCases = 'true';
+      row.classList.add('fk-manual-cases');
+      row.setAttribute('aria-label', 'Case studies');
+      previous.type = 'button';
+      next.type = 'button';
+      previous.setAttribute('aria-label', 'Previous case study');
+      next.setAttribute('aria-label', 'Next case study');
+      previous.addEventListener('click', function () {
+        index = Math.max(0, Math.min(cards.length - 1, index - 1));
+        show(true);
+      });
+      next.addEventListener('click', function () {
+        index = Math.max(0, Math.min(cards.length - 1, index + 1));
+        show(true);
+      });
       function alignTrack() {
         var inset = heading ? heading.getBoundingClientRect().left : row.parentElement.getBoundingClientRect().left;
         row.style.setProperty('--fk-case-inset', Math.max(0, inset) + 'px');
@@ -130,11 +146,11 @@
         row.style.setProperty('--fk-case-viewport', document.documentElement.clientWidth + 'px');
       }
       function updateButtons() {
-        previous.disabled = index === 0;
-        next.disabled = index === cards.length - 1;
+        previous.disabled = cards.length === 0 || index <= 0;
+        next.disabled = cards.length === 0 || index >= cards.length - 1;
       }
       function show(smooth) {
-        if (!cards.length) return;
+        if (!cards.length) { updateButtons(); return; }
         var target = cards[index].offsetLeft - cards[0].offsetLeft;
         row.scrollTo({left: target, behavior: smooth && !window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant'});
         updateButtons();

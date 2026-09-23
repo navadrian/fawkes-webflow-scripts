@@ -70,10 +70,6 @@
   /* Native Home component classes and variants own this presentation. */
 }
 /* Approved review corrections: manual cases and article contents. */
-.fk-case-heading-row { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:32px; }
-.fk-case-heading-row .home-case-label-exact { margin-bottom:0 !important; }
-.fk-case-controls { display:flex; align-items:center; gap:12px; }
-.fk-case-control { width:52px; height:48px; border:1px solid rgba(255,255,255,.22); border-radius:12px; background:rgba(0,0,0,.4); color:#fff; font:400 22px/1 Inter,sans-serif; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 .fk-case-control:hover:not(:disabled) { background:#f2971f; color:#111217; }
 .fk-case-control:focus-visible { outline:2px solid #f2971f; outline-offset:4px; }
 .fk-case-control:disabled { opacity:.3; cursor:default; }
