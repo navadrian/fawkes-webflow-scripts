@@ -11,7 +11,6 @@ const sources = [
   'fk-review-20260908.js',
   'fk-responsive-nav.js',
   'fk-home-tabs-native.js',
-  'fk-product-feature-runtime.js',
   'fk-faq-native.js'
 ];
 const bundle = sources.map(path => fs.readFileSync(path, 'utf8').trimEnd()).join('\n;\n') + '\n';
