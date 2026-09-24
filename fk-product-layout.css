@@ -146,9 +146,8 @@
    can't express: the 100vw full-bleed on the bar, and the adjacent-sibling
    divider rule between items. ---- */
 /* Full-bleed sizing is owned by native Use Cases Bar styles. */
-.fk-use-cases-slot > .fk-use-case-item + .fk-use-case-item {
-  border-left: 1px solid var(--_fawkes-energy-design-system---overlay-black-10);
-}
+/* Industry use-case dividers are native: fk-use-case-item border-left + first-child 0,
+   colour overlay-black-10 on the fk-use-case-compact-inset combo (B7). */
 @media (max-width: 767px) {
   .fk-use-cases-slot > .fk-use-case-item + .fk-use-case-item {
     border-left: 0;
@@ -173,24 +172,8 @@
    but keyed off an explicit class now, not a `:has(.fk-feature-description-dark)`
    sniff. Tile colour/size come from the Process Tile component + its `fk-process-tile-desc`
    token style; only the grid geometry lives here. */
-.fk-process-tile-list.is-columns {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--_fawkes-energy-design-system---space-xs);
-  align-items: stretch;
-}
-.fk-process-tile-list.is-columns:has(> .fk-process-tile:nth-child(4):last-child) {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-.fk-process-tile-list.is-columns > .fk-process-tile {
-  width: auto;          /* the component style pins these to 212px; let the grid cell size them */
-  justify-content: flex-start;
-  gap: 10px;
-}
-.fk-process-tile-list.is-columns > .fk-process-tile .fk-process-tile-number {
-  color: var(--_fawkes-energy-design-system---brand-orange);
-  letter-spacing: 1px;
-}
+/* Desktop tile grid, tile width and number colour are native (B7); only the
+   deferred tablet/phone column overrides remain. */
 @media (max-width: 991px) {
   .fk-process-tile-list.is-columns,
   .fk-process-tile-list.is-columns:has(> .fk-process-tile:nth-child(4):last-child) {
@@ -286,7 +269,6 @@
 }
 
 /* ---- Field Intelligence / Industry Application cross-link card ---- */
-.fk-xlink-title:where(:not(.fk-xlink-native-title)) { font-family: Inter, sans-serif; font-size: 34px; font-weight: 500; color: #fff; line-height: 1.15; margin-bottom: 20px; }
 @media (max-width: 767px) {
   .fk-xlink-card:where(:not(.fk-xlink-native)) { padding: 24px; min-height: 300px; }
   .fk-xlink-title:where(:not(.fk-xlink-native-title)) { font-size: 24px; }
