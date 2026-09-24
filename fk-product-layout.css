@@ -44,25 +44,7 @@
 /* D3 - "read case study" arrow, bottom-right of BOTH cards (they're now clickable). Decorative.
    Descendant (not child) combinator: fk-site-interactions wraps the cards in a
    marquee track, so they are no longer direct children of .case-study-row. */
-.case-study-row .fk-case-study-card::after {
-  content: "\2192";
-  position: absolute;
-  right: 40px;
-  bottom: 40px;
-  z-index: 3;
-  width: 52px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #ffffff;
-  font-size: 22px;
-  line-height: 1;
-  pointer-events: none;
-}
+/* Case-card arrow generator retired (B3): it only rendered where the Home rail suppressed it. */
 
 /* D4 - case-study images: parallax removed (data-parallax stripped from both), so the
    image sits flush. Overscale via top/left + auto right/bottom so width/height aren't
@@ -71,9 +53,6 @@
 
 
 /* D5 - whole card is a link */
-.fk-cs-card-link { position: absolute; inset: 0; z-index: 6; display: block; }
-.fk-case-study-card { transition: filter .18s ease; }
-.fk-case-study-card:hover { filter: brightness(1.05); cursor: pointer; }
 
 /* Industry dashboard exports include a sub-pixel light outline at their outer
    rounded edge. Let the clipped frame trim that source outline so the corner
@@ -119,7 +98,7 @@
 
 /* ---- G: hero KPI backing-plate blur and responsive placement/visibility.
    Static card alignment, label/value order, and value line-height are native. ---- */
-.hero-stat-row { -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+/* .hero-stat-row blur is native (B3); only the responsive position/visibility overrides remain. */
 @media (max-width: 1279px) { .hero-stat-row { right: 120px; top: 300px; } }
 @media (max-width: 1023px) { .hero-stat-row { right: 40px; } }
 @media (max-width: 767px)  { .hero-stat-row { display: none; } }

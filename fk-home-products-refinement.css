@@ -73,7 +73,6 @@
 .fk-case-control:hover:not(:disabled) { background:#f2971f; color:#111217; }
 .fk-case-control:focus-visible { outline:2px solid #f2971f; outline-offset:4px; }
 .fk-case-control:disabled { opacity:.3; cursor:default; }
-.fk-home-case-section-exact .case-study-row .fk-case-study-card::after { content:none !important; display:none !important; }
 .case-study-row.fk-manual-cases { display:flex !important; overflow-x:auto !important; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:none; }
 .case-study-row.fk-manual-cases::-webkit-scrollbar { display:none; }
 .fk-manual-cases::after { content:''; flex:0 0 max(0px,calc(100% - 700px - 34px)); }
